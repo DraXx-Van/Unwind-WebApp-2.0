@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
-export default function CompletePage() {
+function CompletePageContent() {
   const searchParams = useSearchParams();
   const activity = searchParams.get('activity') || 'Mindful Session';
   const duration = searchParams.get('duration') || '1'; // fallback string
@@ -103,4 +103,12 @@ export default function CompletePage() {
         </div>
     </div>
   )
+}
+
+export default function CompletePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#FDFBF9] flex items-center justify-center font-bold text-[#4B3425]">Loading...</div>}>
+      <CompletePageContent />
+    </Suspense>
+  );
 }

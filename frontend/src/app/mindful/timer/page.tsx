@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMindfulStore } from '@/store/mindfulStore';
 import Link from 'next/link';
 
-export default function TimerPage() {
+function TimerPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { addEntry, updateEntry } = useMindfulStore();
@@ -201,5 +201,13 @@ export default function TimerPage() {
       </div>
 
     </div>
+  );
+}
+
+export default function TimerPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#9BB068] flex items-center justify-center font-bold text-white">Loading...</div>}>
+      <TimerPageContent />
+    </Suspense>
   );
 }
