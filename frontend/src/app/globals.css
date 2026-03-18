@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+:root {
+  /* Mindful Brown Palette */
+  --mindful-brown-80: #4F3422;
+  --mindful-brown-60: #926247;
+  --mindful-brown-20: #E8DDD9;
+  --mindful-brown-10: #F7F4F2;
+  --mindful-brown-white: #FFFFFF;
+
+  /* Other Colors */
+  --serenity-green-50: #9BB168;
+  --optimistic-gray-30: #C9C7C5;
+  --system-orange: #FF9500;
+
+  --background: var(--mindful-brown-10);
+  /* Default background based on Figma */
+  --foreground: var(--mindful-brown-80);
+  /* Default text color */
+}
+
+@theme inline {
+  --color-mindful-brown-80: var(--mindful-brown-80);
+  --color-mindful-brown-60: var(--mindful-brown-60);
+  --color-mindful-brown-20: var(--mindful-brown-20);
+  --color-mindful-brown-10: var(--mindful-brown-10);
+  --color-mindful-brown-white: var(--mindful-brown-white);
+
+  --color-serenity-green-50: var(--serenity-green-50);
+  --color-optimistic-gray-30: var(--optimistic-gray-30);
+  --color-system-orange: var(--system-orange);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-sans: var(--font-urbanist);
+
+  --radius-40px: 40px;
+  --radius-32px: 32px;
+  --radius-100px: 100px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-urbanist), sans-serif;
+}
+
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}

@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "windows"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Assessment {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  
+  goal String?
+  gender String?
+  age Int?
+  weight Int?
+  weightUnit String?
+  mood Int?
+  hasSoughtProfessionalHelp Boolean?
+  physicalDistress Boolean?
+  sleepQuality Int?
+  medications String[]
+  symptoms String[]
+  stressLevel Int?
+}
+
+model Journal {
+  id        String   @id @default(uuid())
+  title     String?
+  content   String
+  emotion   String   
+  createdAt DateTime @default(now())
+}
+
+model DailyMood {
+  id        String   @id @default(uuid())
+  userId    String   // In a real app this would be a relation, but keeping simple for now
+  date      DateTime @unique // Ensures one mood per day
+  mood      String   // OVERJOYED, HAPPY, NEUTRAL, LOW, OVERWHELMED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
