@@ -42,3 +42,36 @@ model DailyMood {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model StressEntry {
+  id        String   @id @default(uuid())
+  userId    String
+  value     Int
+  stressor  String
+  impact    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SleepEntry {
+  id        String   @id @default(uuid())
+  userId    String
+  duration  Float
+  sleepTime String
+  wakeTime  String
+  quality   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MindfulSession {
+  id              String   @id @default(uuid())
+  userId          String
+  activity        String
+  duration        Float
+  plannedDuration Float    @default(0)
+  category        String
+  timeOfDay       String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

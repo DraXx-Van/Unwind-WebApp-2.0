@@ -1,0 +1,660 @@
+/* Resource */
+
+position: relative;
+width: 375px;
+height: 812px;
+
+/* Serenity Green/50 */
+background: #9BB068;
+border-radius: 40px;
+
+
+/* Vector */
+
+position: absolute;
+width: 280px;
+height: 272px;
+left: -204px;
+top: 140px;
+
+/* Serenity Green/60 */
+background: #7D944D;
+opacity: 0.32;
+
+
+/* Vector */
+
+position: absolute;
+left: 82.13%;
+right: -3.2%;
+top: 93.47%;
+bottom: -3.2%;
+
+/* Serenity Green/60 */
+background: #7D944D;
+opacity: 0.64;
+
+
+/* Vector */
+
+position: absolute;
+width: 149px;
+height: 137px;
+left: -37px;
+top: 593px;
+
+/* Serenity Green/60 */
+background: #7D944D;
+opacity: 0.32;
+
+
+/* iPhone X or newer */
+
+position: absolute;
+height: 44px;
+left: 0%;
+right: 0%;
+top: 0px;
+
+
+
+/* Right Side */
+
+position: absolute;
+width: 66.66px;
+height: 11.34px;
+left: 293.67px;
+top: 17.33px;
+
+
+
+/* Battery */
+
+position: absolute;
+left: 89.6%;
+right: 3.91%;
+top: 39.39%;
+bottom: 34.85%;
+
+
+
+/* Vector */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 22px;
+height: 11.33px;
+right: 17px;
+top: 17.33px;
+
+mix-blend-mode: normal;
+opacity: 0.35;
+/* Mindful Brown/White */
+border: 1px solid #FFFFFF;
+border-radius: 2.66667px;
+
+
+/* Combined Shape */
+
+position: absolute;
+width: 1.33px;
+height: 4px;
+right: 14.67px;
+top: 21px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+mix-blend-mode: normal;
+opacity: 0.4;
+
+
+/* Vector */
+
+position: absolute;
+width: 18px;
+height: 7.33px;
+right: 19px;
+top: 19.33px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 1.33333px;
+
+
+/* Wifi */
+
+position: absolute;
+left: 84.18%;
+right: 11.74%;
+top: 39.39%;
+bottom: 35.69%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 15.27px;
+height: 4.74px;
+right: 44.03px;
+top: 17.33px;
+
+background: #DADADA;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 9.95px;
+height: 3.63px;
+right: 46.69px;
+top: 21.12px;
+
+background: #DADADA;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 4.63px;
+height: 3.37px;
+right: 49.36px;
+top: 24.92px;
+
+background: #DADADA;
+
+
+/* Mobile Signal */
+
+position: absolute;
+left: 78.31%;
+right: 17.16%;
+top: 40.15%;
+bottom: 35.61%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 4px;
+right: 78.33px;
+top: 24.33px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 6px;
+right: 73.67px;
+top: 22.33px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 8.33px;
+right: 69px;
+top: 20px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 10.67px;
+right: 64.33px;
+top: 17.67px;
+
+background: #DADADA;
+
+
+/* Recording Indicator */
+
+position: absolute;
+visibility: hidden;
+width: 6px;
+height: 6px;
+left: 298px;
+top: 8px;
+
+
+
+/* Indicator */
+
+position: absolute;
+width: 6px;
+height: 6px;
+right: 71px;
+top: 8px;
+
+/* SystemOrange / Light
+
+class var systemOrange: UIColor
+*/
+background: #FF9500;
+
+
+/* Left Side */
+
+position: absolute;
+width: 54px;
+height: 21px;
+left: 21px;
+top: 12px;
+
+
+
+/* Time */
+
+position: absolute;
+width: 54px;
+height: 21px;
+left: 21px;
+top: 12px;
+
+
+
+/* Time */
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+border-radius: 32px;
+
+
+/* Vector */
+
+position: absolute;
+width: 28.43px;
+height: 11.09px;
+left: 12.45px;
+top: 5.17px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 48px;
+
+position: absolute;
+width: 287px;
+height: 408px;
+left: 44px;
+top: calc(50% - 408px/2);
+
+
+
+/* Mindfulness Meditation Intro */
+
+width: 287px;
+height: 88px;
+
+/* Heading md/ExtraBold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 36px;
+line-height: 44px;
+/* or 122% */
+text-align: center;
+letter-spacing: -0.03em;
+
+/* Mindful Brown/White */
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Group */
+
+width: 180px;
+height: 180px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Vector */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 180px;
+height: 180px;
+left: 53.5px;
+top: 136px;
+
+/* Serenity Green/40 */
+border: 16px solid #B4C48D;
+
+
+/* Vector */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 180px;
+height: 180px;
+left: 53.5px;
+top: 136px;
+
+/* Mindful Brown/White */
+border: 16px solid #FFFFFF;
+
+
+/* Solid pause */
+
+position: absolute;
+width: 48px;
+height: 48px;
+left: calc(50% - 48px/2);
+top: 202px;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 20.83%;
+right: 20.83%;
+top: 16.67%;
+bottom: 16.67%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* 05:55 */
+
+width: 89px;
+height: 44px;
+
+/* Heading md/ExtraBold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 36px;
+line-height: 44px;
+/* identical to box height, or 122% */
+text-align: center;
+letter-spacing: -0.03em;
+
+/* Mindful Brown/White */
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Top Nav */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px;
+gap: 12px;
+
+position: absolute;
+width: 343px;
+height: 48px;
+left: calc(50% - 343px/2);
+top: 60px;
+
+
+
+/* Button Container */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 10px;
+
+width: 48px;
+height: 48px;
+
+/* Mindful Brown/White */
+border: 1px solid #FFFFFF;
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Monotone chevron left */
+
+width: 24px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Vector */
+
+position: absolute;
+left: 37.5%;
+right: -12.5%;
+top: 12.5%;
+bottom: 12.5%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+transform: matrix(-1, 0, 0, 1, 0, 0);
+
+
+/* Text */
+
+width: 283px;
+height: 24px;
+
+/* Text xl/ExtraBold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 20px;
+line-height: 24px;
+/* identical to box height */
+letter-spacing: -0.01em;
+
+/* Mindful Brown/White */
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 1;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 12px;
+gap: 10px;
+
+position: absolute;
+width: 111px;
+height: 46px;
+left: calc(50% - 111px/2);
+top: 730px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+box-shadow: 0px 73px 29px rgba(75, 52, 37, 0.01), 0px 41px 25px rgba(75, 52, 37, 0.03), 0px 18px 18px rgba(75, 52, 37, 0.04), 0px 5px 10px rgba(75, 52, 37, 0.05), 0px 0px 0px rgba(75, 52, 37, 0.05);
+border-radius: 32px;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 16px;
+
+width: 87px;
+height: 22px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+gap: 8px;
+
+width: 87px;
+height: 22px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 1;
+
+
+/* Dealing with Anxiety */
+
+width: 87px;
+height: 22px;
+
+/* Text lg/ExtraBold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 18px;
+line-height: 22px;
+/* identical to box height */
+letter-spacing: -0.01em;
+
+/* Mindful Brown/80 */
+color: #4B3425;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Home Indicator */
+
+position: absolute;
+width: 375px;
+height: 34px;
+left: 0px;
+bottom: 0px;
+
+
+
+/* Home Indicator */
+
+position: absolute;
+width: 134px;
+height: 5px;
+left: calc(50% - 134px/2 + 0.5px);
+bottom: 8px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 100px;
+
+
+/* Vector */
+
+position: absolute;
+width: 24px;
+height: 23px;
+left: 358px;
+top: 452px;
+
+/* Serenity Green/40 */
+background: #B4C48D;
+
+
+/* Vector */
+
+position: absolute;
+width: 41.41px;
+left: calc(50% - 41.41px/2 + 35.2px);
+top: -2.96%;
+bottom: 93.94%;
+
+/* Serenity Green/40 */
+background: #B4C48D;
+transform: rotate(45deg);
+
+
+/* Vector */
+
+position: absolute;
+width: 149.36px;
+height: 68.02px;
+left: 282px;
+top: 122px;
+
+/* Serenity Green/60 */
+background: #7D944D;
+opacity: 0.64;
+transform: rotate(-45deg);

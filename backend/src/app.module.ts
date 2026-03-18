@@ -4,9 +4,12 @@ import { AppService } from './app.service';
 import { AssessmentModule } from './assessment/assessment.module';
 import { JournalModule } from './journal/journal.module';
 import { MoodModule } from './mood/mood.module';
+import { StressModule } from './stress/stress.module';
+import { SleepModule } from './sleep/sleep.module';
+import { MindfulModule } from './mindful/mindful.module';
 
 @Module({
-  imports: [AssessmentModule, JournalModule, MoodModule],
+  imports: [AssessmentModule, JournalModule, MoodModule, StressModule, SleepModule, MindfulModule],
   controllers: [AppController],
   providers: [AppService],
 })
