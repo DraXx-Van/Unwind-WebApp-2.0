@@ -53,6 +53,20 @@ model StressEntry {
   updatedAt DateTime @updatedAt
 }
 
+model SleepSchedule {
+  id           String   @id @default(uuid())
+  userId       String
+  isEveryday   Boolean  @default(true)
+  isToday      Boolean  @default(false)
+  sleepTime    String   // e.g. "23:00"
+  wakeTime     String   // e.g. "07:00"
+  snoozeLength Int      
+  autoStats    Boolean  @default(true)
+  autoAlarm    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
 model SleepEntry {
   id        String   @id @default(uuid())
   userId    String
