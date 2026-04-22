@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { authFetch } from '@/lib/api';
 
 export interface AssessmentState {
     // Navigation
@@ -12,13 +13,18 @@ export interface AssessmentState {
     age: number | null;
     weight: number | null;
     weightUnit: 'kg' | 'lbs';
-    mood: number | null; // 1-5 or similar scale
+    mood: number | null;
     hasSoughtProfessionalHelp: boolean | null;
-    physicalDistress: boolean | null; // true if yes, false if no
-    sleepQuality: number | null; // 1-5
-    medications: string[]; // List of medication names
+    physicalDistress: boolean | null;
+    sleepQuality: number | null;
+    medications: string[];
     symptoms: string[];
     stressLevel: number | null;
+
+    // Submission state
+    isSubmitting: boolean;
+    submitError: string | null;
+    isSubmitted: boolean;
 
     // Actions
     setStep: (step: number) => void;
@@ -38,19 +44,20 @@ export interface AssessmentState {
     setSymptoms: (symptoms: string[]) => void;
     setStressLevel: (level: number) => void;
 
+    submitAssessment: () => Promise<void>;
     resetAssessment: () => void;
 }
 
 export const useAssessmentStore = create<AssessmentState>()(
     persist(
-        (set) => ({
+        (set, get) => ({
             currentStep: 0,
-            totalSteps: 12, // Adjust based on actual step count
+            totalSteps: 12,
 
             goal: null,
             gender: null,
-            age: 18, // Default starting value
-            weight: 60, // Default
+            age: 18,
+            weight: 60,
             weightUnit: 'kg',
             mood: null,
             hasSoughtProfessionalHelp: null,
@@ -59,6 +66,10 @@ export const useAssessmentStore = create<AssessmentState>()(
             medications: [],
             symptoms: [],
             stressLevel: null,
+
+            isSubmitting: false,
+            submitError: null,
+            isSubmitted: false,
 
             setStep: (step) => set({ currentStep: step }),
             nextStep: () => set((state) => ({ currentStep: Math.min(state.currentStep + 1, state.totalSteps - 1) })),
@@ -77,6 +88,38 @@ export const useAssessmentStore = create<AssessmentState>()(
             setSymptoms: (symptoms) => set({ symptoms }),
             setStressLevel: (stressLevel) => set({ stressLevel }),
 
+            submitAssessment: async () => {
+                const state = get();
+                set({ isSubmitting: true, submitError: null });
+                try {
+                    const payload = {
+                        goal: state.goal,
+                        gender: state.gender,
+                        age: state.age,
+                        weight: state.weight,
+                        weightUnit: state.weightUnit,
+                        mood: state.mood,
+                        hasSoughtProfessionalHelp: state.hasSoughtProfessionalHelp,
+                        physicalDistress: state.physicalDistress,
+                        sleepQuality: state.sleepQuality,
+                        medications: state.medications,
+                        symptoms: state.symptoms,
+                        stressLevel: state.stressLevel,
+                    };
+
+                    const response = await authFetch('/assessment', {
+                        method: 'POST',
+                        body: JSON.stringify(payload),
+                    });
+
+                    if (!response.ok) throw new Error('Failed to submit assessment');
+                    await response.json();
+                    set({ isSubmitting: false, isSubmitted: true });
+                } catch (error) {
+                    set({ submitError: (error as Error).message, isSubmitting: false });
+                }
+            },
+
             resetAssessment: () => set({
                 currentStep: 0,
                 goal: null,
@@ -90,10 +133,13 @@ export const useAssessmentStore = create<AssessmentState>()(
                 medications: [],
                 symptoms: [],
                 stressLevel: null,
+                isSubmitting: false,
+                submitError: null,
+                isSubmitted: false,
             }),
         }),
         {
-            name: 'assessment-storage', // name of the item in the storage (must be unique)
+            name: 'assessment-storage',
         },
     ),
 );

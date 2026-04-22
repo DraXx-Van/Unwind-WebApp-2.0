@@ -198,7 +198,6 @@ export default function JournalHistoryPage() {
             </div>
 
             <TabBar />
-            <TabBar />
 
             <DeleteConfirmationModal
                 isOpen={deleteModal.isOpen}

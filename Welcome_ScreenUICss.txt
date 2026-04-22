@@ -1,0 +1,4365 @@
+PAGE - 1 
+/* Welcome Screen */
+
+width: 375px;
+height: 812px;
+
+/* Mindful Brown/10 */
+background: #F7F4F2;
+border-radius: 40px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Home Indicator */
+
+position: absolute;
+width: 375px;
+height: 34px;
+left: 0px;
+bottom: 0px;
+
+
+
+/* Home Indicator */
+
+position: absolute;
+width: 134px;
+height: 5px;
+left: calc(50% - 134px/2 + 0.5px);
+bottom: 8px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 100px;
+
+
+/* iPhone X or newer */
+
+position: absolute;
+height: 44px;
+left: 0%;
+right: 0%;
+top: 0px;
+
+
+
+/* Right Side */
+
+position: absolute;
+width: 66.66px;
+height: 11.34px;
+left: 293.67px;
+top: 17.33px;
+
+
+
+/* Battery */
+
+position: absolute;
+left: 89.6%;
+right: 3.91%;
+top: 39.39%;
+bottom: 34.85%;
+
+
+
+/* Vector */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 22px;
+height: 11.33px;
+right: 17px;
+top: 17.33px;
+
+mix-blend-mode: normal;
+opacity: 0.35;
+/* Mindful Brown/80 */
+border: 1px solid #4B3425;
+border-radius: 2.66667px;
+
+
+/* Combined Shape */
+
+position: absolute;
+width: 1.33px;
+height: 4px;
+right: 14.67px;
+top: 21px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+mix-blend-mode: normal;
+opacity: 0.4;
+
+
+/* Vector */
+
+position: absolute;
+width: 18px;
+height: 7.33px;
+right: 19px;
+top: 19.33px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 1.33333px;
+
+
+/* Wifi */
+
+position: absolute;
+left: 84.18%;
+right: 11.74%;
+top: 39.39%;
+bottom: 35.69%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 15.27px;
+height: 4.74px;
+right: 44.03px;
+top: 17.33px;
+
+background: #DADADA;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 9.95px;
+height: 3.63px;
+right: 46.69px;
+top: 21.12px;
+
+background: #DADADA;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 4.63px;
+height: 3.37px;
+right: 49.36px;
+top: 24.92px;
+
+background: #DADADA;
+
+
+/* Mobile Signal */
+
+position: absolute;
+left: 78.31%;
+right: 17.16%;
+top: 40.15%;
+bottom: 35.61%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 4px;
+right: 78.33px;
+top: 24.33px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 6px;
+right: 73.67px;
+top: 22.33px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 8.33px;
+right: 69px;
+top: 20px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 10.67px;
+right: 64.33px;
+top: 17.67px;
+
+background: #DADADA;
+
+
+/* Recording Indicator */
+
+position: absolute;
+visibility: hidden;
+width: 6px;
+height: 6px;
+left: 298px;
+top: 8px;
+
+
+
+/* Indicator */
+
+position: absolute;
+width: 6px;
+height: 6px;
+right: 71px;
+top: 8px;
+
+/* SystemOrange / Light
+
+class var systemOrange: UIColor
+*/
+background: #FF9500;
+
+
+/* Left Side */
+
+position: absolute;
+width: 54px;
+height: 21px;
+left: 21px;
+top: 12px;
+
+
+
+/* Time */
+
+position: absolute;
+width: 54px;
+height: 21px;
+left: 21px;
+top: 12px;
+
+
+
+/* Time */
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+border-radius: 32px;
+
+
+/* Vector */
+
+position: absolute;
+width: 28.43px;
+height: 11.09px;
+left: 12.45px;
+top: 5.17px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Already have an account Sign In */
+
+position: absolute;
+width: 207px;
+height: 22px;
+left: calc(50% - 207px/2);
+top: 748px;
+
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 160%;
+/* or 22px */
+text-align: center;
+letter-spacing: -0.01em;
+
+/* Mindful Brown/100 Alpha 64% */
+color: rgba(31, 22, 15, 0.64);
+
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 32px;
+
+position: absolute;
+width: 343px;
+height: 612px;
+left: 16px;
+top: calc(50% - 612px/2 - 13px);
+
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 16px;
+
+width: 343px;
+height: 192px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 13.33px;
+
+width: 64px;
+height: 64px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 1645.33px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Logomark */
+
+width: 32px;
+height: 32px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Vector */
+
+position: absolute;
+width: 12.44px;
+height: 12.44px;
+left: 9.78px;
+top: 19.56px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 888.889px;
+transform: rotate(90deg);
+
+
+/* Vector */
+
+position: absolute;
+width: 12.44px;
+height: 12.44px;
+left: 0px;
+top: 9.78px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 888.889px;
+transform: rotate(90deg);
+
+
+/* Vector */
+
+position: absolute;
+width: 12.44px;
+height: 12.44px;
+left: 9.78px;
+top: 0px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 888.889px;
+transform: rotate(90deg);
+
+
+/* Vector */
+
+position: absolute;
+width: 12.44px;
+height: 12.44px;
+left: 19.56px;
+top: 9.78px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 888.889px;
+transform: rotate(90deg);
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 16px;
+
+width: 343px;
+height: 112px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Welcome to the ultimate freud UI Kit */
+
+width: 343px;
+height: 38px;
+
+/* Heading sm/ExtraBold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 30px;
+line-height: 38px;
+/* identical to box height, or 127% */
+text-align: center;
+letter-spacing: -0.02em;
+
+/* Mindful Brown/80 */
+color: #4B3425;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Your mindful mental health AI companion for everyone anywhere */
+
+width: 343px;
+height: 58px;
+
+/* Paragraph/lg */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 160%;
+/* or 29px */
+text-align: center;
+letter-spacing: -0.01em;
+
+/* Mindful Brown/100 Alpha 64% */
+color: rgba(31, 22, 15, 0.64);
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Frame */
+
+width: 300px;
+height: 300px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Group */
+
+position: absolute;
+width: 318.65px;
+height: 317.93px;
+left: calc(50% - 318.65px/2 + 0.32px);
+top: 0px;
+
+
+
+/* Group */
+
+position: absolute;
+left: 7.67%;
+right: 3.3%;
+top: 9.33%;
+bottom: 14.62%;
+
+
+
+/* Group */
+
+position: absolute;
+left: 64.46%;
+right: 3.3%;
+top: 38.72%;
+bottom: 31.32%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 64.46%;
+right: 3.3%;
+top: 38.72%;
+bottom: 31.32%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 64.46%;
+right: 3.3%;
+top: 38.72%;
+bottom: 31.32%;
+
+/* Serenity Green/60 */
+background: #7D944D;
+
+
+/* Vector */
+
+position: absolute;
+left: 80.45%;
+right: 4.16%;
+top: 40.11%;
+bottom: 43.39%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 80.45%;
+right: 4.16%;
+top: 40.11%;
+bottom: 43.39%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Group */
+
+position: absolute;
+left: 14.63%;
+right: 18.88%;
+top: 9.33%;
+bottom: 14.62%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 14.63%;
+right: 18.88%;
+top: 9.33%;
+bottom: 14.77%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 14.63%;
+right: 18.88%;
+top: 9.33%;
+bottom: 14.77%;
+
+/* Serenity Green/50 */
+background: #9BB068;
+
+
+/* Vector */
+
+position: absolute;
+left: 33.2%;
+right: 31.24%;
+top: 20%;
+bottom: 51.84%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 33.2%;
+right: 31.24%;
+top: 20%;
+bottom: 51.84%;
+
+/* Serenity Green/60 */
+background: #7D944D;
+
+
+/* Vector */
+
+position: absolute;
+left: 34.94%;
+right: 29.49%;
+top: 18.78%;
+bottom: 53.06%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 34.94%;
+right: 29.49%;
+top: 18.78%;
+bottom: 53.06%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 42.07%;
+right: 37.01%;
+top: 65.31%;
+bottom: 14.62%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 42.07%;
+right: 37.01%;
+top: 65.31%;
+bottom: 14.62%;
+
+/* Serenity Green/60 */
+background: #7D944D;
+
+
+/* Vector */
+
+position: absolute;
+left: 61.66%;
+right: 19.58%;
+top: 47.43%;
+bottom: 48.11%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 61.66%;
+right: 19.58%;
+top: 47.43%;
+bottom: 48.11%;
+
+/* Serenity Green/60 */
+background: #7D944D;
+
+
+/* Group Copy */
+
+position: absolute;
+left: 47.74%;
+right: 27.53%;
+top: 48.4%;
+bottom: 35.26%;
+
+transform: matrix(0.98, 0.17, -0.17, 0.98, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 47.74%;
+right: 29.49%;
+top: 48.88%;
+bottom: 35.27%;
+
+transform: matrix(0.98, 0.17, -0.17, 0.98, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 47.74%;
+right: 29.49%;
+top: 48.88%;
+bottom: 35.27%;
+
+/* Mindful Brown/60 */
+background: #926247;
+transform: matrix(0.98, 0.17, -0.17, 0.98, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 49.73%;
+right: 27.49%;
+top: 48.74%;
+bottom: 35.27%;
+
+transform: matrix(0.98, 0.17, -0.17, 0.98, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 49.73%;
+right: 27.49%;
+top: 48.74%;
+bottom: 35.27%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+transform: matrix(0.98, 0.17, -0.17, 0.98, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 54.29%;
+right: 39.06%;
+top: 55.06%;
+bottom: 38.33%;
+
+transform: matrix(0.98, 0.17, -0.17, 0.98, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 54.29%;
+right: 39.06%;
+top: 55.06%;
+bottom: 38.33%;
+
+/* Mindful Brown/60 */
+background: #926247;
+transform: matrix(0.98, 0.17, -0.17, 0.98, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 62.83%;
+right: 30.9%;
+top: 55.27%;
+bottom: 42.31%;
+
+transform: matrix(0.98, 0.17, -0.17, 0.98, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 62.83%;
+right: 30.9%;
+top: 55.27%;
+bottom: 42.31%;
+
+/* Mindful Brown/60 */
+background: #926247;
+transform: matrix(0.98, 0.17, -0.17, 0.98, 0, 0);
+
+
+/* Vector Copy */
+
+position: absolute;
+left: 63.03%;
+right: 32.8%;
+top: 58.44%;
+bottom: 39.6%;
+
+transform: matrix(0.98, 0.17, -0.17, 0.98, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 63.03%;
+right: 32.8%;
+top: 58.44%;
+bottom: 39.6%;
+
+/* Mindful Brown/60 */
+background: #926247;
+transform: matrix(0.98, 0.17, -0.17, 0.98, 0, 0);
+
+
+/* Group Copy */
+
+position: absolute;
+left: 50.63%;
+right: 35.11%;
+top: 27.35%;
+bottom: 62%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 50.63%;
+right: 46.23%;
+top: 27.35%;
+bottom: 68.98%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 50.63%;
+right: 46.23%;
+top: 27.35%;
+bottom: 68.98%;
+
+/* Mindful Brown/60 */
+background: #926247;
+
+
+/* Vector */
+
+position: absolute;
+left: 61.75%;
+right: 35.11%;
+top: 27.35%;
+bottom: 68.98%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 61.75%;
+right: 35.11%;
+top: 27.35%;
+bottom: 68.98%;
+
+/* Mindful Brown/60 */
+background: #926247;
+
+
+/* Vector Copy */
+
+position: absolute;
+left: 53.24%;
+right: 37.27%;
+top: 34.08%;
+bottom: 62%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 53.24%;
+right: 37.27%;
+top: 34.08%;
+bottom: 62%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 7.67%;
+right: 64.88%;
+top: 39.31%;
+bottom: 26.56%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 7.67%;
+right: 64.88%;
+top: 39.31%;
+bottom: 26.56%;
+
+/* Serenity Green/60 */
+background: #7D944D;
+
+
+/* Vector */
+
+position: absolute;
+left: 21.58%;
+right: 64.98%;
+top: 52.39%;
+bottom: 30.52%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 21.58%;
+right: 64.98%;
+top: 52.39%;
+bottom: 30.52%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 64.27%;
+right: 15.11%;
+top: 85.33%;
+bottom: -5.98%;
+
+/* Empathy Orange/40 */
+background: #FE814B;
+
+
+/* Group */
+
+position: absolute;
+width: 33.74px;
+height: 34.62px;
+left: calc(50% - 33.74px/2 + 73.7px);
+top: calc(50% - 34.62px/2 + 137.31px);
+
+
+
+/* Vector */
+
+position: absolute;
+left: 68.94%;
+right: 19.81%;
+top: 90%;
+bottom: 7.04%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 68.94%;
+right: 19.81%;
+top: 90%;
+bottom: 7.04%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 70.29%;
+right: 21.04%;
+top: 92.96%;
+bottom: -1.54%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 70.29%;
+right: 21.04%;
+top: 92.96%;
+bottom: -1.54%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 71.44%;
+right: 21.84%;
+top: 94.37%;
+bottom: 1.74%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 71.44%;
+right: 21.84%;
+top: 94.37%;
+bottom: 1.74%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 72.77%;
+right: 22.48%;
+top: 95.72%;
+bottom: 3.35%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 72.77%;
+right: 22.48%;
+top: 95.72%;
+bottom: 3.35%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 1.27%;
+right: 78.12%;
+top: 7.28%;
+bottom: 72.08%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 1.27%;
+right: 78.12%;
+top: 7.28%;
+bottom: 72.08%;
+
+/* Empathy Orange/40 */
+background: #FE814B;
+
+
+/* Group */
+
+position: absolute;
+left: 5.67%;
+right: 82.15%;
+top: 11.65%;
+bottom: 76.36%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 10.85%;
+right: 87.34%;
+top: 19.52%;
+bottom: 77.1%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 10.85%;
+right: 87.34%;
+top: 19.52%;
+bottom: 77.1%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 5.67%;
+right: 82.15%;
+top: 11.65%;
+bottom: 80.04%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 5.67%;
+right: 82.15%;
+top: 11.65%;
+bottom: 80.04%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 7.99%;
+right: 84.27%;
+top: 22.31%;
+bottom: 76.36%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 7.99%;
+right: 84.27%;
+top: 22.31%;
+bottom: 76.36%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 7.73%;
+right: 84.27%;
+top: 13.47%;
+bottom: 81.88%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 7.73%;
+right: 84.27%;
+top: 13.47%;
+bottom: 81.88%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group Copy */
+
+position: absolute;
+left: 82.6%;
+right: -3.22%;
+top: 16.61%;
+bottom: 62.75%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 82.6%;
+right: -3.22%;
+top: 16.61%;
+bottom: 62.75%;
+
+/* Empathy Orange/40 */
+background: #FE814B;
+
+
+/* Group */
+
+position: absolute;
+width: 42.86px;
+left: calc(50% - 42.86px/2 + 128.43px);
+top: 19.33%;
+bottom: 65.13%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 88.43%;
+right: 2.64%;
+top: 22.16%;
+bottom: 65.13%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 88.43%;
+right: 2.64%;
+top: 22.16%;
+bottom: 65.13%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 91.06%;
+right: 5.46%;
+top: 24.47%;
+bottom: 70.92%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 91.06%;
+right: 5.46%;
+top: 24.47%;
+bottom: 70.92%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 97.96%;
+right: 0.05%;
+top: 25.38%;
+bottom: 73.45%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 97.96%;
+right: 0.05%;
+top: 25.38%;
+bottom: 73.45%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 96.66%;
+right: 1.75%;
+top: 20.99%;
+bottom: 77.2%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 96.66%;
+right: 1.75%;
+top: 20.99%;
+bottom: 77.2%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 92.49%;
+right: 6.29%;
+top: 19.33%;
+bottom: 78.65%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 92.49%;
+right: 6.29%;
+top: 19.33%;
+bottom: 78.65%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 87.24%;
+right: 11.05%;
+top: 20.87%;
+bottom: 77.42%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 87.24%;
+right: 11.05%;
+top: 20.87%;
+bottom: 77.42%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 85.67%;
+right: 12.33%;
+top: 25.01%;
+bottom: 73.91%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 85.67%;
+right: 12.33%;
+top: 25.01%;
+bottom: 73.91%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 90.51%;
+right: 4.61%;
+top: 30.43%;
+bottom: 68.22%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 90.51%;
+right: 4.61%;
+top: 30.43%;
+bottom: 68.22%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector Copy */
+
+position: absolute;
+left: 91.29%;
+right: 5.43%;
+top: 32.85%;
+bottom: 65.82%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 91.29%;
+right: 5.43%;
+top: 32.85%;
+bottom: 65.82%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector Copy */
+
+position: absolute;
+left: 61.33%;
+right: 21.03%;
+top: 0%;
+bottom: 91.98%;
+
+transform: rotate(-30deg);
+
+
+/* Vector */
+
+position: absolute;
+left: 61.33%;
+right: 21.03%;
+top: 0%;
+bottom: 91.98%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+transform: rotate(-30deg);
+
+
+/* Vector */
+
+position: absolute;
+left: -3%;
+right: 96.58%;
+top: 37.67%;
+bottom: 55.9%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: -3%;
+right: 96.58%;
+top: 37.67%;
+bottom: 55.9%;
+
+/* Gentle Purple/30 */
+background: #A28FFF;
+
+
+/* Vector Copy */
+
+position: absolute;
+left: 2.67%;
+right: 80.42%;
+top: 79.67%;
+bottom: 4.68%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 2.67%;
+right: 80.42%;
+top: 79.67%;
+bottom: 4.68%;
+
+/* Serenity Green/60 */
+background: #7D944D;
+
+
+/* Vector Copy */
+
+position: absolute;
+left: 45%;
+right: 50.35%;
+top: 95.67%;
+bottom: -3.88%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 45%;
+right: 50.35%;
+top: 95.67%;
+bottom: -3.88%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+
+
+/* Button Primary Icon */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 16px 24px;
+
+width: 184px;
+height: 56px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 1000px;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Content */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 16px;
+
+width: 136px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Text */
+
+width: 96px;
+height: 22px;
+
+/* Text lg/ExtraBold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 18px;
+line-height: 22px;
+/* identical to box height */
+letter-spacing: -0.01em;
+
+/* Mindful Brown/White */
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Monotone arrow right sm */
+
+width: 24px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Vector */
+
+position: absolute;
+left: 8.33%;
+right: 12.5%;
+top: 50%;
+bottom: 50%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 37.5%;
+right: 12.5%;
+top: 25%;
+bottom: 25%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+
+
+
+
+PAGE 2
+
+/* Welcome Screen */
+
+width: 375px;
+height: 812px;
+
+/* Empathy Orange/20 */
+background: #FFD2C2;
+border-radius: 40px;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Vector */
+
+position: absolute;
+width: 617px;
+left: calc(50% - 617px/2);
+top: 6.16%;
+bottom: 44.46%;
+
+/* Empathy Orange/10 */
+background: #FFF0EB;
+opacity: 0.48;
+
+
+/* Group */
+
+position: absolute;
+width: 361.52px;
+left: calc(50% - 361.52px/2 + 0.26px);
+top: 14.29%;
+bottom: 35.3%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 1.87%;
+right: 67.68%;
+top: 37.91%;
+bottom: 36.59%;
+
+/* Empathy Orange/40 */
+background: #FE814B;
+
+
+/* Vector */
+
+position: absolute;
+left: 24.74%;
+right: 35.78%;
+top: 38.29%;
+bottom: 35.99%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 54.55%;
+right: 1.73%;
+top: 37.39%;
+bottom: 35.3%;
+
+/* Empathy Orange/40 */
+background: #FE814B;
+
+
+/* Group */
+
+position: absolute;
+left: 31.37%;
+right: 67.28%;
+top: 28.33%;
+bottom: 70.48%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 31.37%;
+right: 67.28%;
+top: 28.33%;
+bottom: 70.48%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 36.75%;
+right: 32.51%;
+top: 39.13%;
+bottom: 54.03%;
+
+/* Empathy Orange/30 */
+background: #FEAF8F;
+
+
+/* Group */
+
+position: absolute;
+left: 64.07%;
+right: 30.15%;
+top: 52.34%;
+bottom: 38.24%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 64.07%;
+right: 30.15%;
+top: 52.34%;
+bottom: 38.24%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 34.13%;
+right: 64.39%;
+top: 41.06%;
+bottom: 53.81%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 34.13%;
+right: 64.39%;
+top: 41.06%;
+bottom: 53.81%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 38.09%;
+right: 39.68%;
+top: 44.67%;
+bottom: 52.36%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 38.09%;
+right: 39.68%;
+top: 44.67%;
+bottom: 52.36%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 6.13%;
+right: 60.89%;
+top: 14.29%;
+bottom: 68.92%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 22.84%;
+right: 38.96%;
+top: 24.18%;
+bottom: 54.87%;
+
+
+
+/* Group */
+
+position: absolute;
+left: 22.84%;
+right: 38.96%;
+top: 24.18%;
+bottom: 54.87%;
+
+
+
+/* Group */
+
+position: absolute;
+left: 22.84%;
+right: 38.96%;
+top: 24.18%;
+bottom: 54.87%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 24.21%;
+right: 38.96%;
+top: 26.54%;
+bottom: 54.87%;
+
+/* Empathy Orange/30 */
+background: #FEAF8F;
+
+
+/* Vector */
+
+position: absolute;
+left: 26.46%;
+right: 64.2%;
+top: 24.18%;
+bottom: 72.14%;
+
+/* Empathy Orange/30 */
+background: #FEAF8F;
+
+
+/* Vector */
+
+position: absolute;
+left: 36.12%;
+right: 55.37%;
+top: 26.12%;
+bottom: 69.96%;
+
+/* Empathy Orange/30 */
+background: #FEAF8F;
+
+
+/* Group */
+
+position: absolute;
+left: 39.04%;
+right: 58.06%;
+top: 26.86%;
+bottom: 71.02%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 39.04%;
+right: 58.06%;
+top: 26.86%;
+bottom: 71.02%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 33.97%;
+right: 61.27%;
+top: 33.2%;
+bottom: 57.94%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 22.84%;
+right: 73.63%;
+top: 28.55%;
+bottom: 67.53%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 22.84%;
+right: 73.63%;
+top: 28.55%;
+bottom: 67.53%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 30.9%;
+right: 67.59%;
+top: 28.19%;
+bottom: 70.35%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 30.9%;
+right: 67.59%;
+top: 28.19%;
+bottom: 70.35%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 31.1%;
+right: 66.7%;
+top: 29.16%;
+bottom: 70.16%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 31.1%;
+right: 66.7%;
+top: 29.16%;
+bottom: 70.16%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 28.91%;
+right: 66.14%;
+top: 26.99%;
+bottom: 71.89%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 28.91%;
+right: 66.14%;
+top: 26.99%;
+bottom: 71.89%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 26.98%;
+right: 65.15%;
+top: 31.19%;
+bottom: 65.17%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 35.24%;
+right: 63.89%;
+top: 30.91%;
+bottom: 67.54%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 35.24%;
+right: 63.89%;
+top: 30.91%;
+bottom: 67.54%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 11.86%;
+right: 85.99%;
+top: 49.59%;
+bottom: 39.34%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 11.86%;
+right: 85.99%;
+top: 49.59%;
+bottom: 39.34%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 42.99%;
+right: 52.95%;
+top: 33.02%;
+bottom: 64.8%;
+
+/* Gentle Purple/30 */
+background: #A28FFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 59.33%;
+right: 36.6%;
+top: 34.04%;
+bottom: 63.78%;
+
+/* Gentle Purple/30 */
+background: #A28FFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 14.22%;
+right: 82.68%;
+top: 33.26%;
+bottom: 64.3%;
+
+/* Gentle Purple/30 */
+background: #A28FFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 33.8%;
+right: 63.25%;
+top: 29.11%;
+bottom: 68.4%;
+
+/* Gentle Purple/30 */
+background: #A28FFF;
+
+
+/* Group */
+
+position: absolute;
+left: 36.68%;
+right: 55.27%;
+top: 16.88%;
+bottom: 73.56%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 36.68%;
+right: 55.27%;
+top: 16.88%;
+bottom: 73.56%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 6.46%;
+right: 83.86%;
+top: 23.28%;
+bottom: 73.42%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 6.46%;
+right: 83.86%;
+top: 23.28%;
+bottom: 73.42%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Frame */
+
+position: absolute;
+width: 960px;
+height: 960px;
+left: calc(50% - 960px/2 - 0.5px);
+top: 472px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+box-shadow: 0px -274px 110px rgba(75, 52, 37, 0.01), 0px -154px 93px rgba(75, 52, 37, 0.03), 0px -69px 69px rgba(75, 52, 37, 0.04), 0px -17px 38px rgba(75, 52, 37, 0.05), 0px 0px 0px rgba(75, 52, 37, 0.05);
+border-radius: 1234px;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 24px;
+
+position: absolute;
+width: 343px;
+height: 234px;
+left: calc(50% - 343px/2 + 0.5px);
+top: 54px;
+
+
+
+/* Tag */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px 12px;
+
+width: 69px;
+height: 30px;
+
+/* Empathy Orange/20 */
+background: #FFD2C2;
+border-radius: 100px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* pricing */
+
+width: 45px;
+height: 14px;
+
+/* Label/sm */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 12px;
+line-height: 14px;
+text-align: center;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+
+/* Empathy Orange/40 */
+color: #FE814B;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Intelligent Mood Tracking Emotion Insights */
+
+width: 343px;
+height: 76px;
+
+/* Heading sm/ExtraBold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 30px;
+line-height: 38px;
+/* or 127% */
+text-align: center;
+letter-spacing: -0.02em;
+
+/* Empathy Orange/50 */
+color: #FE631B;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Button Icon */
+
+width: 80px;
+height: 80px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 1000px;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Monotone arrow right sm */
+
+position: absolute;
+width: 24px;
+height: 24px;
+left: calc(50% - 24px/2);
+top: calc(50% - 24px/2);
+
+
+
+/* Vector */
+
+position: absolute;
+left: 8.33%;
+right: 12.5%;
+top: 50%;
+bottom: 50%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 37.5%;
+right: 12.5%;
+top: 25%;
+bottom: 25%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+/* Home Indicator */
+
+position: absolute;
+width: 375px;
+height: 34px;
+left: 0px;
+bottom: 0px;
+
+
+
+/* Home Indicator */
+
+position: absolute;
+width: 134px;
+height: 5px;
+left: calc(50% - 134px/2 + 0.5px);
+bottom: 8px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 100px;
+
+
+/* iPhone X or newer */
+
+position: absolute;
+height: 44px;
+left: 0%;
+right: 0%;
+top: 0px;
+
+
+
+/* Right Side */
+
+position: absolute;
+width: 66.66px;
+height: 11.34px;
+left: 293.67px;
+top: 17.33px;
+
+
+
+/* Battery */
+
+position: absolute;
+left: 89.6%;
+right: 3.91%;
+top: 39.39%;
+bottom: 34.85%;
+
+
+
+/* Vector */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 22px;
+height: 11.33px;
+right: 17px;
+top: 17.33px;
+
+mix-blend-mode: normal;
+opacity: 0.35;
+/* Mindful Brown/80 */
+border: 1px solid #4B3425;
+border-radius: 2.66667px;
+
+
+/* Combined Shape */
+
+position: absolute;
+width: 1.33px;
+height: 4px;
+right: 14.67px;
+top: 21px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+mix-blend-mode: normal;
+opacity: 0.4;
+
+
+/* Vector */
+
+position: absolute;
+width: 18px;
+height: 7.33px;
+right: 19px;
+top: 19.33px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 1.33333px;
+
+
+/* Wifi */
+
+position: absolute;
+left: 84.18%;
+right: 11.74%;
+top: 39.39%;
+bottom: 35.69%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 15.27px;
+height: 4.74px;
+right: 44.03px;
+top: 17.33px;
+
+background: #DADADA;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 9.95px;
+height: 3.63px;
+right: 46.69px;
+top: 21.12px;
+
+background: #DADADA;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 4.63px;
+height: 3.37px;
+right: 49.36px;
+top: 24.92px;
+
+background: #DADADA;
+
+
+/* Mobile Signal */
+
+position: absolute;
+left: 78.31%;
+right: 17.16%;
+top: 40.15%;
+bottom: 35.61%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 4px;
+right: 78.33px;
+top: 24.33px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 6px;
+right: 73.67px;
+top: 22.33px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 8.33px;
+right: 69px;
+top: 20px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 10.67px;
+right: 64.33px;
+top: 17.67px;
+
+background: #DADADA;
+
+
+/* Recording Indicator */
+
+position: absolute;
+visibility: hidden;
+width: 6px;
+height: 6px;
+left: 298px;
+top: 8px;
+
+
+
+/* Indicator */
+
+position: absolute;
+width: 6px;
+height: 6px;
+right: 71px;
+top: 8px;
+
+/* SystemOrange / Light
+
+class var systemOrange: UIColor
+*/
+background: #FF9500;
+
+
+/* Left Side */
+
+position: absolute;
+width: 54px;
+height: 21px;
+left: 21px;
+top: 12px;
+
+
+
+/* Time */
+
+position: absolute;
+width: 54px;
+height: 21px;
+left: 21px;
+top: 12px;
+
+
+
+/* Time */
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+border-radius: 32px;
+
+
+/* Vector */
+
+position: absolute;
+width: 28.43px;
+height: 11.09px;
+left: 12.45px;
+top: 5.17px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Welcome Screen Indicator Group */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 0px;
+gap: 12px;
+
+position: absolute;
+width: 84px;
+height: 12px;
+left: calc(50% - 84px/2 - 0.5px);
+top: 60px;
+
+
+
+/* Welcome Screen Indicator */
+
+width: 12px;
+height: 12px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Welcome Screen Indicator */
+
+width: 12px;
+height: 12px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Welcome Screen Indicator */
+
+box-sizing: border-box;
+
+width: 12px;
+height: 12px;
+
+/* Mindful Brown/80 */
+border: 1px solid #4B3425;
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Welcome Screen Indicator */
+
+box-sizing: border-box;
+
+width: 12px;
+height: 12px;
+
+/* Mindful Brown/80 */
+border: 1px solid #4B3425;
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 3;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 10px;
+gap: 10px;
+
+position: absolute;
+width: 116px;
+height: 116px;
+left: 245px;
+top: 253px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 1234px;
+
+
+/* Emotion */
+
+width: 96px;
+height: 96px;
+
+/* Mindful Brown/40 */
+background: #BDA193;
+box-shadow: 0px 42.4px 16.8px rgba(255, 206, 92, 0.01), 0px 24px 14.4px rgba(255, 206, 92, 0.05), 0px 10.4px 10.4px rgba(255, 206, 92, 0.09), 0px 2.4px 5.6px rgba(255, 206, 92, 0.1), 0px 0px 0px rgba(255, 206, 92, 0.1);
+border-radius: 4936px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Vector */
+
+position: absolute;
+left: 70.83%;
+right: 20.83%;
+top: 29.17%;
+bottom: 50%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 20.83%;
+right: 70.83%;
+top: 29.17%;
+bottom: 50%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 20.83%;
+right: 20.83%;
+top: 62.5%;
+bottom: 29.17%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 8px;
+gap: 10px;
+
+position: absolute;
+width: 80px;
+height: 80px;
+left: 189px;
+top: 139px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 1234px;
+
+
+/* Emotion */
+
+width: 64px;
+height: 64px;
+
+/* Gentle Purple/30 */
+background: #A28FFF;
+box-shadow: 0px 28.2667px 11.2px rgba(255, 206, 92, 0.01), 0px 16px 9.6px rgba(255, 206, 92, 0.05), 0px 6.93333px 6.93333px rgba(255, 206, 92, 0.09), 0px 1.6px 3.73333px rgba(255, 206, 92, 0.1), 0px 0px 0px rgba(255, 206, 92, 0.1);
+border-radius: 3290.67px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Vector */
+
+position: absolute;
+left: 62.5%;
+right: 16.67%;
+top: 25%;
+bottom: 54.17%;
+
+/* Gentle Purple/80 */
+background: #1C0070;
+
+
+/* Vector */
+
+position: absolute;
+left: 62.5%;
+right: 16.67%;
+top: 25%;
+bottom: 54.17%;
+
+/* Gentle Purple/80 */
+background: #1C0070;
+transform: rotate(90deg);
+
+
+/* Vector */
+
+position: absolute;
+left: 16.67%;
+right: 62.5%;
+top: 25%;
+bottom: 54.17%;
+
+/* Gentle Purple/80 */
+background: #1C0070;
+
+
+/* Vector */
+
+position: absolute;
+left: 16.67%;
+right: 62.5%;
+top: 25%;
+bottom: 54.17%;
+
+/* Gentle Purple/80 */
+background: #1C0070;
+transform: rotate(90deg);
+
+
+/* Vector */
+
+position: absolute;
+left: 25.71%;
+right: 25.71%;
+top: 54.17%;
+bottom: 22.06%;
+
+/* Gentle Purple/80 */
+background: #1C0070;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 6px;
+gap: 10px;
+
+position: absolute;
+width: 60px;
+height: 60px;
+left: 30px;
+top: 337px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 1234px;
+
+
+/* Emotion */
+
+width: 48px;
+height: 48px;
+
+/* Empathy Orange/40 */
+background: #FE814B;
+box-shadow: 0px 21.2px 8.4px rgba(255, 206, 92, 0.01), 0px 12px 7.2px rgba(255, 206, 92, 0.05), 0px 5.2px 5.2px rgba(255, 206, 92, 0.09), 0px 1.2px 2.8px rgba(255, 206, 92, 0.1), 0px 0px 0px rgba(255, 206, 92, 0.1);
+border-radius: 2468px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Vector */
+
+position: absolute;
+left: 25.71%;
+right: 25.71%;
+top: 54.17%;
+bottom: 22.06%;
+
+/* Empathy Orange/80 */
+background: #702901;
+
+
+/* Vector */
+
+position: absolute;
+left: 20.83%;
+right: 70.83%;
+top: 29.17%;
+bottom: 50%;
+
+/* Empathy Orange/80 */
+background: #702901;
+
+
+/* Vector */
+
+position: absolute;
+left: 70.83%;
+right: 20.83%;
+top: 29.17%;
+bottom: 50%;
+
+/* Empathy Orange/80 */
+background: #702901;
+
+
+
+
+PAGE 3
+
+
+/* Welcome Screen */
+
+width: 375px;
+height: 812px;
+
+/* Zen Yellow/20 */
+background: #FFEBC2;
+border-radius: 40px;
+
+/* Inside auto layout */
+flex: none;
+order: 3;
+flex-grow: 0;
+
+
+/* Group */
+
+position: absolute;
+width: 792px;
+height: 528px;
+left: calc(50% - 792px/2);
+top: calc(50% - 528px/2 - 141px);
+
+
+
+/* Vector */
+
+position: absolute;
+left: -55.6%;
+right: -27.71%;
+top: 0.12%;
+bottom: 61.61%;
+
+/* Zen Yellow/10 */
+background: #FFF4E0;
+
+
+/* Vector */
+
+position: absolute;
+left: -55.6%;
+right: -55.6%;
+top: 9.29%;
+bottom: 34.85%;
+
+/* Zen Yellow/10 */
+background: #FFF4E0;
+
+
+/* Vector */
+
+position: absolute;
+left: 32.31%;
+right: -55.6%;
+top: 40.25%;
+bottom: 34.85%;
+
+/* Zen Yellow/10 */
+background: #FFF4E0;
+
+
+/* Group */
+
+position: absolute;
+left: -27.73%;
+right: -53.05%;
+top: 2.1%;
+bottom: 24.38%;
+
+
+
+/* Group */
+
+position: absolute;
+left: 82.47%;
+right: 7.46%;
+top: 28.24%;
+bottom: 48.94%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 82.47%;
+right: 7.46%;
+top: 28.24%;
+bottom: 48.94%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+
+
+/* Group */
+
+position: absolute;
+left: -3.65%;
+right: 78.74%;
+top: 23.07%;
+bottom: 58.94%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: -3.65%;
+right: 78.74%;
+top: 23.07%;
+bottom: 58.94%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+
+
+/* Vector */
+
+position: absolute;
+left: -27.73%;
+right: -53.05%;
+top: 12.56%;
+bottom: 52.87%;
+
+/* Empathy Orange/30 */
+background: #FEAF8F;
+
+
+/* Vector */
+
+position: absolute;
+left: 37.36%;
+right: 40.43%;
+top: 30.74%;
+bottom: 61.94%;
+
+/* Empathy Orange/30 */
+background: #FEAF8F;
+
+
+/* Group */
+
+position: absolute;
+left: 16.29%;
+right: -12.45%;
+top: 30.37%;
+bottom: 24.38%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 16.29%;
+right: -12.45%;
+top: 30.37%;
+bottom: 24.38%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+
+
+/* Vector */
+
+position: absolute;
+left: 49.22%;
+right: -33.09%;
+top: 4.91%;
+bottom: 72.72%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 50.65%;
+right: -9.41%;
+top: 2.1%;
+bottom: 75.53%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 50.65%;
+right: -9.41%;
+top: 2.1%;
+bottom: 75.53%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 62.54%;
+right: -34.38%;
+top: 15.43%;
+bottom: 73.92%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 62.54%;
+right: -34.38%;
+top: 15.43%;
+bottom: 73.92%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: -2.1%;
+right: 64.09%;
+top: 22.98%;
+bottom: 56.75%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+
+
+/* Vector */
+
+position: absolute;
+left: 60.92%;
+right: 13.36%;
+top: 28.37%;
+bottom: 49.34%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+
+
+/* Group */
+
+position: absolute;
+left: 58.17%;
+right: 27.73%;
+top: 33%;
+bottom: 51.25%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 58.17%;
+right: 27.73%;
+top: 33%;
+bottom: 51.25%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 20.99%;
+right: 64.13%;
+top: 30.24%;
+bottom: 58.29%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 20.99%;
+right: 64.13%;
+top: 30.24%;
+bottom: 58.29%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 16.94%;
+right: 80.67%;
+top: 38.82%;
+bottom: 60.67%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 16.94%;
+right: 80.67%;
+top: 38.82%;
+bottom: 60.67%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 18.78%;
+right: 78.64%;
+top: 36.87%;
+bottom: 62.08%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 18.78%;
+right: 78.64%;
+top: 36.87%;
+bottom: 62.08%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 27.27%;
+right: 69.55%;
+top: 31.37%;
+bottom: 67.85%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 27.27%;
+right: 69.55%;
+top: 31.37%;
+bottom: 67.85%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 29.88%;
+right: 68.24%;
+top: 30.67%;
+bottom: 68.34%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 29.88%;
+right: 68.24%;
+top: 30.67%;
+bottom: 68.34%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 31.16%;
+right: 66.67%;
+top: 29.35%;
+bottom: 69.43%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 31.16%;
+right: 66.67%;
+top: 29.35%;
+bottom: 69.43%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 63.34%;
+right: 33.75%;
+top: 34.7%;
+bottom: 64.76%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 63.34%;
+right: 33.75%;
+top: 34.7%;
+bottom: 64.76%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 62.29%;
+right: 34.54%;
+top: 36.38%;
+bottom: 63.22%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 62.29%;
+right: 34.54%;
+top: 36.38%;
+bottom: 63.22%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 60.67%;
+right: 36.96%;
+top: 42.22%;
+bottom: 56.65%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 60.67%;
+right: 36.96%;
+top: 42.22%;
+bottom: 56.65%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 60.69%;
+right: 36.36%;
+top: 41.51%;
+bottom: 58.03%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 60.69%;
+right: 36.36%;
+top: 41.51%;
+bottom: 58.03%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 60.45%;
+right: 36.9%;
+top: 40.38%;
+bottom: 59.09%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 60.45%;
+right: 36.9%;
+top: 40.38%;
+bottom: 59.09%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: -27.59%;
+right: 125.95%;
+top: 21.72%;
+bottom: 76.78%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: -27.59%;
+right: 125.95%;
+top: 21.72%;
+bottom: 76.78%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: -21.66%;
+right: 119.48%;
+top: 13.91%;
+bottom: 84.59%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: -21.66%;
+right: 119.48%;
+top: 13.91%;
+bottom: 84.59%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: -16.41%;
+right: 114.74%;
+top: 12.93%;
+bottom: 85.86%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: -16.41%;
+right: 114.74%;
+top: 12.93%;
+bottom: 85.86%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: -11.87%;
+right: 109.5%;
+top: 13.52%;
+bottom: 85.23%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: -11.87%;
+right: 109.5%;
+top: 13.52%;
+bottom: 85.23%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: -13.19%;
+right: 110.56%;
+top: 21.03%;
+bottom: 78.32%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: -13.19%;
+right: 110.56%;
+top: 21.03%;
+bottom: 78.32%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+
+
+/* Group */
+
+position: absolute;
+left: -7.93%;
+right: 105.32%;
+top: 20.06%;
+bottom: 79.28%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: -7.93%;
+right: 105.32%;
+top: 20.06%;
+bottom: 79.28%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+
+
+/* Group */
+
+position: absolute;
+left: -3.24%;
+right: 101.38%;
+top: 19.58%;
+bottom: 79.9%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: -3.24%;
+right: 101.38%;
+top: 19.58%;
+bottom: 79.9%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+
+
+/* Group */
+
+position: absolute;
+left: 129.41%;
+right: -30.76%;
+top: 38.94%;
+bottom: 59.59%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 129.41%;
+right: -30.76%;
+top: 38.94%;
+bottom: 59.59%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+
+
+/* Group */
+
+position: absolute;
+left: 127.29%;
+right: -28.39%;
+top: 35.92%;
+bottom: 62.98%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 127.29%;
+right: -28.39%;
+top: 35.92%;
+bottom: 62.98%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+
+
+/* Group */
+
+position: absolute;
+left: 124.97%;
+right: -26.53%;
+top: 32.88%;
+bottom: 65.75%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 124.97%;
+right: -26.53%;
+top: 32.88%;
+bottom: 65.75%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+
+
+/* Group */
+
+position: absolute;
+left: 48.64%;
+right: 41.29%;
+top: 6.8%;
+bottom: 76.97%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 48.64%;
+right: 41.29%;
+top: 6.8%;
+bottom: 76.97%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 57.24%;
+right: 35.74%;
+top: 15.44%;
+bottom: 81.08%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 57.24%;
+right: 35.74%;
+top: 15.44%;
+bottom: 81.08%;
+
+/* Mindful Brown/100 */
+background: #1F160F;
+
+
+/* Group */
+
+position: absolute;
+left: 74.48%;
+right: 15.81%;
+top: 9.85%;
+bottom: 85.1%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 74.48%;
+right: 15.81%;
+top: 9.85%;
+bottom: 85.1%;
+
+/* Mindful Brown/100 */
+background: #1F160F;
+
+
+/* Group */
+
+position: absolute;
+left: 88.14%;
+right: 0.07%;
+top: 8.02%;
+bottom: 90.96%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 88.14%;
+right: 0.07%;
+top: 8.02%;
+bottom: 90.96%;
+
+/* Mindful Brown/100 */
+background: #1F160F;
+
+
+/* Group */
+
+position: absolute;
+left: 112.96%;
+right: -21.1%;
+top: 6.45%;
+bottom: 92.24%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 112.96%;
+right: -21.1%;
+top: 6.45%;
+bottom: 92.24%;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+
+
+/* Group */
+
+position: absolute;
+left: 40.68%;
+right: 41.67%;
+top: 22.79%;
+bottom: 64.37%;
+
+
+
+/* Group */
+
+position: absolute;
+left: 40.68%;
+right: 41.67%;
+top: 22.79%;
+bottom: 64.37%;
+
+
+
+/* Group */
+
+position: absolute;
+left: 40.68%;
+right: 41.67%;
+top: 22.79%;
+bottom: 64.37%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 40.68%;
+right: 44.78%;
+top: 22.79%;
+bottom: 64.37%;
+
+/* Empathy Orange/30 */
+background: #FEAF8F;
+
+
+/* Vector */
+
+position: absolute;
+left: 53.39%;
+right: 41.67%;
+top: 25.51%;
+bottom: 72.2%;
+
+/* Empathy Orange/30 */
+background: #FEAF8F;
+
+
+/* Group */
+
+position: absolute;
+left: 54.43%;
+right: 42.33%;
+top: 26.38%;
+bottom: 73.14%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 54.43%;
+right: 42.33%;
+top: 26.38%;
+bottom: 73.14%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 41.78%;
+right: 49.96%;
+top: 28.06%;
+bottom: 68.43%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 43.27%;
+right: 49.26%;
+top: 25.81%;
+bottom: 72.85%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Group */
+
+position: absolute;
+left: 44.98%;
+right: 50.06%;
+top: 23.67%;
+bottom: 74.77%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 44.98%;
+right: 50.06%;
+top: 23.67%;
+bottom: 74.77%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Group */
+
+position: absolute;
+left: 50.17%;
+right: 46.68%;
+top: 24.85%;
+bottom: 74.38%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 50.17%;
+right: 46.68%;
+top: 24.85%;
+bottom: 74.38%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Frame */
+
+position: absolute;
+width: 960px;
+height: 960px;
+left: calc(50% - 960px/2 - 0.5px);
+top: 472px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+box-shadow: 0px -274px 110px rgba(75, 52, 37, 0.01), 0px -154px 93px rgba(75, 52, 37, 0.03), 0px -69px 69px rgba(75, 52, 37, 0.04), 0px -17px 38px rgba(75, 52, 37, 0.05), 0px 0px 0px rgba(75, 52, 37, 0.05);
+border-radius: 1234px;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 24px;
+
+position: absolute;
+width: 343px;
+height: 234px;
+left: calc(50% - 343px/2 + 0.5px);
+top: 54px;
+
+
+
+/* Tag */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px 12px;
+
+width: 68px;
+height: 30px;
+
+/* Zen Yellow/20 */
+background: #FFEBC2;
+border-radius: 100px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* pricing */
+
+width: 44px;
+height: 14px;
+
+/* Label/sm */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 12px;
+line-height: 14px;
+text-align: center;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+
+/* Zen Yellow/60 */
+color: #E0A500;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Mindful Resources That Makes You Happy */
+
+width: 343px;
+height: 76px;
+
+/* Heading sm/ExtraBold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 30px;
+line-height: 38px;
+/* or 127% */
+text-align: center;
+letter-spacing: -0.02em;
+
+/* Mindful Brown/80 */
+color: #4B3425;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Button Icon */
+
+width: 80px;
+height: 80px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 1000px;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Monotone arrow right sm */
+
+position: absolute;
+width: 24px;
+height: 24px;
+left: calc(50% - 24px/2);
+top: calc(50% - 24px/2);
+
+
+
+/* Vector */
+
+position: absolute;
+left: 8.33%;
+right: 12.5%;
+top: 50%;
+bottom: 50%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 37.5%;
+right: 12.5%;
+top: 25%;
+bottom: 25%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+/* Home Indicator */
+
+position: absolute;
+width: 375px;
+height: 34px;
+left: 0px;
+bottom: 0px;
+
+
+
+/* Home Indicator */
+
+position: absolute;
+width: 134px;
+height: 5px;
+left: calc(50% - 134px/2 + 0.5px);
+bottom: 8px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 100px;
+
+
+/* iPhone X or newer */
+
+position: absolute;
+height: 44px;
+left: 0%;
+right: 0%;
+top: 0px;
+
+
+
+/* Right Side */
+
+position: absolute;
+width: 66.66px;
+height: 11.34px;
+left: 293.67px;
+top: 17.33px;
+
+
+
+/* Battery */
+
+position: absolute;
+left: 89.6%;
+right: 3.91%;
+top: 39.39%;
+bottom: 34.85%;
+
+
+
+/* Vector */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 22px;
+height: 11.33px;
+right: 17px;
+top: 17.33px;
+
+mix-blend-mode: normal;
+opacity: 0.35;
+/* Mindful Brown/80 */
+border: 1px solid #4B3425;
+border-radius: 2.66667px;
+
+
+/* Combined Shape */
+
+position: absolute;
+width: 1.33px;
+height: 4px;
+right: 14.67px;
+top: 21px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+mix-blend-mode: normal;
+opacity: 0.4;
+
+
+/* Vector */
+
+position: absolute;
+width: 18px;
+height: 7.33px;
+right: 19px;
+top: 19.33px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 1.33333px;
+
+
+/* Wifi */
+
+position: absolute;
+left: 84.18%;
+right: 11.74%;
+top: 39.39%;
+bottom: 35.69%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 15.27px;
+height: 4.74px;
+right: 44.03px;
+top: 17.33px;
+
+background: #DADADA;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 9.95px;
+height: 3.63px;
+right: 46.69px;
+top: 21.12px;
+
+background: #DADADA;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 4.63px;
+height: 3.37px;
+right: 49.36px;
+top: 24.92px;
+
+background: #DADADA;
+
+
+/* Mobile Signal */
+
+position: absolute;
+left: 78.31%;
+right: 17.16%;
+top: 40.15%;
+bottom: 35.61%;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 4px;
+right: 78.33px;
+top: 24.33px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 6px;
+right: 73.67px;
+top: 22.33px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 8.33px;
+right: 69px;
+top: 20px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 10.67px;
+right: 64.33px;
+top: 17.67px;
+
+background: #DADADA;
+
+
+/* Recording Indicator */
+
+position: absolute;
+visibility: hidden;
+width: 6px;
+height: 6px;
+left: 298px;
+top: 8px;
+
+
+
+/* Indicator */
+
+position: absolute;
+width: 6px;
+height: 6px;
+right: 71px;
+top: 8px;
+
+/* SystemOrange / Light
+
+class var systemOrange: UIColor
+*/
+background: #FF9500;
+
+
+/* Left Side */
+
+position: absolute;
+width: 54px;
+height: 21px;
+left: 21px;
+top: 12px;
+
+
+
+/* Time */
+
+position: absolute;
+width: 54px;
+height: 21px;
+left: 21px;
+top: 12px;
+
+
+
+/* Time */
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+border-radius: 32px;
+
+
+/* Vector */
+
+position: absolute;
+width: 28.43px;
+height: 11.09px;
+left: 12.45px;
+top: 5.17px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+
+
+/* Welcome Screen Indicator Group */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 0px;
+gap: 12px;
+
+position: absolute;
+width: 84px;
+height: 12px;
+left: calc(50% - 84px/2 - 0.5px);
+top: 60px;
+
+
+
+/* Welcome Screen Indicator */
+
+width: 12px;
+height: 12px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Welcome Screen Indicator */
+
+width: 12px;
+height: 12px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Welcome Screen Indicator */
+
+width: 12px;
+height: 12px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Welcome Screen Indicator */
+
+box-sizing: border-box;
+
+width: 12px;
+height: 12px;
+
+/* Mindful Brown/80 */
+border: 1px solid #4B3425;
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 3;
+flex-grow: 0;

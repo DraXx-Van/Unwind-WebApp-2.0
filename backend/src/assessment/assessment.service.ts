@@ -7,14 +7,25 @@ import { CreateAssessmentDto } from './dto/create-assessment.dto';
 export class AssessmentService {
     constructor(private prisma: PrismaService) { }
 
-    async create(createAssessmentDto: CreateAssessmentDto) {
+    async create(userId: string, createAssessmentDto: CreateAssessmentDto) {
         return this.prisma.assessment.create({
-            data: createAssessmentDto,
+            data: {
+                ...createAssessmentDto,
+                userId,
+            },
         });
     }
 
-    async findAll() {
+    async findLatest(userId: string) {
+        return this.prisma.assessment.findFirst({
+            where: { userId },
+            orderBy: { createdAt: 'desc' },
+        });
+    }
+
+    async findAll(userId: string) {
         return this.prisma.assessment.findMany({
+            where: { userId },
             orderBy: { createdAt: 'desc' },
         });
     }

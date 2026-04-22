@@ -3,7 +3,11 @@
 import { FilePlus } from 'lucide-react';
 import Link from 'next/link';
 
-export function HealthJournalCard() {
+interface HealthJournalCardProps {
+    count: number;
+}
+
+export function HealthJournalCard({ count }: HealthJournalCardProps) {
     return (
         <Link href="/journal" className="relative w-[180px] h-[220px] rounded-[32px] bg-[#A28FFF] shadow-[0px_16px_32px_rgba(162,143,255,0.15)] flex flex-col justify-between overflow-hidden shrink-0 transition-transform active:scale-95">
             {/* Header & Content */}
@@ -15,7 +19,7 @@ export function HealthJournalCard() {
                     <span className="text-white font-bold text-base leading-tight mt-1 text-right">Health<br />Journal</span>
                 </div>
                 {/* Main Value */}
-                <h3 className="text-white font-extrabold text-3xl tracking-tight mb-2">31<span className="text-white/60 text-xl font-semibold">/365</span></h3>
+                <h3 className="text-white font-extrabold text-3xl tracking-tight mb-2">{count}<span className="text-white/60 text-xl font-semibold">/365</span></h3>
             </div>
 
             {/* Heatmap Grid Visualization - Contained */}

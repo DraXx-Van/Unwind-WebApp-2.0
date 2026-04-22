@@ -13,6 +13,7 @@ import { StepSleep } from '../../components/assessment/StepSleep';
 import { StepMedication } from '../../components/assessment/StepMedication';
 import { StepSymptoms } from '../../components/assessment/StepSymptoms';
 import { StepStress } from '../../components/assessment/StepStress';
+import { StepComplete } from '../../components/assessment/StepComplete';
 
 export default function AssessmentPage() {
     const { currentStep } = useAssessmentStore();
@@ -30,7 +31,8 @@ export default function AssessmentPage() {
             case 8: return <StepMedication />;
             case 9: return <StepSymptoms />;
             case 10: return <StepStress />;
-            default: return <div>Assessment Completed</div>;
+            case 11: return <StepComplete />;
+            default: return <StepComplete />;
         }
     };
 

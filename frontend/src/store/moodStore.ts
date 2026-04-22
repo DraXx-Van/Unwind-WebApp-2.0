@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { authFetch } from '@/lib/api';
 
 interface MoodState {
     todayMood: any | null;
@@ -11,8 +12,6 @@ interface MoodState {
     fetchHistory: () => Promise<void>;
 }
 
-const API_BASE_URL = 'http://localhost:4000'; // Adjust if needed
-
 export const useMoodStore = create<MoodState>((set) => ({
     todayMood: null,
     history: [],
@@ -22,9 +21,8 @@ export const useMoodStore = create<MoodState>((set) => ({
     setTodayMood: async (mood: string) => {
         set({ isLoading: true, error: null });
         try {
-            const response = await fetch(`${API_BASE_URL}/mood`, {
+            const response = await authFetch('/mood', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ mood }),
             });
             if (!response.ok) throw new Error('Failed to save mood');
@@ -38,7 +36,7 @@ export const useMoodStore = create<MoodState>((set) => ({
     fetchTodayMood: async () => {
         set({ isLoading: true, error: null });
         try {
-            const response = await fetch(`${API_BASE_URL}/mood/today`);
+            const response = await authFetch('/mood/today');
             if (response.ok) {
                 const data = await response.json();
                 set({ todayMood: data, isLoading: false });
@@ -53,7 +51,7 @@ export const useMoodStore = create<MoodState>((set) => ({
     fetchHistory: async () => {
         set({ isLoading: true, error: null });
         try {
-            const response = await fetch(`${API_BASE_URL}/mood/history`);
+            const response = await authFetch('/mood/history');
             if (!response.ok) throw new Error('Failed to fetch history');
             const data = await response.json();
             set({ history: data, isLoading: false });

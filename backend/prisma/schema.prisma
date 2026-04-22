@@ -8,10 +8,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+
+  assessments Assessment[]
+  journals    Journal[]
+  dailyMoods  DailyMood[]
+}
+
 model Assessment {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   goal String?
   gender String?
   age Int?
@@ -32,13 +47,19 @@ model Journal {
   content   String
   emotion   String   
   createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model DailyMood {
   id        String   @id @default(uuid())
-  userId    String   // In a real app this would be a relation, but keeping simple for now
-  date      DateTime @unique // Ensures one mood per day
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      DateTime
   mood      String   // OVERJOYED, HAPPY, NEUTRAL, LOW, OVERWHELMED
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([userId, date])
 }

@@ -2,7 +2,18 @@
 
 import { Heart } from 'lucide-react';
 
-export function FreudScoreCard() {
+interface FreudScoreCardProps {
+    score: number | null;
+    label: string | null;
+}
+
+export function FreudScoreCard({ score, label }: FreudScoreCardProps) {
+    const displayScore = score ?? '--';
+    const displayLabel = label ?? 'N/A';
+
+    // Calculate stroke offset based on score (283 = full circumference)
+    const strokeOffset = score ? 283 - (score / 100) * 183 : 183;
+
     return (
         <div className="relative w-[180px] h-[220px] rounded-[32px] bg-[#9BB068] shadow-[0px_16px_32px_rgba(155,176,104,0.15)] p-5 flex flex-col justify-between overflow-hidden shrink-0">
             {/* Header */}
@@ -30,7 +41,7 @@ export function FreudScoreCard() {
                         strokeDashoffset="-35" // Rotate gap to bottom
                         className="opacity-60"
                     />
-                    {/* Progress (80%) */}
+                    {/* Progress */}
                     <circle
                         cx="60"
                         cy="60"
@@ -39,16 +50,16 @@ export function FreudScoreCard() {
                         strokeWidth="10"
                         fill="transparent"
                         strokeDasharray="283" // 2 * PI * 45
-                        strokeDashoffset="100" // 80% filled roughly
+                        strokeDashoffset={strokeOffset}
                         strokeLinecap="round"
-                        className="drop-shadow-sm"
+                        className="drop-shadow-sm transition-all duration-700"
                     />
                 </svg>
 
                 {/* Centered Score */}
                 <div className="absolute flex flex-col items-center justify-center text-center">
-                    <span className="text-[#F2F5EB] font-extrabold text-3xl leading-none">80</span>
-                    <span className="text-[#E5EAD7] font-semibold text-xs mt-1">Healthy</span>
+                    <span className="text-[#F2F5EB] font-extrabold text-3xl leading-none">{displayScore}</span>
+                    <span className="text-[#E5EAD7] font-semibold text-xs mt-1">{displayLabel}</span>
                 </div>
             </div>
         </div>

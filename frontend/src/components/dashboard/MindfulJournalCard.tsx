@@ -3,7 +3,13 @@
 import { FileText } from 'lucide-react';
 import Link from 'next/link';
 
-export function MindfulJournalCard() {
+interface MindfulJournalCardProps {
+    count: number;
+}
+
+export function MindfulJournalCard({ count }: MindfulJournalCardProps) {
+    const streakText = count > 0 ? `${count} Entries` : 'Start journaling';
+
     return (
         <Link href="/journal" className="w-full bg-[#fff0eb] rounded-[32px] p-4 pr-6 flex items-center justify-between shadow-sm h-24 mb-4 transition-transform active:scale-95">
             <div className="flex items-center gap-4">
@@ -15,7 +21,7 @@ export function MindfulJournalCard() {
                 {/* Text */}
                 <div className="flex flex-col">
                     <span className="text-[#3a2e26] font-bold text-lg leading-tight">Mindful Journal</span>
-                    <span className="text-[#3a2e26]/60 font-medium text-sm">64 Day Streak</span>
+                    <span className="text-[#3a2e26]/60 font-medium text-sm">{streakText}</span>
                 </div>
             </div>
 
