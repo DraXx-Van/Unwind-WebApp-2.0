@@ -18,6 +18,8 @@ interface JournalState {
     deleteJournal: (id: string) => Promise<void>;
 }
 
+const JOURNAL_API = `${process.env.NEXT_PUBLIC_API_URL}/journal`;
+
 export const useJournalStore = create<JournalState>((set, get) => ({
     journals: [],
     isLoading: false,
@@ -26,7 +28,7 @@ export const useJournalStore = create<JournalState>((set, get) => ({
     fetchJournals: async () => {
         set({ isLoading: true, error: null });
         try {
-            const response = await fetch('http://localhost:4000/journal');
+            const response = await fetch(JOURNAL_API);
             if (!response.ok) throw new Error('Failed to fetch journals');
             const data = await response.json();
             set({ journals: data });
@@ -40,7 +42,7 @@ export const useJournalStore = create<JournalState>((set, get) => ({
     addJournal: async (entry) => {
         set({ isLoading: true, error: null });
         try {
-            const response = await fetch('http://localhost:4000/journal', {
+            const response = await fetch(JOURNAL_API, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(entry),
@@ -58,7 +60,7 @@ export const useJournalStore = create<JournalState>((set, get) => ({
     deleteJournal: async (id: string) => {
         set({ isLoading: true, error: null });
         try {
-            const response = await fetch(`http://localhost:4000/journal/${id}`, {
+            const response = await fetch(`${JOURNAL_API}/${id}`, {
                 method: 'DELETE',
             });
             if (!response.ok) throw new Error('Failed to delete journal');

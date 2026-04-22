@@ -20,7 +20,7 @@ interface StressState {
   addEntry: (userId: string, data: { value: number; stressor: string; impact: string }) => Promise<void>;
 }
 
-const API_BASE_URL = 'http://localhost:4000/stress';
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/stress`;
 
 export const useStressStore = create<StressState>((set) => ({
   latestEntry: null,

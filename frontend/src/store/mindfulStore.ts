@@ -23,7 +23,7 @@ interface MindfulState {
   updateEntry: (id: string, additionalDuration: number) => Promise<void>;
 }
 
-const API_BASE_URL = 'http://localhost:4000/mindful';
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/mindful`;
 
 export const useMindfulStore = create<MindfulState>((set) => ({
   latestEntry: null,

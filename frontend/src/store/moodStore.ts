@@ -11,7 +11,7 @@ interface MoodState {
     fetchHistory: () => Promise<void>;
 }
 
-const API_BASE_URL = 'http://localhost:4000'; // Adjust if needed
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL!;
 
 export const useMoodStore = create<MoodState>((set) => ({
     todayMood: null,

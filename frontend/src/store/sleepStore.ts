@@ -49,13 +49,18 @@ interface SleepState {
   endSleepFromSchedule: (userId?: string) => Promise<void>;
 }
 
-const API_BASE_URL = 'http://localhost:4000/sleep';
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/sleep`;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-/** Returns the ISO date string for today (YYYY-MM-DD) */
+/** Returns the ISO date string for TODAY in the device's LOCAL timezone (YYYY-MM-DD) */
 function todayDateStr() {
-  return new Date().toISOString().slice(0, 10);
+  const d = new Date();
+  // Use local year/month/day — NOT toISOString() which gives UTC date
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 
 /** Format a Date as "HH:MM" */
@@ -71,10 +76,16 @@ function parseHHMM(hhmm: string): Date {
   return d;
 }
 
-/** Returns true if today's sleep is already in latestEntry (same calendar day) */
+/** Returns true if today's sleep is already in latestEntry (same calendar day in LOCAL timezone) */
 export function sleptToday(latestEntry: SleepEntry | null): boolean {
   if (!latestEntry) return false;
-  return latestEntry.createdAt.slice(0, 10) === todayDateStr();
+  // Convert the UTC createdAt to local date string
+  const entryDate = new Date(latestEntry.createdAt);
+  const y = entryDate.getFullYear();
+  const m = String(entryDate.getMonth() + 1).padStart(2, '0');
+  const day = String(entryDate.getDate()).padStart(2, '0');
+  const entryLocalDate = `${y}-${m}-${day}`;
+  return entryLocalDate === todayDateStr();
 }
 
 // ─── Store ────────────────────────────────────────────────────────────────────
@@ -183,9 +194,13 @@ export const useSleepStore = create<SleepState>((set, get) => ({
   initTimer: () => {
     if (typeof window === 'undefined') return;
     const stored = localStorage.getItem('sleep_start_time');
-    // Only restore if it's from today (don't carry over yesterday's stale timer)
+    // Only restore if it's from today — compare in LOCAL timezone (same as todayDateStr)
     if (stored) {
-      const startDate = stored.slice(0, 10);
+      const storedDate = new Date(stored);
+      const y = storedDate.getFullYear();
+      const m = String(storedDate.getMonth() + 1).padStart(2, '0');
+      const day = String(storedDate.getDate()).padStart(2, '0');
+      const startDate = `${y}-${m}-${day}`;
       if (startDate === todayDateStr()) {
         set({ activeSleepStart: stored });
       } else {
