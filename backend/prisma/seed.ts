@@ -50,8 +50,8 @@ async function main() {
 
   for (const m of moodData) {
     await prisma.dailyMood.upsert({
-      where: { date: pastMidnight(m.daysBack) },
-      update: { mood: m.mood, userId },
+      where: { userId_date: { userId, date: pastMidnight(m.daysBack) } },
+      update: { mood: m.mood },
       create: { userId, date: pastMidnight(m.daysBack), mood: m.mood },
     });
   }
@@ -199,6 +199,7 @@ async function main() {
   for (const j of journalData) {
     await prisma.journal.create({
       data: {
+        userId,
         title: j.title,
         content: j.content,
         emotion: j.emotion,
