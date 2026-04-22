@@ -63,3 +63,50 @@ model DailyMood {
 
   @@unique([userId, date])
 }
+
+model StressEntry {
+  id        String   @id @default(uuid())
+  userId    String
+  value     Int
+  stressor  String
+  impact    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SleepSchedule {
+  id           String   @id @default(uuid())
+  userId       String
+  isEveryday   Boolean  @default(true)
+  isToday      Boolean  @default(false)
+  sleepTime    String   // e.g. "23:00"
+  wakeTime     String   // e.g. "07:00"
+  snoozeLength Int      
+  autoStats    Boolean  @default(true)
+  autoAlarm    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model SleepEntry {
+  id        String   @id @default(uuid())
+  userId    String
+  duration  Float
+  sleepTime String
+  wakeTime  String
+  quality   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MindfulSession {
+  id              String   @id @default(uuid())
+  userId          String
+  activity        String
+  duration        Float
+  plannedDuration Float    @default(0)
+  category        String
+  timeOfDay       String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

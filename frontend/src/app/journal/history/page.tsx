@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { ChevronLeft, MoreVertical, Filter, Clock } from 'lucide-react';
@@ -9,9 +9,8 @@ import { useJournalStore } from '@/store/journalStore';
 import { format, isToday, isYesterday, startOfWeek, addDays, isSameDay } from 'date-fns';
 import { TabBar } from '@/components/dashboard/TabBar';
 import { DeleteConfirmationModal } from '@/components/ui/DeleteConfirmationModal';
-import { useState } from 'react';
 
-export default function JournalHistoryPage() {
+function JournalHistoryContent() {
     const { journals, fetchJournals, isLoading } = useJournalStore();
     const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; journalId: string | null }>({ isOpen: false, journalId: null });
 
@@ -209,6 +208,14 @@ export default function JournalHistoryPage() {
                 }}
             />
         </div>
+    );
+}
+
+export default function JournalHistoryPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-[#FDFBF9] flex items-center justify-center text-[#926247] font-semibold">Loading History...</div>}>
+            <JournalHistoryContent />
+        </Suspense>
     );
 }
 
