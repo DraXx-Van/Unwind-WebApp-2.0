@@ -14,8 +14,11 @@ function minsUntil(hhmm: string): number {
   return (target.getTime() - now.getTime()) / 60000;
 }
 
+import { useAuthStore } from '@/store/authStore';
+
 export default function SleepPopupOverlay() {
   const router = useRouter();
+  const { user } = useAuthStore();
   const {
     schedule,
     latestEntry,
@@ -23,10 +26,20 @@ export default function SleepPopupOverlay() {
     initTimer,
     startSleep,
     endSleep,
+    clearSleep,
   } = useSleepStore();
 
   const [now, setNow] = useState(new Date());
   const [isEnding, setIsEnding] = useState(false);
+  const [tooShort, setTooShort] = useState(false);
+
+  // How many minutes the current sleep session has lasted
+  const elapsedMins = activeSleepStart
+    ? Math.floor((Date.now() - new Date(activeSleepStart).getTime()) / 60000)
+    : 0;
+
+  // Minimum real sleep before we save — anything shorter is likely accidental
+  const MIN_SLEEP_MINS = 30;
 
   useEffect(() => {
     initTimer();
@@ -41,12 +54,19 @@ export default function SleepPopupOverlay() {
   // Already slept today — nothing to do
   const doneToday = sleptToday(latestEntry);
 
-  // Time-lock: only allow start within ±10 min of scheduled sleep time
+  // Allow starting sleep any time within the sleep window (sleep → wake, crossing midnight)
+  // OR if no schedule: always allow (manual log)
   const canStart = (() => {
-    if (!schedule?.sleepTime) return false;
-    const mins = minsUntil(schedule.sleepTime);
-    // Allow from -10 min (past) to +10 min (future)
-    return mins >= -10 && mins <= 10;
+    if (!schedule?.sleepTime || !schedule?.wakeTime) return true; // no schedule = always allow
+    const nowMins = new Date().getHours() * 60 + new Date().getMinutes();
+    const [sh, sm] = schedule.sleepTime.split(':').map(Number);
+    const [wh, wm] = schedule.wakeTime.split(':').map(Number);
+    const sleepMins = sh * 60 + sm;
+    const wakeMins  = wh * 60 + wm;
+    if (sleepMins > wakeMins) {
+      return nowMins >= sleepMins || nowMins < wakeMins;
+    }
+    return nowMins >= sleepMins && nowMins < wakeMins;
   })();
 
   const minsLeft = schedule?.sleepTime ? Math.round(minsUntil(schedule.sleepTime)) : null;
@@ -69,25 +89,43 @@ export default function SleepPopupOverlay() {
 
   const elapsedLabel = (() => {
     if (!activeSleepStart) return null;
-    const diffMs = now.getTime() - new Date(activeSleepStart).getTime();
-    const totalMins = Math.floor(diffMs / 60000);
-    const hrs = Math.floor(totalMins / 60);
-    const mins = totalMins % 60;
+    const hrs = Math.floor(elapsedMins / 60);
+    const mins = elapsedMins % 60;
     if (hrs > 0) return `${hrs}h ${mins}m sleeping`;
-    return `${mins}m sleeping`;
+    return `${elapsedMins}m sleeping`;
   })();
 
   const handleStartSleep = () => {
     if (!canStart || doneToday) return;
     startSleep();
-    // Navigate back to dashboard — user will see "Sleeping now" banner
     router.push('/sleep');
   };
 
   const handleWakeUp = async () => {
+    if (isEnding || !activeSleepStart) return;
+
+    // Block saving if sleep is shorter than MIN_SLEEP_MINS — show discard UI instead
+    if (elapsedMins < MIN_SLEEP_MINS) {
+      setTooShort(true);
+      return;
+    }
+
+    setIsEnding(true);
+    await endSleep(user?.id || 'user-1');
+    router.push('/sleep/stats');
+  };
+
+  const handleDiscard = () => {
+    clearSleep();
+    setTooShort(false);
+    router.push('/sleep');
+  };
+
+  const handleSaveAnyway = async () => {
     if (isEnding) return;
     setIsEnding(true);
-    await endSleep('user-1');
+    setTooShort(false);
+    await endSleep(user?.id || 'user-1');
     router.push('/sleep/stats');
   };
 
@@ -96,6 +134,44 @@ export default function SleepPopupOverlay() {
 
       {/* Background Glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[80vw] h-[80vw] bg-[#FE814B]/10 rounded-full blur-[80px] pointer-events-none" />
+
+      {/* ── Too-Short Sleep Modal ─────────────────────────────────────────── */}
+      {tooShort && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 px-6">
+          <div className="bg-[#1E1510] border border-white/10 rounded-3xl p-7 w-full max-w-sm flex flex-col items-center gap-5 shadow-2xl">
+            <div className="w-16 h-16 rounded-full bg-[#FE814B]/15 flex items-center justify-center">
+              <span className="text-3xl">⏱️</span>
+            </div>
+            <div className="text-center">
+              <h2 className="text-white font-bold text-xl mb-2">Too soon!</h2>
+              <p className="text-white/60 text-sm leading-relaxed">
+                You've only been sleeping for <span className="text-[#FE814B] font-bold">{elapsedMins} min</span>.
+                Logging this would give you incorrect sleep data.
+              </p>
+            </div>
+            <div className="w-full flex flex-col gap-3">
+              <button
+                onClick={() => { setTooShort(false); }}
+                className="w-full py-3.5 bg-[#A89CFC] text-white font-bold rounded-2xl text-sm active:scale-95 transition-transform"
+              >
+                ↩ Keep sleeping
+              </button>
+              <button
+                onClick={handleDiscard}
+                className="w-full py-3.5 bg-white/10 text-white/80 font-semibold rounded-2xl text-sm active:scale-95 transition-transform"
+              >
+                Cancel & discard session
+              </button>
+              <button
+                onClick={handleSaveAnyway}
+                className="text-white/30 text-xs font-medium py-1"
+              >
+                Save {elapsedMins}m anyway (not recommended)
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Back Button */}
       <div className="absolute top-14 left-6 z-30">

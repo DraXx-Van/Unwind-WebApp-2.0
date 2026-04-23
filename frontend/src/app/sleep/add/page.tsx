@@ -3,9 +3,11 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSleepStore } from '@/store/sleepStore';
+import { useAuthStore } from '@/store/authStore';
 
 export default function AddSleep() {
   const router = useRouter();
+  const { user } = useAuthStore();
   const { addEntry, isLoading } = useSleepStore();
 
   const [duration, setDuration] = useState(8);
@@ -17,7 +19,7 @@ export default function AddSleep() {
   // Keeping it simple with manual slider + time inputs for now to match the user request.
 
   const handleSave = async () => {
-    await addEntry('user-1', {
+    await addEntry(user?.id || 'user-1', {
       duration,
       sleepTime,
       wakeTime,

@@ -9,12 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "autoprefixer": "^10.5.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.34.0",
     "lucide-react": "^0.563.0",
     "matter-js": "^0.20.0",
     "next": "16.1.6",
+    "postcss": "^8.5.10",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.1",
@@ -23,14 +25,14 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/postcss": "^4.2.4",
     "@types/matter-js": "^0.20.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4",
+    "tailwindcss": "^4.2.4",
     "typescript": "^5"
   }
 }

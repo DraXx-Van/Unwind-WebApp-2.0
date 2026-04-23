@@ -6,11 +6,11 @@ import { cn } from '../ui/button';
 import Image from 'next/image';
 
 const SLEEP_OPTIONS = [
-    { val: 5, label: 'Excellent', hours: '7-9 HOURS', icon: 'Solid mood overjoyed.svg', color: 'text-serenity-green-50' },
-    { val: 4, label: 'Good', hours: '6-7 HOURS', icon: 'Solid mood happy.svg', color: 'text-yellow-500' },
-    { val: 3, label: 'Fair', hours: '5 HOURS', icon: 'Solid mood neutral.svg', color: 'text-orange-400' },
-    { val: 2, label: 'Poor', hours: '3-4 HOURS', icon: 'Solid mood sad.svg', color: 'text-orange-600' },
-    { val: 1, label: 'Worst', hours: '< 3 HOURS', icon: 'Solid mood depressed.svg', color: 'text-red-600' },
+    { val: 5, label: 'Excellent', hours: '7–9 HRS / NIGHT', icon: 'Solid mood overjoyed.svg', color: 'text-serenity-green-50' },
+    { val: 4, label: 'Good', hours: '6–7 HRS / NIGHT', icon: 'Solid mood happy.svg', color: 'text-yellow-500' },
+    { val: 3, label: 'Fair', hours: 'ABOUT 5 HRS', icon: 'Solid mood neutral.svg', color: 'text-orange-400' },
+    { val: 2, label: 'Poor', hours: '3–4 HRS / NIGHT', icon: 'Solid mood sad.svg', color: 'text-orange-600' },
+    { val: 1, label: 'Worst', hours: 'UNDER 3 HRS', icon: 'Solid mood depressed.svg', color: 'text-red-600' },
 ];
 
 export function StepSleep() {
@@ -46,9 +46,12 @@ export function StepSleep() {
 
     return (
         <div className="flex flex-col h-full relative">
-            <h2 className="text-3xl font-extrabold text-mindful-brown-80 mb-8 text-center leading-tight">
-                How would you rate your sleep quality?
+            <h2 className="text-3xl font-extrabold text-mindful-brown-80 mb-1 text-center leading-tight">
+                How much do you usually sleep?
             </h2>
+            <p className="text-mindful-brown-60 text-sm font-medium text-center mb-6">
+                Your average nightly sleep — this is your sleep baseline.
+            </p>
 
             <div className="flex-1 relative flex items-center justify-between px-2">
                 {/* Labels Left */}

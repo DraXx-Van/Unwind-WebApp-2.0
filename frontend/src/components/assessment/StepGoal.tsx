@@ -7,11 +7,12 @@ import { Check, Heart, Smile } from 'lucide-react'; // Icons as placeholders
 import { cn } from '../ui/button';
 
 const GOALS = [
-    { id: 'stress', label: 'I wanna reduce stress', icon: Heart },
-    { id: 'ai-therapy', label: 'I wanna try AI Therapy', icon: Smile },
-    { id: 'trauma', label: 'I want to cope with trauma', icon: Heart }, // Replace with Flag if available
-    { id: 'better-person', label: 'I want to be a better person', icon: Smile },
-    { id: 'try-app', label: 'Just trying out the app, mate!', icon: Heart }, // Replace with Can
+    { id: 'stress', label: 'Reduce stress & anxiety', icon: Heart },
+    { id: 'ai-therapy', label: 'Try AI-guided therapy', icon: Smile },
+    { id: 'trauma', label: 'Cope with trauma or grief', icon: Heart },
+    { id: 'better-person', label: 'Improve my overall wellbeing', icon: Smile },
+    { id: 'sleep', label: 'Sleep better at night', icon: Heart },
+    { id: 'try-app', label: 'Just exploring the app', icon: Smile },
 ];
 
 export function StepGoal() {
@@ -26,7 +27,7 @@ export function StepGoal() {
     return (
         <div className="flex flex-col h-full">
             <h2 className="text-3xl font-extrabold text-mindful-brown-80 mb-8 text-center leading-tight">
-                What's your health goal for today?
+                What brings you to Unwind?
             </h2>
 
             <div className="flex-1 space-y-4 overflow-y-auto pb-4">

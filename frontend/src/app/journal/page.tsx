@@ -1,21 +1,35 @@
 
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Plus } from 'lucide-react';
 import { useJournalStore } from '@/store/journalStore';
 import { JournalHeatmap } from '@/components/journal/JournalHeatmap';
 import { TabBar } from '@/components/dashboard/TabBar';
 
+import { isToday } from '@/lib/dateUtils';
+
 export default function JournalPage() {
     const { journals, fetchJournals } = useJournalStore();
+    const [timeframe, setTimeframe] = useState<'Daily' | 'Weekly' | 'Yearly'>('Yearly');
 
     useEffect(() => {
         fetchJournals();
     }, [fetchJournals]);
 
-    const journalsThisYear = journals.length; // Simplified for now
+    const currentYear = new Date().getFullYear();
+    const journalsThisYear = journals.filter(j => new Date(j.createdAt).getFullYear() === currentYear).length;
+    
+    const filteredJournals = journals.filter(j => {
+        if (timeframe === 'Daily') return isToday(j.createdAt);
+        if (timeframe === 'Weekly') {
+            const weekAgo = new Date();
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            return new Date(j.createdAt) >= weekAgo;
+        }
+        return new Date(j.createdAt).getFullYear() === currentYear;
+    });
 
     return (
         <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
@@ -43,8 +57,22 @@ export default function JournalPage() {
 
                     {/* Stats */}
                     <div className="mt-8 flex flex-col items-center">
-                        <h1 className="text-6xl font-bold mb-2">{journalsThisYear}<span className="text-4xl opacity-70">/365</span></h1>
-                        <p className="text-white/80 font-medium text-lg">Journals this year. Keep it Up!</p>
+                        <div className="flex gap-2 mb-4 bg-white/10 p-1 rounded-full backdrop-blur-md">
+                            {(['Daily', 'Weekly', 'Yearly'] as const).map(t => (
+                                <button
+                                    key={t}
+                                    onClick={() => setTimeframe(t)}
+                                    className={`px-4 py-1 rounded-full text-xs font-bold transition-all ${timeframe === t ? 'bg-white text-[#926247]' : 'text-white/60 hover:text-white'}`}
+                                >
+                                    {t}
+                                </button>
+                            ))}
+                        </div>
+                        <h1 className="text-6xl font-bold mb-2">
+                            {timeframe === 'Yearly' ? journalsThisYear : filteredJournals.length}
+                            <span className="text-4xl opacity-70">/{timeframe === 'Yearly' ? '365' : timeframe === 'Weekly' ? '7' : '1'}</span>
+                        </h1>
+                        <p className="text-white/80 font-medium text-lg">Journals {timeframe.toLowerCase()}. Keep it Up!</p>
                     </div>
                 </div>
             </div>
@@ -58,17 +86,41 @@ export default function JournalPage() {
                     </svg>
                 </div>
 
-                {/* Floating Add Button sitting on the peak of the curve */}
-                <div className="absolute -top-[72px] left-1/2 -translate-x-1/2">
-                    <Link href="/journal/new" className="w-16 h-16 bg-[#4F3422] rounded-full flex items-center justify-center shadow-lg border-4 border-[#FAFAFA] hover:scale-105 transition-transform">
-                        <Plus className="w-8 h-8 text-white" />
-                    </Link>
+                {/* Add Button (Floating Center) - Absolute to move it correctly over the tab bar */}
+                <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
+                    <div className="relative top-[-72px] pointer-events-auto">
+                        <button className="w-16 h-16 bg-[#9BB068] rounded-full flex items-center justify-center shadow-[0px_16px_32px_rgba(155,176,104,0.5)] transition-transform active:scale-95 border-4 border-white">
+                            <Plus className="text-white w-8 h-8" strokeWidth={3} />
+                        </button>
+                    </div>
                 </div>
-
                 <JournalHeatmap journals={journals} />
 
-                <div className="mt-8 flex justify-between px-8 text-[#926247]/60">
-                    {/* Bottom Nav Placeholders */}
+                {/* Recent Entries List */}
+                <div className="mt-10">
+                    <h3 className="text-[#4F3422] font-bold text-lg mb-4">Recent Entries</h3>
+                    <div className="flex flex-col gap-4">
+                        {filteredJournals.length > 0 ? (
+                            filteredJournals.slice(0, 10).map((j, i) => (
+                                <div key={j.id || i} className="bg-white rounded-[24px] p-4 shadow-sm border border-gray-100 flex flex-col gap-2">
+                                    <div className="flex justify-between items-start">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-2xl">{j.emotion === 'happy' ? '🙂' : j.emotion === 'sad' ? '☹️' : j.emotion === 'angry' ? '😡' : j.emotion === 'calm' ? '😌' : '😐'}</span>
+                                            <h4 className="font-bold text-[#4F3422]">{j.title || 'Untitled'}</h4>
+                                        </div>
+                                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{new Date(j.createdAt).toLocaleDateString()}</span>
+                                    </div>
+                                    <p className="text-[#4F3422]/70 text-sm line-clamp-2 leading-relaxed">
+                                        {j.content}
+                                    </p>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="text-center py-10 opacity-40">
+                                <p className="text-sm font-medium">No journals for this timeframe.</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 

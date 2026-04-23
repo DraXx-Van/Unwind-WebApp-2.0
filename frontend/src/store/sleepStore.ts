@@ -44,6 +44,7 @@ interface SleepState {
   initTimer: () => void;
   startSleep: () => void;
   endSleep: (userId?: string) => Promise<void>;
+  clearSleep: () => void;
 
   // Fallback: log sleep based purely on schedule (for users who didn't open app)
   endSleepFromSchedule: (userId?: string) => Promise<void>;
@@ -76,9 +77,12 @@ function parseHHMM(hhmm: string): Date {
   return d;
 }
 
-/** Returns true if today's sleep is already in latestEntry (same calendar day in LOCAL timezone) */
+/** Returns true if today's sleep is already logged AND was at least 30 minutes long.
+ *  Entries under 30 min are treated as accidental/junk and ignored. */
 export function sleptToday(latestEntry: SleepEntry | null): boolean {
   if (!latestEntry) return false;
+  // Ignore accidental very-short sessions (< 0.5h = 30 mins)
+  if (latestEntry.duration < 0.5) return false;
   // Convert the UTC createdAt to local date string
   const entryDate = new Date(latestEntry.createdAt);
   const y = entryDate.getFullYear();
@@ -238,11 +242,16 @@ export const useSleepStore = create<SleepState>((set, get) => ({
     );
 
     await addEntry(userId, {
-      duration: Math.max(0.1, durationHours), // min 0.1h to avoid zero
+      duration: durationHours,
       sleepTime: fmt(sleepStart),
       wakeTime: fmt(wakeNow),
     });
 
+    if (typeof window !== 'undefined') localStorage.removeItem('sleep_start_time');
+    set({ activeSleepStart: null });
+  },
+
+  clearSleep: () => {
     if (typeof window !== 'undefined') localStorage.removeItem('sleep_start_time');
     set({ activeSleepStart: null });
   },

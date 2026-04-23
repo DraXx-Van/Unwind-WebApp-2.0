@@ -27,10 +27,10 @@ export function MoodLevelCard() {
     return (
         <div
             onClick={() => router.push('/mood/check-in')}
-            className="relative w-[180px] h-[220px] rounded-[32px] shadow-lg flex flex-col justify-between overflow-hidden shrink-0 cursor-pointer transition-transform hover:scale-105"
+            className="relative w-[180px] h-[220px] rounded-32px shadow-lg flex flex-col justify-between overflow-hidden shrink-0 cursor-pointer transition-transform hover:scale-105"
             style={{
-                backgroundColor: moodConfig ? moodConfig.color : '#E0E0E0',
-                boxShadow: moodConfig ? `0px 16px 32px ${moodConfig.color}40` : 'none'
+                backgroundColor: '#FFCE5C',
+                boxShadow: `0px 16px 32px #FFCE5C40`
             }}
         >
             {/* Header & Content */}

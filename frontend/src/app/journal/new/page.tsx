@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ChevronLeft, Check, Camera, FileText, X } from 'lucide-react';
@@ -23,6 +23,28 @@ export default function AddJournalPage() {
     const [content, setContent] = useState('');
     const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
 
+    // Draft Recovery
+    useEffect(() => {
+        const savedDraft = localStorage.getItem('journal_draft');
+        if (savedDraft) {
+            try {
+                const { title: dTitle, content: dContent, emotion: dEmotion } = JSON.parse(savedDraft);
+                setTitle(dTitle || '');
+                setContent(dContent || '');
+                setSelectedEmotion(dEmotion || null);
+            } catch (e) {
+                console.error("Failed to parse journal draft", e);
+            }
+        }
+    }, []);
+
+    // Auto-save
+    useEffect(() => {
+        if (content || title || selectedEmotion) {
+            localStorage.setItem('journal_draft', JSON.stringify({ title, content, emotion: selectedEmotion }));
+        }
+    }, [title, content, selectedEmotion]);
+
     const handleSubmit = async () => {
         if (!content || !selectedEmotion) return;
 
@@ -32,6 +54,7 @@ export default function AddJournalPage() {
             emotion: selectedEmotion,
         });
 
+        localStorage.removeItem('journal_draft');
         router.push('/journal');
     };
 
@@ -107,6 +130,7 @@ export default function AddJournalPage() {
                             className="flex-1 w-full resize-none outline-none bg-transparent text-[#4F3422] text-2xl leading-relaxed placeholder:text-[#926247]/40 font-medium"
                             placeholder="I had a bad day today..."
                             value={content}
+                            maxLength={300}
                             onChange={(e) => setContent(e.target.value)}
                         />
 

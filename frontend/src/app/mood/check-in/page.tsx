@@ -51,6 +51,8 @@ export default function MoodCheckInPage() {
     const { todayMood, fetchTodayMood, setTodayMood, isLoading } = useMoodStore();
     const [currentIndex, setCurrentIndex] = useState(2); // Default to Neutral (index 2)
 
+    const hasChanges = todayMood?.mood && MOODS[currentIndex].id !== todayMood.mood;
+
     useEffect(() => {
         fetchTodayMood();
     }, [fetchTodayMood]);
@@ -137,9 +139,14 @@ export default function MoodCheckInPage() {
                     key={`label-${currentIndex}`}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-center mb-12"
+                    className="text-center mb-12 flex flex-col items-center gap-1"
                 >
-                    <p className="text-white/80 text-lg font-medium mb-1">Today felt</p>
+                    <div className="flex items-center gap-2">
+                        <p className="text-white/80 text-lg font-medium">Today felt</p>
+                        {hasChanges && (
+                            <span className="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full backdrop-blur-md border border-white/20">CHANGED</span>
+                        )}
+                    </div>
                     <h3 className="text-4xl font-[900] text-white tracking-tight">{currentMood.label}</h3>
                 </motion.div>
 

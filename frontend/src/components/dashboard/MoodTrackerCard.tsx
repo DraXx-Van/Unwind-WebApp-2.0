@@ -6,7 +6,7 @@ export function MoodTrackerCard() {
     return (
         <div
             onClick={() => window.location.href = '/mood/stats'}
-            className="w-full bg-[#f5f5f5] rounded-[32px] p-4 pr-6 flex items-center justify-between shadow-sm h-24 mb-4 cursor-pointer hover:bg-gray-100 transition-colors"
+            className="w-full bg-[#f5f5f5] rounded-32px p-4 pr-6 flex items-center justify-between shadow-sm h-24 mb-4 cursor-pointer hover:bg-gray-100 transition-colors"
         >
             <div className="flex items-center gap-4">
                 {/* Icon Container */}

@@ -5,11 +5,12 @@ import Link from 'next/link';
 
 interface HealthJournalCardProps {
     count: number;
+    done?: boolean;
 }
 
 export function HealthJournalCard({ count }: HealthJournalCardProps) {
     return (
-        <Link href="/journal" className="relative w-[180px] h-[220px] rounded-[32px] bg-[#A28FFF] shadow-[0px_16px_32px_rgba(162,143,255,0.15)] flex flex-col justify-between overflow-hidden shrink-0 transition-transform active:scale-95">
+        <Link href="/journal" className="relative w-[180px] h-[220px] rounded-32px bg-[#A28FFF] shadow-[0px_16px_32px_rgba(162,143,255,0.15)] flex flex-col justify-between overflow-hidden shrink-0 transition-transform active:scale-95">
             {/* Header & Content */}
             <div className="p-5 pb-0 flex flex-col z-10 w-full">
                 <div className="flex justify-between items-start mb-2">

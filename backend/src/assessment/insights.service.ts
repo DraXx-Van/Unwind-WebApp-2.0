@@ -78,71 +78,120 @@ export class InsightsService {
     const sixDaysAgo = new Date(now.getTime() - 6 * 24 * 60 * 60 * 1000);
 
     const [
-      todayMood, todayStress, todaySleep,
+      todayMood, todayStress, todaySleepRaw,
       moodHistory, stressHistory, sleepHistory,
       mindfulSessions, journalEntries,
       recentStress, prevStress,
       recentMood, prevMood,
+      sleepSchedule, latestAssessment, lastSleepEver,
     ] = await Promise.all([
       // Today's data
-      this.prisma.dailyMood.findFirst({ where: { userId, createdAt: { gte: startOfDay } }, orderBy: { createdAt: 'desc' } }),
+      this.prisma.dailyMood.findFirst({ where: { userId, date: { gte: startOfDay } }, orderBy: { date: 'desc' } }),
       this.prisma.stressEntry.findFirst({ where: { userId, createdAt: { gte: startOfDay } }, orderBy: { createdAt: 'desc' } }),
       this.prisma.sleepEntry.findFirst({ where: { userId, createdAt: { gte: startOfDay } }, orderBy: { createdAt: 'desc' } }),
-      // 7-day history for score
-      this.prisma.dailyMood.findMany({ where: { userId, createdAt: { gte: sevenDaysAgo } }, orderBy: { createdAt: 'desc' } }),
+      // 7-day history
+      this.prisma.dailyMood.findMany({ where: { userId, date: { gte: sevenDaysAgo } }, orderBy: { date: 'desc' } }),
       this.prisma.stressEntry.findMany({ where: { userId, createdAt: { gte: sevenDaysAgo } }, orderBy: { createdAt: 'desc' } }),
       this.prisma.sleepEntry.findMany({ where: { userId, createdAt: { gte: sevenDaysAgo } }, orderBy: { createdAt: 'desc' } }),
       this.prisma.mindfulSession.findMany({ where: { userId, createdAt: { gte: sevenDaysAgo } } }),
-      this.prisma.journal.findMany({ where: { createdAt: { gte: sevenDaysAgo } } }),
-      // Trend: last 3 days stress
+      this.prisma.journal.findMany({ where: { userId, createdAt: { gte: sevenDaysAgo } } }),
+      // Trend
       this.prisma.stressEntry.findMany({ where: { userId, createdAt: { gte: threeDaysAgo } } }),
-      // Trend: prev 3-6 days stress
       this.prisma.stressEntry.findMany({ where: { userId, createdAt: { gte: sixDaysAgo, lt: threeDaysAgo } } }),
-      // Trend: last 3 days mood
-      this.prisma.dailyMood.findMany({ where: { userId, createdAt: { gte: threeDaysAgo } } }),
-      // Trend: prev 3-6 days mood
-      this.prisma.dailyMood.findMany({ where: { userId, createdAt: { gte: sixDaysAgo, lt: threeDaysAgo } } }),
+      this.prisma.dailyMood.findMany({ where: { userId, date: { gte: threeDaysAgo } } }),
+      this.prisma.dailyMood.findMany({ where: { userId, date: { gte: sixDaysAgo, lt: threeDaysAgo } } }),
+      // Fallback sources
+      this.prisma.sleepSchedule.findFirst({ where: { userId } }),
+      this.prisma.assessment.findFirst({ where: { userId }, orderBy: { createdAt: 'desc' } }),
+      this.prisma.sleepEntry.findFirst({ where: { userId }, orderBy: { createdAt: 'desc' } }),
     ]);
 
-    const score = this.calculateScore({ moodHistory, stressHistory, sleepHistory, mindfulSessions, journalEntries });
+    // ── Sleep Fallback Logic ─────────────────────────────────────────────────
+    // If user didn't track sleep today, estimate from:
+    //   1. Schedule-based duration (if schedule exists)
+    //   2. Last logged sleep entry
+    //   3. Assessment sleep quality baseline
+    let todaySleep = todaySleepRaw;
+    let sleepIsEstimated = false;
 
-    const hasData = !!(todayMood || todayStress || todaySleep);
-    const hasEnoughData = !!(todayMood && (todayStress || todaySleep));
+    if (!todaySleep) {
+      if (sleepSchedule) {
+        // Estimate from schedule: compute duration, then quality
+        const [sh, sm] = sleepSchedule.sleepTime.split(':').map(Number);
+        const [wh, wm] = sleepSchedule.wakeTime.split(':').map(Number);
+        let durationHours = (wh * 60 + wm - (sh * 60 + sm)) / 60;
+        if (durationHours <= 0) durationHours += 24; // crosses midnight
+        // Mirror the quality formula from sleep.service.ts
+        let q = 0;
+        if (durationHours < 4) q = (durationHours / 4) * 40;
+        else if (durationHours < 7) q = 40 + ((durationHours - 4) / 3) * 40;
+        else if (durationHours <= 9) q = 80 + ((durationHours - 7) / 2) * 20;
+        else q = Math.max(70, 100 - (durationHours - 9) * 10);
+        todaySleep = { id: 'estimated', userId, duration: durationHours, quality: Math.round(q), sleepTime: sleepSchedule.sleepTime, wakeTime: sleepSchedule.wakeTime, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() } as any;
+        sleepIsEstimated = true;
+      } else if (lastSleepEver) {
+        // Use the last known sleep as a proxy
+        todaySleep = lastSleepEver;
+        sleepIsEstimated = true;
+      } else if (latestAssessment?.sleepQuality) {
+        // Convert 1-5 scale to estimated quality 0-100
+        todaySleep = { id: 'estimated', userId, duration: latestAssessment.sleepQuality * 1.5 + 3, quality: latestAssessment.sleepQuality * 20, sleepTime: '00:00', wakeTime: '07:00', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() } as any;
+        sleepIsEstimated = true;
+      }
+    }
 
-    // Only generate insights & tasks when user has logged *something* today.
-    // Empty arrays → frontend shows "Log data for insights / Log data to get tasks" prompts.
+    // Add estimated sleep to history for score if not already there
+    const effectiveSleepHistory = sleepHistory.length > 0 ? sleepHistory : (todaySleep ? [todaySleep] : []);
+
+    const score = this.calculateScore({ moodHistory, stressHistory, sleepHistory: effectiveSleepHistory, mindfulSessions, journalEntries });
+
+    const hasData = !!(todayMood || todayStress || todaySleepRaw); // real tracked data
+    const hasEnoughData = !!(todayMood && (todayStress || todaySleepRaw));
+
     const insights = hasData
       ? this.generateInsights({
-          todayMood, todayStress, todaySleep,
+          todayMood, todayStress, todaySleep: todaySleepRaw, // pass real sleep for insight text
           sleepHistory, mindfulSessions, journalEntries,
           recentStress, prevStress, recentMood, prevMood,
         })
       : [];
 
     const tasks = hasData
-      ? this.generateTasks({ todayMood, todayStress, todaySleep, mindfulSessions, journalEntries })
+      ? this.generateTasks({ todayMood, todayStress, todaySleep: todaySleepRaw, mindfulSessions, journalEntries })
       : [];
 
     return {
-      score: score.value, label: score.label, delta: score.delta,
+      score: score.value ?? null,
+      label: score.incomplete ? null : score.label,
+      delta: score.incomplete ? 0 : score.delta,
+      scoreIncomplete: score.incomplete,   // true = user hasn't logged mood+stress this week
       insights, tasks,
-      today: { mood: todayMood, stress: todayStress, sleep: todaySleep },
+      sleepIsEstimated,
+      today: { mood: todayMood, stress: todayStress, sleep: todaySleepRaw },
       state: !hasData ? 'empty' : !hasEnoughData ? 'partial' : 'ready',
     };
   }
 
+
   // ─── Score ──────────────────────────────────────────────────────────────────
+  // Returns null if the user has no mood OR no stress logged in the last 7 days.
+  // This prevents serving a fake score derived from empty-array defaults.
+  // Sleep fallback is allowed (overnight tracking is hard).
   private calculateScore(data: { moodHistory: any[]; stressHistory: any[]; sleepHistory: any[]; mindfulSessions: any[]; journalEntries: any[] }) {
     const { moodHistory, stressHistory, sleepHistory, mindfulSessions, journalEntries } = data;
 
-    const avgMood = moodHistory.length > 0
-      ? moodHistory.reduce((s, m) => s + (MOOD_VALUES[m.mood] ?? 3), 0) / moodHistory.length : 3;
+    // Mood and stress are required — no fallback to neutral
+    if (moodHistory.length === 0 || stressHistory.length === 0) {
+      return { value: null as any, label: 'Incomplete', delta: 0, incomplete: true };
+    }
+
+    const avgMood = moodHistory.reduce((s, m) => s + (MOOD_VALUES[m.mood] ?? 3), 0) / moodHistory.length;
     const moodScore = Math.round(((avgMood - 1) / 4) * 20);
 
-    const avgStress = stressHistory.length > 0
-      ? stressHistory.reduce((s, e) => s + e.value, 0) / stressHistory.length : 2;
+    const avgStress = stressHistory.reduce((s, e) => s + e.value, 0) / stressHistory.length;
     const stressPenalty = Math.round((avgStress / 5) * 20);
 
+    // Sleep: safe to use fallback — harder to log nightly
     const avgSleep = sleepHistory.length > 0
       ? sleepHistory.reduce((s, e) => s + e.duration, 0) / sleepHistory.length : 6;
     const sleepScore = Math.min(20, Math.round((avgSleep / 8) * 20));
@@ -162,7 +211,7 @@ export class InsightsService {
     // Deterministic delta seeded from today's date (same all day)
     const rngDelta = seededRandom(dateSeed() + 999);
     const delta = Math.round((rngDelta() - 0.4) * 6);
-    return { value, label, delta };
+    return { value, label, delta, incomplete: false };
   }
 
   // ─── Insights (progressive: real data + CTA log-prompts) ────────────────────

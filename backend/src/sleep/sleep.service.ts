@@ -27,21 +27,24 @@ export class SleepService {
 
   // --- Entry Management ---
   async createEntry(userId: string, data: { duration: number; sleepTime: string; wakeTime: string }): Promise<SleepEntry> {
-    // Algorithm: Determine Sleep Quality (Out of 100)
-    // 50 base points + up to 50 duration points
-    // Ideal sleep is ~8 hours.
-    const optimalDuration = 8;
-    const deviation = Math.abs(optimalDuration - data.duration);
-    let durationScore = 50;
+    // New Algorithm: Better distribution
+    // 0-4h: 0-40 points
+    // 4-6h: 40-70 points
+    // 6-8h: 70-100 points
+    // 8h+: slight decline for oversleeping
     
-    if (deviation <= 1) {
-      durationScore = 50; // Perfect duration score
+    let quality = 0;
+    const d = data.duration;
+    
+    if (d < 4) {
+      quality = (d / 4) * 40; // 0 to 40
+    } else if (d < 7) {
+      quality = 40 + ((d - 4) / 3) * 40; // 40 to 80
+    } else if (d <= 9) {
+      quality = 80 + ((d - 7) / 2) * 20; // 80 to 100
     } else {
-      durationScore = Math.max(0, 50 - (deviation * 15));
+      quality = Math.max(70, 100 - (d - 9) * 10); // Slight penalty for > 9h
     }
-    
-    // In a full app, consistency bonus (matching schedule) would go here.
-    const finalQuality = Math.round(50 + durationScore);
 
     return this.prisma.sleepEntry.create({
       data: {
@@ -49,7 +52,7 @@ export class SleepService {
         duration: data.duration,
         sleepTime: data.sleepTime,
         wakeTime: data.wakeTime,
-        quality: Math.min(100, finalQuality),
+        quality: Math.round(quality),
       },
     });
   }

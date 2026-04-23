@@ -3,6 +3,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useStressStore } from '@/store/stressStore';
+import { useAuthStore } from '@/store/authStore';
+import { isWithinDays } from '@/lib/dateUtils';
 import Matter from 'matter-js';
 
 const STRESS_CATEGORIES = [
@@ -15,6 +17,7 @@ const STRESS_CATEGORIES = [
 
 export default function StressStats() {
   const router = useRouter();
+  const { user } = useAuthStore();
   const { history, fetchHistory, isLoading } = useStressStore();
   
   const [timeframe, setTimeframe] = useState<'Weekly' | 'Monthly'>('Monthly');
@@ -28,8 +31,8 @@ export default function StressStats() {
   const [isPreview, setIsPreview] = useState(false);
 
   useEffect(() => {
-    fetchHistory('user-1');
-  }, [fetchHistory]);
+    if (user?.id) fetchHistory(user.id);
+  }, [fetchHistory, user?.id]);
 
   const statsData = useMemo(() => {
       let baseHistory = history;
@@ -59,12 +62,9 @@ export default function StressStats() {
       const filtered = (isPreview || history.length === 0) 
           ? baseHistory
           : baseHistory.filter(entry => {
-               if (!entry.createdAt) return true;
-               const entryDate = new Date(entry.createdAt);
-               const cutoff = new Date();
-               // Weekly = 7 days ago. Monthly = 30 days ago.
-               cutoff.setDate(cutoff.getDate() - (timeframe === 'Weekly' ? 7 : 30));
-               return entryDate >= cutoff;
+                if (!entry.createdAt) return true;
+                const days = timeframe === 'Weekly' ? 7 : 30;
+                return isWithinDays(entry.createdAt, days);
           });
 
       const counts: Record<string, number> = {
@@ -171,6 +171,12 @@ export default function StressStats() {
 
       <div className="w-full flex flex-col items-center mt-[30px] z-30">
          <h1 className="text-[28px] font-extrabold text-[#4B3425] tracking-tight">Stress Level Stats</h1>
+         
+         {isPreview && (
+            <div className="mt-1 bg-amber-100 text-amber-700 px-3 py-0.5 rounded-full text-[10px] font-bold border border-amber-200">
+                SAMPLE DATA (PREVIEW MODE)
+            </div>
+         )}
          
          {/* Configurable Filters Row */}
          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 max-w-[300px] mt-4">

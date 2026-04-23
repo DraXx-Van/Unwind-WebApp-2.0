@@ -90,9 +90,12 @@ export function StepMood() {
 
     return (
         <div className="flex flex-col h-full relative">
-            <h2 className="text-3xl font-extrabold text-mindful-brown-80 mb-4 text-center leading-tight">
-                How would you describe your mood?
+            <h2 className="text-3xl font-extrabold text-mindful-brown-80 mb-1 text-center leading-tight">
+                How do you generally feel?
             </h2>
+            <p className="text-mindful-brown-60 text-sm font-medium text-center mb-4">
+                This sets your emotional baseline — you can update it daily from the dashboard.
+            </p>
 
             <div className="flex-1 flex flex-col items-center justify-center w-full relative">
 

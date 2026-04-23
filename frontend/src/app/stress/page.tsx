@@ -3,17 +3,21 @@
 import React, { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useStressStore } from '@/store/stressStore';
+import { useAuthStore } from '@/store/authStore';
 import Link from 'next/link';
 import { TabBar } from '@/components/dashboard/TabBar';
 
 export default function StressDashboard() {
   const router = useRouter();
+  const { user } = useAuthStore();
   const { latestEntry, history, isLoading, fetchLatest, fetchHistory } = useStressStore();
 
   useEffect(() => {
-    fetchLatest('user-1');
-    fetchHistory('user-1');
-  }, [fetchLatest, fetchHistory]);
+    if (user?.id) {
+      fetchLatest(user.id);
+      fetchHistory(user.id);
+    }
+  }, [fetchLatest, fetchHistory, user?.id]);
 
   const isEntryFromToday = useMemo(() => {
      if (!latestEntry?.createdAt) return false;

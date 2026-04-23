@@ -6,6 +6,7 @@ import { useMoodStore } from '@/store/moodStore';
 import { useJournalStore } from '@/store/journalStore';
 import { useStressStore } from '@/store/stressStore';
 import { useSleepStore, sleptToday } from '@/store/sleepStore';
+import { useAuthStore } from '@/store/authStore';
 import {
   Sun, Moon, Sparkles, CheckCircle2, ArrowRight,
   ChevronRight, Zap, BedDouble, Wind,
@@ -78,6 +79,8 @@ function derivePriority(opts: {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export function DailyCheckCard() {
+  const { user } = useAuthStore();
+  const userId = user?.id;
   const { todayMood, fetchTodayMood } = useMoodStore();
   const { journals, fetchJournals } = useJournalStore();
   const { latestEntry: stressEntry, fetchLatest: fetchStress } = useStressStore();
@@ -113,9 +116,11 @@ export function DailyCheckCard() {
     initTimer();
     fetchTodayMood();
     fetchJournals();
-    fetchStress('user-1');
-    fetchSleep('user-1');
-  }, [fetchTodayMood, fetchJournals, fetchStress, fetchSleep, initTimer]);
+    if (userId) {
+      fetchStress(userId);
+      fetchSleep(userId);
+    }
+  }, [fetchTodayMood, fetchJournals, fetchStress, fetchSleep, initTimer, userId]);
 
   const dismiss = (key: string) => {
     localStorage.setItem(`ucd_${key}`, Date.now().toString());

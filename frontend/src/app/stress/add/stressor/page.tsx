@@ -3,6 +3,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useStressStore } from '@/store/stressStore';
+import { useAuthStore } from '@/store/authStore';
 
 const VALID_STRESSORS = ['None', 'Work', 'Life', 'Friendship', 'Kids', 'Finance', 'Loneliness', 'Other'];
 
@@ -21,6 +22,7 @@ const IMPACT_MAPPING: Record<string, string> = {
 function StressorSelectionContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { user } = useAuthStore();
   const { addEntry, isLoading } = useStressStore();
 
   const [selectedStressor, setSelectedStressor] = useState('Loneliness');
@@ -42,7 +44,7 @@ function StressorSelectionContent() {
 
   const handleSave = async () => {
     const impact = IMPACT_MAPPING[selectedStressor] || 'Moderate';
-    await addEntry('user-1', {
+    await addEntry(user?.id || 'user-1', {
       value: level,
       stressor: selectedStressor,
       impact: impact,

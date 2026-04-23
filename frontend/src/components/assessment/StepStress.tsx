@@ -7,8 +7,8 @@ import { cn } from '../ui/button'; // Assuming cn utility is here, or import fro
 export function StepStress() {
     const { stressLevel, setStressLevel, nextStep } = useAssessmentStore();
 
-    // Default to 5 if not set, or maybe 1? User image shows 5 selected.
-    const currentLevel = stressLevel || 5;
+    // Default to 3 (neutral) — defaulting to 5 would show max stress incorrectly
+    const currentLevel = stressLevel ?? 3;
 
     const handleContinue = () => {
         if (stressLevel) {
@@ -21,9 +21,11 @@ export function StepStress() {
     };
 
     const getStressLabel = (val: number) => {
-        if (val <= 2) return "You Are Relaxed.";
-        if (val === 3) return "You Are Doing Okay.";
-        if (val >= 4) return "You Are Extremely Stressed Out.";
+        if (val === 1) return "Very relaxed — life feels peaceful.";
+        if (val === 2) return "Mostly calm with minor worries.";
+        if (val === 3) return "Moderate — manageable stress.";
+        if (val === 4) return "Quite stressed most of the time.";
+        if (val === 5) return "Overwhelmed — very high stress.";
         return "";
     };
 
@@ -36,9 +38,12 @@ export function StepStress() {
                 {/* Layout handles header "Assessment 12 of 14" etc. */}
             </div>
 
-            <h2 className="text-3xl font-extrabold text-mindful-brown-80 mb-12 text-center leading-tight">
-                How would you rate your<br />stress level?
+            <h2 className="text-3xl font-extrabold text-mindful-brown-80 mb-2 text-center leading-tight">
+                How stressed do you typically feel?
             </h2>
+            <p className="text-mindful-brown-60 text-sm font-medium text-center mb-10">
+                This is your stress baseline — you can log it daily to track changes.
+            </p>
 
             <div className="flex-1 flex flex-col items-center justify-center">
 

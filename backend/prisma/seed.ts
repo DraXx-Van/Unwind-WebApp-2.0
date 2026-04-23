@@ -1,11 +1,12 @@
 import { PrismaClient } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 /**
- * Returns a Date anchored to IST March 20 2026 (today during presentation).
- * daysBack=1 → Mar 19, daysBack=7 → Mar 13, etc.
- * TODAY (Mar 20) is left empty → logged live during the demo.
+ * Returns a Date anchored to IST April 22 2026 (today during presentation).
+ * daysBack=1 → Apr 21, daysBack=7 → Apr 15, etc.
+ * TODAY (Apr 22) is left empty → logged live during the demo.
  */
 function pastDate(daysBack: number, hour = 10, minute = 0): Date {
   const d = new Date();
@@ -23,29 +24,45 @@ function pastMidnight(daysBack: number): Date {
 }
 
 async function main() {
-  const userId = 'user-1';
-
   console.log('🗑️  Clearing all existing data...');
-  await prisma.stressEntry.deleteMany({ where: { userId } });
-  await prisma.sleepEntry.deleteMany({ where: { userId } });
-  await prisma.mindfulSession.deleteMany({ where: { userId } });
-  await prisma.dailyMood.deleteMany({ where: { userId } });
+  // Delete in dependency order — User last since others reference it
+  await prisma.stressEntry.deleteMany({});
+  await prisma.sleepEntry.deleteMany({});
+  await prisma.mindfulSession.deleteMany({});
+  await prisma.dailyMood.deleteMany({});
   await prisma.journal.deleteMany({});
-  await prisma.sleepSchedule.deleteMany({ where: { userId } });
+  await prisma.sleepSchedule.deleteMany({});
+  await prisma.assessment.deleteMany({});
+  await prisma.user.deleteMany({});
   console.log('✅ DB cleared\n');
 
   // ═══════════════════════════════════════════════════════════════════
-  // MOOD  — 7 days: Mar 13 (day 7) → Mar 19 (day 1)
+  // USER — create the demo user first (required by auth schema)
+  // ═══════════════════════════════════════════════════════════════════
+  const hashedPassword = await bcrypt.hash('password123', 10);
+  const user = await prisma.user.create({
+    data: {
+      name: 'Demo User',
+      email: 'demo@unwind.app',
+      password: hashedPassword,
+    },
+  });
+  const userId = user.id;
+  console.log(`✅ User created: ${user.email} (id: ${userId})\n`);
+
+  // ═══════════════════════════════════════════════════════════════════
+  // MOOD  — 8 days
   // Arc: crash → struggle → turning point → recovery → thriving
   // ═══════════════════════════════════════════════════════════════════
   const moodData = [
-    { daysBack: 7, mood: 'LOW' },           // Mar 13 — pre-crash, starting to feel it
-    { daysBack: 6, mood: 'OVERWHELMED' },   // Mar 14 — worst day (exam + no sleep)
-    { daysBack: 5, mood: 'LOW' },           // Mar 15 — still rough
-    { daysBack: 4, mood: 'LOW' },           // Mar 16 — deadline day, hanging on
-    { daysBack: 3, mood: 'NEUTRAL' },       // Mar 17 — deadline passed, breathing again
-    { daysBack: 2, mood: 'HAPPY' },         // Mar 18 — slept well, feeling better
-    { daysBack: 1, mood: 'HAPPY' },         // Mar 19 — confident, ready for presentation
+    { daysBack: 7, mood: 'LOW' },
+    { daysBack: 6, mood: 'OVERWHELMED' },
+    { daysBack: 5, mood: 'LOW' },
+    { daysBack: 4, mood: 'LOW' },
+    { daysBack: 3, mood: 'NEUTRAL' },
+    { daysBack: 2, mood: 'HAPPY' },
+    { daysBack: 1, mood: 'HAPPY' },
+    { daysBack: 0, mood: 'HAPPY' }, // Today
   ];
 
   for (const m of moodData) {
@@ -55,10 +72,10 @@ async function main() {
       create: { userId, date: pastMidnight(m.daysBack), mood: m.mood },
     });
   }
-  console.log('✅ Mood: 7 entries (Mar 13-19) — LOW→OVERWHELMED→LOW→NEUTRAL→HAPPY');
+  console.log('✅ Mood: 8 entries (Apr 15-22) — LOW→OVERWHELMED→LOW→NEUTRAL→HAPPY');
 
   // ═══════════════════════════════════════════════════════════════════
-  // STRESS — 7 days with stressor context
+  // STRESS — 8 days with stressor context
   // ═══════════════════════════════════════════════════════════════════
   const stressData = [
     { daysBack: 7, value: 4, stressor: 'Academic workload',  impact: 'High',     hour: 12 }, // Mar 13
@@ -68,6 +85,7 @@ async function main() {
     { daysBack: 3, value: 3, stressor: 'Social obligations', impact: 'Moderate', hour: 13 }, // Mar 17
     { daysBack: 2, value: 2, stressor: 'Minor tasks',        impact: 'Low',      hour: 10 }, // Mar 18
     { daysBack: 1, value: 2, stressor: 'Presentation prep',  impact: 'Low',      hour: 9  }, // Mar 19
+    { daysBack: 0, value: 1, stressor: 'None',               impact: 'None',     hour: 8  }, // Today
   ];
 
   for (const s of stressData) {
@@ -81,12 +99,11 @@ async function main() {
       },
     });
   }
-  console.log('✅ Stress: 7 entries — 4,5,5,4,3,2,2 — perfect downward arc for stats chart');
+  console.log('✅ Stress: 8 entries — 4,5,5,4,3,2,2,1 — perfect downward arc for stats chart');
 
   // ═══════════════════════════════════════════════════════════════════
-  // SLEEP — 7 days
+  // SLEEP — 8 days
   // Bad early week (exam nights) → great recovery later in the week
-  // Large variance between Mar 13-15 vs Mar 16-19 → triggers sleep insight
   // ═══════════════════════════════════════════════════════════════════
   const sleepData = [
     { daysBack: 7, duration: 6.0, sleepTime: '01:00', wakeTime: '07:00', quality: 55 }, // Mar 13
@@ -96,6 +113,7 @@ async function main() {
     { daysBack: 3, duration: 8.0, sleepTime: '22:45', wakeTime: '06:45', quality: 88 }, // Mar 17
     { daysBack: 2, duration: 7.0, sleepTime: '23:30', wakeTime: '06:30', quality: 78 }, // Mar 18
     { daysBack: 1, duration: 7.5, sleepTime: '23:00', wakeTime: '06:30', quality: 85 }, // Mar 19
+    { daysBack: 0, duration: 8.0, sleepTime: '23:00', wakeTime: '07:00', quality: 90 }, // Today
   ];
 
   for (const s of sleepData) {
@@ -110,17 +128,13 @@ async function main() {
       },
     });
   }
-  console.log('✅ Sleep: 7 entries — 4.5h→8h recovery arc, big variance triggers insights');
+  console.log('✅ Sleep: 8 entries — 4.5h→8h recovery arc, big variance triggers insights');
 
   // ═══════════════════════════════════════════════════════════════════
-  // MINDFUL SESSIONS — 9 sessions across 5 days
-  // Zero sessions during peak stress (Mar 13-15) → started when mood turned
-  // This will show on the mindful stats page as a building habit
+  // MINDFUL SESSIONS — 9 sessions across 6 days
   // ═══════════════════════════════════════════════════════════════════
   const mindfulData = [
-    // Mar 16 — first session, short (5min), evening
     { daysBack: 4, activity: 'Box Breathing',        duration: 5,  category: 'Breathing',   timeOfDay: 'Evening',   hour: 21, minute: 30 },
-    // Mar 17 — two sessions
     { daysBack: 3, activity: '4-7-8 Breathing',      duration: 7,  category: 'Breathing',   timeOfDay: 'Morning',   hour: 8,  minute: 0  },
     { daysBack: 3, activity: 'Body Scan',             duration: 10, category: 'Relaxation',  timeOfDay: 'Evening',   hour: 22, minute: 0  },
     // Mar 18 — two sessions
@@ -207,7 +221,7 @@ async function main() {
       },
     });
   }
-  console.log('✅ Journal: 6 entries (Mar 13,14,15,17,18,19) — anxious→depressed→sad→neutral→happy→calm');
+  console.log('✅ Journal: 6 entries (Apr 15-21) — anxious→depressed→sad→neutral→happy→calm');
 
   // ═══════════════════════════════════════════════════════════════════
   // SLEEP SCHEDULE — target bedtime
@@ -225,18 +239,33 @@ async function main() {
     },
   });
 
+  // ═══════════════════════════════════════════════════════════════════
+  // ASSESSMENT — initial health data
+  // ═══════════════════════════════════════════════════════════════════
+  await prisma.assessment.create({
+    data: {
+      userId,
+      goal: 'Reduce stress and improve sleep',
+      gender: 'Male',
+      age: 22,
+      mood: 4,
+      sleepQuality: 4,
+      stressLevel: 2,
+    }
+  });
+
   console.log('\n🎯 PRESENTATION DEMO DATA READY');
   console.log('══════════════════════════════════════════════════════════');
-  console.log('📅  Today: March 20 2026 — EMPTY (log live during demo!)');
+  console.log('📅  Today: April 22 2026 — EMPTY (log live during demo!)');
   console.log('');
-  console.log('📈  NARRATIVE ARC (Mar 13 → 19):');
-  console.log('   Mar 13: Low mood, stress 4/5, sleep 6h — pressure building');
-  console.log('   Mar 14: OVERWHELMED, stress 5/5, sleep 4.5h — worst day');
-  console.log('   Mar 15: Low mood, stress 5/5, sleep 5h — still struggling');
-  console.log('   Mar 16: Low mood, stress 4/5, sleep 7.5h — first mindful session');
-  console.log('   Mar 17: NEUTRAL mood, stress 3/5, sleep 8h — turning point');
-  console.log('   Mar 18: HAPPY, stress 2/5, sleep 7h — recovering well');
-  console.log('   Mar 19: HAPPY, stress 2/5, sleep 7.5h — ready for presentation');
+  console.log('📈  NARRATIVE ARC (Apr 15 → 21):');
+  console.log('   Apr 15: Low mood, stress 4/5, sleep 6h — pressure building');
+  console.log('   Apr 16: OVERWHELMED, stress 5/5, sleep 4.5h — worst day');
+  console.log('   Apr 17: Low mood, stress 5/5, sleep 5h — still struggling');
+  console.log('   Apr 18: Low mood, stress 4/5, sleep 7.5h — first mindful session');
+  console.log('   Apr 19: NEUTRAL mood, stress 3/5, sleep 8h — turning point');
+  console.log('   Apr 20: HAPPY, stress 2/5, sleep 7h — recovering well');
+  console.log('   Apr 21: HAPPY, stress 2/5, sleep 7.5h — ready for presentation');
   console.log('');
   console.log('🎬  FEATURES THIS DATA SHOWCASES:');
   console.log('   📊 Mood Stats    — clear LOW→OVERWHELMED→HAPPY trend chart');

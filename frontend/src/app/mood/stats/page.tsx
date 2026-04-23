@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, MoreVertical, Plus } from 'lucide-react';
 import { useMoodStore } from '@/store/moodStore';
 import { motion } from 'framer-motion';
 import { TabBar } from '@/components/dashboard/TabBar';
+import { isToday, isWithinDays } from '@/lib/dateUtils';
 
 // Mood definitions using 'Solid' icons from assets root as requested
 const MOOD_CONFIG: Record<string, { label: string; color: string; score: number; icon: string }> = {
@@ -31,7 +32,6 @@ export default function MoodStatsPage() {
         const week = new Array(7).fill(null);
 
         const now = new Date();
-        const todayStr = now.toDateString();
         const dayOfWeek = now.getDay();
         const diffToMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
 
@@ -39,32 +39,40 @@ export default function MoodStatsPage() {
         monday.setDate(now.getDate() - diffToMonday);
         monday.setHours(0, 0, 0, 0);
 
-        const datesMap = new Map<string, number>();
-        for (let i = 0; i < 7; i++) {
-            const d = new Date(monday);
-            d.setDate(monday.getDate() + i);
-            datesMap.set(d.toDateString(), i);
-        }
-
         history.forEach((entry) => {
             if (!entry.date) return;
-            const entryDateStr = new Date(entry.date).toDateString();
-
-            if (datesMap.has(entryDateStr)) {
-                const idx = datesMap.get(entryDateStr);
-                if (idx !== undefined) {
-                    week[idx] = entry;
+            
+            // Check if entry falls on one of our target dates in the current week
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(monday);
+                d.setDate(monday.getDate() + i);
+                
+                // Compare components for same day regardless of time
+                const sessionDate = new Date(entry.date);
+                if (
+                    sessionDate.getDate() === d.getDate() &&
+                    sessionDate.getMonth() === d.getMonth() &&
+                    sessionDate.getFullYear() === d.getFullYear()
+                ) {
+                    week[i] = entry;
                 }
             }
         });
 
         if (todayMood) {
-            const idx = datesMap.get(todayStr);
-            if (idx !== undefined) {
-                week[idx] = { ...todayMood, date: new Date().toISOString() };
+            const now = new Date();
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(monday);
+                d.setDate(monday.getDate() + i);
+                if (
+                    now.getDate() === d.getDate() &&
+                    now.getMonth() === d.getMonth() &&
+                    now.getFullYear() === d.getFullYear()
+                ) {
+                    week[i] = { ...todayMood, date: now.toISOString() };
+                }
             }
         }
-
         return week;
     }, [history, todayMood]);
 
@@ -101,7 +109,7 @@ export default function MoodStatsPage() {
                     {/* Main Mood Display */}
                     <div className="mt-4 flex flex-col items-center">
                         <span className="text-lg font-medium opacity-80 mb-[-5px]">Your mood is</span>
-                        <h1 className="text-6xl font-[900] tracking-tight mb-8" style={{ color: '#3A281C' }}>
+                        <h1 className="text-6xl font-black tracking-tight mb-8" style={{ color: '#3A281C' }}>
                             {displayMood.label}
                         </h1>
 
@@ -135,8 +143,8 @@ export default function MoodStatsPage() {
                 </div>
 
                 {/* Header - Slightly more space */}
-                <div className="flex items-center justify-between mb-8 pt-6">
-                    <h3 className="text-xl font-[800] text-[#4F3422]">Mood Statistics</h3>
+                <div className="w-full flex items-center justify-between mb-8 pt-6">
+                    <h2 className="text-[#4F3422] text-2xl font-extrabold tracking-tight">Weekly Activity</h2>
                     <button className="p-2 hover:bg-gray-100 rounded-full">
                         <MoreVertical className="w-5 h-5 text-[#4F3422]/60" />
                     </button>
@@ -145,9 +153,14 @@ export default function MoodStatsPage() {
                 {/* Bar Chart Container - Increased height to h-56 for better visibility */}
                 <div className="w-full h-56 relative">
                     {/* Grid Lines (Dashed) - Consistent Opacity */}
-                    <div className="absolute inset-0 flex flex-col justify-between pointer-events-none z-0">
-                        {[1, 2, 3, 4, 5].map((_, i) => (
-                            <div key={i} className="w-full h-[1px] border-t-2 border-dashed border-gray-300" />
+                    <div className="absolute inset-0 flex flex-col justify-between pointer-events-none z-0 py-2">
+                        {[5, 4, 3, 2, 1].map((score) => (
+                            <div key={score} className="w-full flex items-center gap-2">
+                                <span className="text-[8px] font-bold text-gray-300 w-8 text-right">
+                                    {score === 5 ? 'GREAT' : score === 3 ? 'OKAY' : score === 1 ? 'BAD' : ''}
+                                </span>
+                                <div className="flex-1 h-px border-t border-dashed border-gray-200" />
+                            </div>
                         ))}
                     </div>
 

@@ -1,6 +1,10 @@
 "use client";
 
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAssessmentStore } from '@/store/assessmentStore';
+import { useAuthStore } from '@/store/authStore';
+import { authFetch } from '@/lib/api';
 import { AssessmentLayout } from '../../components/assessment/AssessmentLayout';
 import { StepGoal } from '../../components/assessment/StepGoal';
 import { StepGender } from '../../components/assessment/StepGender';
@@ -16,7 +20,37 @@ import { StepStress } from '../../components/assessment/StepStress';
 import { StepComplete } from '../../components/assessment/StepComplete';
 
 export default function AssessmentPage() {
+    const router = useRouter();
+    const { token } = useAuthStore();
     const { currentStep } = useAssessmentStore();
+    const [checking, setChecking] = useState(true);
+
+    useEffect(() => {
+        if (!token) {
+            router.replace('/login');
+            return;
+        }
+        // Check if this user already completed assessment once
+        authFetch('/assessment/latest')
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data?.id) {
+                    // Already done — send to dashboard, never show again
+                    router.replace('/dashboard');
+                } else {
+                    setChecking(false);
+                }
+            })
+            .catch(() => setChecking(false));
+    }, [token, router]);
+
+    if (checking) {
+        return (
+            <div className="min-h-screen bg-[#F5F0EB] flex items-center justify-center">
+                <div className="w-10 h-10 border-4 border-[#4F3422]/20 border-t-[#4F3422] rounded-full animate-spin" />
+            </div>
+        );
+    }
 
     const renderStep = () => {
         switch (currentStep) {

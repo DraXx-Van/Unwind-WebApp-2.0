@@ -61,10 +61,10 @@ export function StepComplete() {
                     </motion.div>
 
                     <h2 className="text-3xl font-extrabold text-mindful-brown-80 leading-tight">
-                        Assessment<br />Complete! 🎉
+                        You're all set! 🎉
                     </h2>
                     <p className="text-mindful-brown-60 font-medium text-lg max-w-xs">
-                        Your mental health profile has been created. Redirecting to your dashboard...
+                        Your personal wellness profile is ready. Taking you to your dashboard now...
                     </p>
 
                     {/* Animated dots */}

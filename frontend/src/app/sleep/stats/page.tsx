@@ -3,19 +3,21 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSleepStore } from '@/store/sleepStore';
+import { useAuthStore } from '@/store/authStore';
 import Link from 'next/link';
 import { ArrowRight, Activity, Heart } from 'lucide-react';
 
 export default function SleepStatsPage() {
   const router = useRouter();
+  const { user } = useAuthStore();
   const { latestEntry, fetchLatest } = useSleepStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    fetchLatest('user-1');
+    if (user?.id) fetchLatest(user.id);
     const t = setTimeout(() => setMounted(true), 150);
     return () => clearTimeout(t);
-  }, [fetchLatest]);
+  }, [fetchLatest, user?.id]);
 
   const duration = latestEntry?.duration ?? 0;
 

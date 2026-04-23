@@ -3,12 +3,14 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMindfulStore } from '@/store/mindfulStore';
+import { useAuthStore } from '@/store/authStore';
 import Link from 'next/link';
 
 function TimerPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { addEntry, updateEntry } = useMindfulStore();
+  const { user } = useAuthStore();
 
   const activity = searchParams.get('activity') || 'Mindful Session';
   const category = searchParams.get('category') || 'NATURE';
@@ -20,17 +22,54 @@ function TimerPageContent() {
 
   const [timeLeft, setTimeLeft] = useState(initialTotalSeconds);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isResumed, setIsResumed] = useState(false);
+
+  // Persistence: Initialize/Resume Timer
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const storedStart = localStorage.getItem('mindful_timer_start');
+    const storedDuration = localStorage.getItem('mindful_timer_duration');
+    const storedActivity = localStorage.getItem('mindful_timer_activity');
+
+    // Only resume if it's the SAME activity and it's still running
+    if (storedStart && storedDuration && storedActivity === activity) {
+      const startTime = parseInt(storedStart, 10);
+      const duration = parseInt(storedDuration, 10);
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      const remaining = duration - elapsed;
+
+      if (remaining > 0) {
+        setTimeLeft(remaining);
+        setIsResumed(true);
+      } else {
+        // Was already finished while away
+        setTimeLeft(0);
+        localStorage.removeItem('mindful_timer_start');
+      }
+    } else {
+      // Fresh start: save state
+      localStorage.setItem('mindful_timer_start', Date.now().toString());
+      localStorage.setItem('mindful_timer_duration', initialTotalSeconds.toString());
+      localStorage.setItem('mindful_timer_activity', activity);
+    }
+  }, [activity, initialTotalSeconds]);
 
   // Timer logic
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isPlaying && timeLeft > 0) {
       interval = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
+        setTimeLeft((prev) => {
+           if (prev <= 1) {
+              localStorage.removeItem('mindful_timer_start');
+           }
+           return prev - 1;
+        });
       }, 1000);
     } else if (timeLeft <= 0) {
       setIsPlaying(false);
-      if (isPlaying) { // prevent double trigger
+      if (isPlaying) { 
          handleCompletion();
       }
     }
@@ -38,7 +77,7 @@ function TimerPageContent() {
   }, [isPlaying, timeLeft]);
 
   const handleCompletion = async () => {
-     // Saved full time elapsed
+     localStorage.removeItem('mindful_timer_start');
      const durationPlayedSec = initialTotalSeconds; 
      const playedMinutesFloat = parseFloat((durationPlayedSec / 60).toFixed(2));
 
@@ -46,7 +85,7 @@ function TimerPageContent() {
          if (sessionId) {
               await updateEntry(sessionId, playedMinutesFloat);
          } else {
-              await addEntry('user-1', {
+              await addEntry(user?.id || 'user-1', {
                   activity: activity,
                   duration: playedMinutesFloat,
                   plannedDuration: parseFloat((initialTotalSeconds / 60).toFixed(2)),
@@ -56,20 +95,33 @@ function TimerPageContent() {
          }
      }
 
-     // Route to completion screen
      router.push(`/mindful/complete?activity=${encodeURIComponent(activity)}&durationSec=${initialTotalSeconds}`);
   };
 
   const handleExitEarly = async () => {
-     // Partial time logged on abort
      const durationPlayedSec = initialTotalSeconds - timeLeft;
+     
+     // Guard: Too short to be a real session (< 30 seconds)
+     if (durationPlayedSec < 30) {
+        const confirmExit = window.confirm("This session is very short. Exit without saving?");
+        if (confirmExit) {
+           localStorage.removeItem('mindful_timer_start');
+           router.push('/mindful');
+        }
+        return;
+     }
+
+     const confirmSave = window.confirm(`You've completed ${Math.floor(durationPlayedSec / 60)}m ${durationPlayedSec % 60}s. Save progress and exit?`);
+     if (!confirmSave) return;
+
+     localStorage.removeItem('mindful_timer_start');
      const playedMinutesFloat = parseFloat((durationPlayedSec / 60).toFixed(2));
      
      if (durationPlayedSec > 0) {
          if (sessionId) {
               await updateEntry(sessionId, playedMinutesFloat);
          } else {
-              await addEntry('user-1', {
+              await addEntry(user?.id || 'user-1', {
                   activity: activity,
                   duration: playedMinutesFloat,
                   plannedDuration: parseFloat((initialTotalSeconds / 60).toFixed(2)),
@@ -78,7 +130,6 @@ function TimerPageContent() {
               });
          }
      }
-     // Directly discard rendering modal and quietly return to Mindful tracking Home
      router.push('/mindful');
   };
 

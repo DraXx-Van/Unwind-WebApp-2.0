@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useSleepStore } from '@/store/sleepStore';
+import { useAuthStore } from '@/store/authStore';
 
 // Reusable Swipe Button Component
 const SwipeButton = ({ text, onComplete }: { text: string; onComplete: () => void }) => {
@@ -73,7 +74,8 @@ const SwipeButton = ({ text, onComplete }: { text: string; onComplete: () => voi
 function SleepActiveContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const mode = searchParams.get('mode') || 'sleep'; // 'sleep' or 'wake'
+  const mode = searchParams.get('mode') || 'sleep';
+  const { user } = useAuthStore();
   const { addEntry } = useSleepStore();
   
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
@@ -103,7 +105,7 @@ function SleepActiveContent() {
       const core = 6.04; 
       const post = 0.2;  // 12 mins
       
-      await addEntry('user-1', {
+      await addEntry(user?.id || 'user-1', {
         duration,
         sleepTime,
         wakeTime,

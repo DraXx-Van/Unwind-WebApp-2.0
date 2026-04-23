@@ -27,14 +27,21 @@ export function StepSymptoms() {
 
     return (
         <div className="flex flex-col h-full relative">
-            <h2 className="text-3xl font-extrabold text-mindful-brown-80 mb-8 text-center leading-tight">
-                Do you have other mental health symptoms?
+            <h2 className="text-3xl font-extrabold text-mindful-brown-80 mb-6 text-center leading-tight">
+                Any mental health symptoms?
             </h2>
 
             <div className="flex-1 flex flex-col">
-                {/* Illustration/Graphic area */}
-                <div className="w-full h-48 bg-mindful-brown-10 rounded-[32px] mb-8 flex items-center justify-center">
-                    <span className="text-mindful-brown-60 font-bold">Illustration Here</span>
+                {/* Visual header */}
+                <div className="w-full h-40 bg-gradient-to-br from-[#F5F0EB] to-[#EAE2D8] rounded-[32px] mb-6 flex items-center justify-center gap-4 overflow-hidden relative">
+                    <div className="flex gap-3 text-4xl select-none">
+                        <span className="animate-bounce" style={{ animationDelay: '0ms' }}>😔</span>
+                        <span className="animate-bounce" style={{ animationDelay: '150ms' }}>😰</span>
+                        <span className="animate-bounce" style={{ animationDelay: '300ms' }}>😴</span>
+                        <span className="animate-bounce" style={{ animationDelay: '450ms' }}>😤</span>
+                        <span className="animate-bounce" style={{ animationDelay: '600ms' }}>🥺</span>
+                    </div>
+                    <p className="absolute bottom-3 text-mindful-brown-60 text-xs font-medium">Select all that apply — or skip if none</p>
                 </div>
 
                 {/* Input Box Simulation */}

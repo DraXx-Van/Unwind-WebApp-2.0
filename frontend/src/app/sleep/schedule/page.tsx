@@ -3,11 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSleepStore } from '@/store/sleepStore';
+import { useAuthStore } from '@/store/authStore';
 import Link from 'next/link';
 import { Calendar, ChevronDown } from 'lucide-react';
 
 export default function SleepSchedulePage() {
   const router = useRouter();
+  const { user } = useAuthStore();
   const { schedule, fetchSchedule, setSchedule } = useSleepStore();
 
   const [sleepTime, setSleepTime] = useState('23:00');
@@ -18,8 +20,10 @@ export default function SleepSchedulePage() {
   const [autoAlarm, setAutoAlarm] = useState(true);
 
   useEffect(() => {
-    fetchSchedule('user-1');
-  }, [fetchSchedule]);
+    if (user?.id) {
+      fetchSchedule(user.id);
+    }
+  }, [fetchSchedule, user?.id]);
 
   useEffect(() => {
     if (schedule) {
@@ -42,7 +46,8 @@ export default function SleepSchedulePage() {
   };
 
   const handleSetSchedule = async () => {
-    await setSchedule('user-1', {
+    if (!user?.id) return;
+    await setSchedule(user.id, {
       isEveryday: repeatMode === 'Everyday',
       isToday: repeatMode === 'Today',
       sleepTime,

@@ -7,6 +7,7 @@ export default function AddStressLevel() {
   const router = useRouter();
 
   const [level, setLevel] = useState(0);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   const levelLabels: Record<number, string> = {
     0: 'No Stress',
@@ -89,7 +90,10 @@ export default function AddStressLevel() {
                return (
                   <button
                      key={val}
-                     onClick={() => setLevel(val)}
+                     onClick={() => {
+                        setLevel(val);
+                        setHasInteracted(true);
+                     }}
                      className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-all duration-300 z-10 w-[30px] h-[30px]"
                      style={pos}
                   >
@@ -122,10 +126,18 @@ export default function AddStressLevel() {
       {/* Sticky Bottom Form Logic */}
       <div className="absolute bottom-8 left-0 px-6 w-full z-20">
           <button 
-             onClick={() => router.push(`/stress/add/stressor?level=${level}`)}
-             className="w-full bg-[#4B3425] text-white py-[20px] rounded-[32px] font-extrabold text-[16px] tracking-wide hover:scale-[1.02] active:scale-95 transition-transform shadow-[0_8px_30px_rgba(75,52,37,0.2)] flex items-center justify-center gap-3 max-w-md mx-auto"
+             onClick={() => {
+                if (!hasInteracted && level === 0) {
+                   const confirmZero = window.confirm("You haven't changed the level. Is it really 'No Stress' today?");
+                   if (!confirmZero) return;
+                }
+                router.push(`/stress/add/stressor?level=${level}`);
+             }}
+             className={`w-full py-[20px] rounded-[32px] font-extrabold text-[16px] tracking-wide transition-all shadow-[0_8px_30px_rgba(75,52,37,0.2)] flex items-center justify-center gap-3 max-w-md mx-auto ${
+                !hasInteracted ? 'bg-[#4B3425]/40 text-white/50' : 'bg-[#4B3425] text-white hover:scale-[1.02] active:scale-95'
+             }`}
           >
-             Continue
+             {hasInteracted ? 'Continue' : 'Confirm No Stress'}
              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 12H19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                 <path d="M12 5L19 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>

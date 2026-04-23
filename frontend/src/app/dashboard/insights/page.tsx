@@ -18,7 +18,8 @@ interface Insight {
 }
 interface Task { id: string; title: string; description: string; type: string; actionLink: string; }
 interface InsightsData {
-  score: number; label: string; delta: number;
+  score: number | null; label: string | null; delta: number;
+  scoreIncomplete?: boolean;
   insights: Insight[]; tasks: Task[];
   today: { mood: any; stress: any; sleep: any; };
   state: 'empty' | 'partial' | 'ready';
@@ -62,15 +63,16 @@ const LIBRARY = [
 ];
 
 // ─── Circular score ring ──────────────────────────────────────────────────────
-function ScoreRing({ score, label }: { score: number; label: string }) {
+function ScoreRing({ score, label }: { score: number | null; label: string | null }) {
   const r = 44;
   const circ = 2 * Math.PI * r;
-  const filled = circ * (score / 100);
+  const filled = score != null ? circ * (score / 100) : 0;
 
   const ringColor =
-    score >= 75 ? '#9BB068' :
-    score >= 55 ? '#FFCE5C' :
-    score >= 35 ? '#FE814B' : '#E05252';
+    score == null   ? 'rgba(255,255,255,0.2)' :
+    score >= 75     ? '#9BB068' :
+    score >= 55     ? '#FFCE5C' :
+    score >= 35     ? '#FE814B' : '#E05252';
 
   return (
     <div className="relative w-28 h-28 flex items-center justify-center">
@@ -84,8 +86,14 @@ function ScoreRing({ score, label }: { score: number; label: string }) {
         />
       </svg>
       <div className="z-10 text-center">
-        <p className="text-white font-black text-3xl leading-none">{score}</p>
-        <p className="text-white/70 text-[11px] font-semibold mt-0.5">{label}</p>
+        {score != null ? (
+          <>
+            <p className="text-white font-black text-3xl leading-none">{score}</p>
+            <p className="text-white/70 text-[11px] font-semibold mt-0.5">{label}</p>
+          </>
+        ) : (
+          <p className="text-white/50 font-black text-2xl leading-none">--</p>
+        )}
       </div>
     </div>
   );
@@ -173,7 +181,7 @@ export default function InsightsPage() {
           <div className="flex items-stretch">
             {/* Left: score ring on brown bg */}
             <div className="bg-gradient-to-br from-[#4F3422] to-[#7A5236] p-5 flex items-center justify-center rounded-[28px]">
-              <ScoreRing score={data?.score ?? 0} label={data?.label ?? '–'} />
+              <ScoreRing score={data?.score ?? null} label={data?.label ?? null} />
             </div>
             {/* Right: detail */}
             <div className="flex-1 px-5 py-4 flex flex-col justify-center">
@@ -181,16 +189,26 @@ export default function InsightsPage() {
                 <BarChart2 className="w-3.5 h-3.5 text-[#926247]" />
                 <span className="text-[#926247] text-[10px] font-black uppercase tracking-widest">Your Score</span>
               </div>
-              <p className="text-[#4F3422] font-black text-[32px] leading-none">{data?.score ?? '–'}</p>
-              <p className="text-[#4F3422] font-bold text-[15px]">{data?.label ?? 'Log data to see score'}</p>
-              <p className="text-[#4F3422]/40 text-[11px] mb-3">Based on your recent activity</p>
-              {data && (
-                <div className={`inline-flex items-center gap-1 self-start rounded-full px-3 py-1.5 text-[11px] font-bold ${
-                  data.delta >= 0 ? 'bg-[#F0F7E8] text-[#3B5C1A]' : 'bg-[#FFF3ED] text-[#A4431B]'
-                }`}>
-                  {data.delta >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                  {data.delta >= 0 ? '+' : ''}{data.delta} from yesterday
-                </div>
+              {data?.score != null ? (
+                <>
+                  <p className="text-[#4F3422] font-black text-[32px] leading-none">{data.score}</p>
+                  <p className="text-[#4F3422] font-bold text-[15px]">{data.label}</p>
+                  <p className="text-[#4F3422]/40 text-[11px] mb-3">Based on your recent activity</p>
+                  <div className={`inline-flex items-center gap-1 self-start rounded-full px-3 py-1.5 text-[11px] font-bold ${
+                    data.delta >= 0 ? 'bg-[#F0F7E8] text-[#3B5C1A]' : 'bg-[#FFF3ED] text-[#A4431B]'
+                  }`}>
+                    {data.delta >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+                    {data.delta >= 0 ? '+' : ''}{data.delta} from yesterday
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-[#4F3422] font-black text-[32px] leading-none">--</p>
+                  <p className="text-[#4F3422] font-bold text-[14px] mt-1">Score not ready yet</p>
+                  <p className="text-[#4F3422]/50 text-[11px] mt-1 leading-snug">
+                    Log your <Link href="/mood/log" className="text-[#9BB068] font-bold">mood</Link> and <Link href="/stress" className="text-[#FE814B] font-bold">stress</Link> to unlock your daily score.
+                  </p>
+                </>
               )}
             </div>
           </div>

@@ -3,7 +3,7 @@
 import { Clock } from 'lucide-react';
 import Link from 'next/link';
 
-export function MindfulHoursCard() {
+export function MindfulHoursCard({ totalMinutes = 0, done }: { totalMinutes?: number; done?: boolean }) {
     return (
         <Link href="/mindful" className="block w-full mb-4">
             <div className="w-full bg-[#f2f8eb] rounded-[32px] p-4 pr-6 flex items-center justify-between shadow-sm h-24 hover:scale-[1.02] transition-transform cursor-pointer">
@@ -16,7 +16,7 @@ export function MindfulHoursCard() {
                     {/* Text */}
                     <div className="flex flex-col">
                         <span className="text-[#3a2e26] font-bold text-lg leading-tight">Mindful Hours</span>
-                        <span className="text-[#3a2e26]/60 font-medium text-sm">2.5h/8h</span>
+                        <span className="text-[#3a2e26]/60 font-medium text-sm">{(totalMinutes / 60).toFixed(1)}h/8h</span>
                     </div>
                 </div>
 
