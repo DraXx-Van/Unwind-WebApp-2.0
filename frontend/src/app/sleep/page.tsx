@@ -64,9 +64,9 @@ export default function SleepDashboard() {
   useEffect(() => {
     initTimer();
     if (user?.id) {
-      fetchLatest(user.id);
-      fetchSchedule(user.id);
-      fetchWeeklyQuality(user.id);
+      fetchLatest();
+      fetchSchedule();
+      fetchWeeklyQuality();
     }
   }, [fetchLatest, fetchSchedule, fetchWeeklyQuality, initTimer, user?.id]);
 
@@ -225,8 +225,8 @@ export default function SleepDashboard() {
                 <button
                   onClick={async () => {
                     if (user?.id) {
-                      await endSleepFromSchedule(user.id);
-                      await fetchLatest(user.id);
+                      await endSleepFromSchedule();
+                      await fetchLatest();
                     }
                   }}
                   className="flex-1 bg-[#FE814B] text-white text-xs font-bold py-2.5 rounded-2xl"

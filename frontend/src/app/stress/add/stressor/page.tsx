@@ -44,7 +44,7 @@ function StressorSelectionContent() {
 
   const handleSave = async () => {
     const impact = IMPACT_MAPPING[selectedStressor] || 'Moderate';
-    await addEntry(user?.id || 'user-1', {
+    await addEntry({
       value: level,
       stressor: selectedStressor,
       impact: impact,

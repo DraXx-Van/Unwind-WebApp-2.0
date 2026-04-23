@@ -21,9 +21,10 @@ export const useMoodStore = create<MoodState>((set) => ({
     setTodayMood: async (mood: string) => {
         set({ isLoading: true, error: null });
         try {
+            const localDate = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD
             const response = await authFetch('/mood', {
                 method: 'POST',
-                body: JSON.stringify({ mood }),
+                body: JSON.stringify({ mood, date: localDate }),
             });
             if (!response.ok) throw new Error('Failed to save mood');
             const data = await response.json();
@@ -36,7 +37,8 @@ export const useMoodStore = create<MoodState>((set) => ({
     fetchTodayMood: async () => {
         set({ isLoading: true, error: null });
         try {
-            const response = await authFetch('/mood/today');
+            const localDate = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD
+            const response = await authFetch(`/mood/today?date=${localDate}`);
             if (response.ok) {
                 const data = await response.json();
                 set({ todayMood: data, isLoading: false });

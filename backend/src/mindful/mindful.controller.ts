@@ -1,14 +1,16 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, Query, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Query, BadRequestException, UseGuards, Req } from '@nestjs/common';
 import { MindfulService } from './mindful.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('mindful')
+@UseGuards(JwtAuthGuard)
 export class MindfulController {
   constructor(private readonly mindfulService: MindfulService) {}
 
   @Post()
-  async createEntry(@Body() body: { userId: string; activity: string; duration: number; plannedDuration: number; category: string; timeOfDay: string }) {
-    if (!body.userId) throw new BadRequestException('userId is required');
-    return this.mindfulService.createEntry(body.userId, {
+  async createEntry(@Req() req: any, @Body() body: { activity: string; duration: number; plannedDuration: number; category: string; timeOfDay: string }) {
+    const userId = req.user.sub;
+    return this.mindfulService.createEntry(userId, {
       activity: body.activity,
       duration: body.duration,
       plannedDuration: body.plannedDuration,
@@ -30,14 +32,14 @@ export class MindfulController {
   }
 
   @Get('latest')
-  async getLatestEntry(@Query('userId') userId: string) {
-    if (!userId) throw new BadRequestException('userId is required');
+  async getLatestEntry(@Req() req: any) {
+    const userId = req.user.sub;
     return this.mindfulService.getLatestEntry(userId);
   }
 
   @Get('history')
-  async getHistory(@Query('userId') userId: string) {
-    if (!userId) throw new BadRequestException('userId is required');
+  async getHistory(@Req() req: any) {
+    const userId = req.user.sub;
     return this.mindfulService.getHistory(userId);
   }
 }

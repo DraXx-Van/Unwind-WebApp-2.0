@@ -22,7 +22,7 @@ export default function MindfulDashboard() {
 
   useEffect(() => {
     if (user?.id) {
-      fetchHistory(user.id);
+      fetchHistory();
     }
   }, [fetchHistory, user?.id]);
 

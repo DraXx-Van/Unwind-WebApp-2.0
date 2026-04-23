@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { authFetch } from '@/lib/api';
 
 export interface SleepEntry {
   id: string;
@@ -36,31 +37,28 @@ interface SleepState {
   // Active sleep timer — ISO string or null
   activeSleepStart: string | null;
 
-  fetchLatest: (userId?: string) => Promise<void>;
-  fetchHistory: (userId?: string) => Promise<void>;
-  fetchSchedule: (userId?: string) => Promise<void>;
-  fetchWeeklyQuality: (userId?: string) => Promise<void>;
-  setSchedule: (userId: string, data: Partial<SleepSchedule>) => Promise<void>;
-  addEntry: (userId: string, data: { duration: number; sleepTime: string; wakeTime: string; quality?: number; rem?: number; core?: number; post?: number }) => Promise<void>;
+  fetchLatest: () => Promise<void>;
+  fetchHistory: () => Promise<void>;
+  fetchSchedule: () => Promise<void>;
+  fetchWeeklyQuality: () => Promise<void>;
+  setSchedule: (data: Partial<SleepSchedule>) => Promise<void>;
+  addEntry: (data: { duration: number; sleepTime: string; wakeTime: string; quality?: number; rem?: number; core?: number; post?: number }) => Promise<void>;
 
   // Sleep timer actions
   initTimer: () => void;
   startSleep: () => void;
-  endSleep: (userId?: string) => Promise<void>;
+  endSleep: () => Promise<void>;
   clearSleep: () => void;
 
   // Fallback: log sleep based purely on schedule (for users who didn't open app)
-  endSleepFromSchedule: (userId?: string) => Promise<void>;
+  endSleepFromSchedule: () => Promise<void>;
 }
-
-const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/sleep`;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 /** Returns the ISO date string for TODAY in the device's LOCAL timezone (YYYY-MM-DD) */
 function todayDateStr() {
   const d = new Date();
-  // Use local year/month/day — NOT toISOString() which gives UTC date
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, '0');
   const day = String(d.getDate()).padStart(2, '0');
@@ -80,13 +78,10 @@ function parseHHMM(hhmm: string): Date {
   return d;
 }
 
-/** Returns true if today's sleep is already logged AND was at least 30 minutes long.
- *  Entries under 30 min are treated as accidental/junk and ignored. */
+/** Returns true if today's sleep is already logged AND was at least 30 minutes long. */
 export function sleptToday(latestEntry: SleepEntry | null): boolean {
   if (!latestEntry) return false;
-  // Ignore accidental very-short sessions (< 0.5h = 30 mins)
   if (latestEntry.duration < 0.5) return false;
-  // Convert the UTC createdAt to local date string
   const entryDate = new Date(latestEntry.createdAt);
   const y = entryDate.getFullYear();
   const m = String(entryDate.getMonth() + 1).padStart(2, '0');
@@ -106,10 +101,10 @@ export const useSleepStore = create<SleepState>((set, get) => ({
   error: null,
   activeSleepStart: null,
 
-  fetchLatest: async (userId = 'user-1') => {
+  fetchLatest: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch(`${API_BASE_URL}/latest?userId=${userId}`);
+      const response = await authFetch('/sleep/latest');
       if (response.ok) {
         const data = await response.json();
         set({ latestEntry: data, isLoading: false });
@@ -121,10 +116,10 @@ export const useSleepStore = create<SleepState>((set, get) => ({
     }
   },
 
-  fetchHistory: async (userId = 'user-1') => {
+  fetchHistory: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch(`${API_BASE_URL}/history?userId=${userId}`);
+      const response = await authFetch('/sleep/history');
       if (!response.ok) throw new Error('Failed to fetch history');
       const data = await response.json();
       set({ history: data, isLoading: false });
@@ -133,13 +128,13 @@ export const useSleepStore = create<SleepState>((set, get) => ({
     }
   },
 
-  fetchSchedule: async (userId = 'user-1') => {
+  fetchSchedule: async () => {
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch(`${API_BASE_URL}/schedule?userId=${userId}`);
+      const response = await authFetch('/sleep/schedule');
       if (response.ok) {
         const data = await response.json();
-        set({ schedule: data && data.userId ? data : null, isLoading: false });
+        set({ schedule: data && data.id ? data : null, isLoading: false });
       } else {
         set({ schedule: null, isLoading: false });
       }
@@ -148,9 +143,9 @@ export const useSleepStore = create<SleepState>((set, get) => ({
     }
   },
 
-  fetchWeeklyQuality: async (userId = 'user-1') => {
+  fetchWeeklyQuality: async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/weekly-quality?userId=${userId}`);
+      const response = await authFetch('/sleep/weekly-quality');
       if (response.ok) {
         const data = await response.json();
         set({ weeklyQuality: data.score || 0 });
@@ -160,13 +155,12 @@ export const useSleepStore = create<SleepState>((set, get) => ({
     }
   },
 
-  setSchedule: async (userId: string, data) => {
+  setSchedule: async (data) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch(`${API_BASE_URL}/schedule`, {
+      const response = await authFetch('/sleep/schedule', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, ...data }),
+        body: JSON.stringify(data),
       });
       if (!response.ok) throw new Error('Failed to set schedule');
       const savedSchedule = await response.json();
@@ -176,13 +170,12 @@ export const useSleepStore = create<SleepState>((set, get) => ({
     }
   },
 
-  addEntry: async (userId: string, data) => {
+  addEntry: async (data) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await fetch(API_BASE_URL, {
+      const response = await authFetch('/sleep', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, ...data }),
+        body: JSON.stringify(data),
       });
       if (!response.ok) throw new Error('Failed to add entry');
       const newEntry = await response.json();
@@ -201,7 +194,6 @@ export const useSleepStore = create<SleepState>((set, get) => ({
   initTimer: () => {
     if (typeof window === 'undefined') return;
     const stored = localStorage.getItem('sleep_start_time');
-    // Only restore if it's from today — compare in LOCAL timezone (same as todayDateStr)
     if (stored) {
       const storedDate = new Date(stored);
       const y = storedDate.getFullYear();
@@ -218,38 +210,28 @@ export const useSleepStore = create<SleepState>((set, get) => ({
 
   startSleep: () => {
     const { latestEntry } = get();
-    // Guard: already slept today
     if (sleptToday(latestEntry)) return;
-
     const now = new Date().toISOString();
     if (typeof window !== 'undefined') localStorage.setItem('sleep_start_time', now);
     set({ activeSleepStart: now });
   },
 
-  endSleep: async (userId = 'user-1') => {
+  endSleep: async () => {
     const { activeSleepStart, addEntry, latestEntry } = get();
-
-    // Guard: already logged today
     if (sleptToday(latestEntry)) {
       if (typeof window !== 'undefined') localStorage.removeItem('sleep_start_time');
       set({ activeSleepStart: null });
       return;
     }
-
     if (!activeSleepStart) return;
-
     const sleepStart = new Date(activeSleepStart);
     const wakeNow = new Date();
-    const durationHours = parseFloat(
-      ((wakeNow.getTime() - sleepStart.getTime()) / (1000 * 60 * 60)).toFixed(2)
-    );
-
-    await addEntry(userId, {
+    const durationHours = parseFloat(((wakeNow.getTime() - sleepStart.getTime()) / (1000 * 60 * 60)).toFixed(2));
+    await addEntry({
       duration: durationHours,
       sleepTime: fmt(sleepStart),
       wakeTime: fmt(wakeNow),
     });
-
     if (typeof window !== 'undefined') localStorage.removeItem('sleep_start_time');
     set({ activeSleepStart: null });
   },
@@ -259,31 +241,18 @@ export const useSleepStore = create<SleepState>((set, get) => ({
     set({ activeSleepStart: null });
   },
 
-  /**
-   * Fallback logger: if user didn't open the app but had a schedule,
-   * log the sleep based purely on scheduled sleep/wake times.
-   * Call this from a "Did you sleep?" prompt or a daily check.
-   */
-  endSleepFromSchedule: async (userId = 'user-1') => {
+  endSleepFromSchedule: async () => {
     const { schedule, latestEntry, addEntry } = get();
     if (!schedule || sleptToday(latestEntry)) return;
-
     const sleepDate = parseHHMM(schedule.sleepTime);
     const wakeDate = parseHHMM(schedule.wakeTime);
-
-    // If wake is before sleep (crosses midnight) — treat wake as next day
     if (wakeDate <= sleepDate) wakeDate.setDate(wakeDate.getDate() + 1);
-
-    const durationHours = parseFloat(
-      ((wakeDate.getTime() - sleepDate.getTime()) / (1000 * 60 * 60)).toFixed(2)
-    );
-
-    await addEntry(userId, {
+    const durationHours = parseFloat(((wakeDate.getTime() - sleepDate.getTime()) / (1000 * 60 * 60)).toFixed(2));
+    await addEntry({
       duration: durationHours,
       sleepTime: schedule.sleepTime,
       wakeTime: schedule.wakeTime,
     });
-
     if (typeof window !== 'undefined') localStorage.removeItem('sleep_start_time');
     set({ activeSleepStart: null });
   },

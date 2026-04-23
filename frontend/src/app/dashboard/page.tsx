@@ -105,7 +105,7 @@ export default function DashboardPage() {
             .then(d => { if (d?.mood) setLiveMoodStr(d.mood); })
             .catch(() => {});
 
-        authFetch(`/stress/latest?userId=${user.id}`)
+        authFetch('/stress/latest')
             .then(r => r.ok ? r.json() : null)
             .then(d => {
                 if (d?.value != null && isToday(d.createdAt)) {
@@ -114,7 +114,7 @@ export default function DashboardPage() {
             })
             .catch(() => {});
 
-        authFetch(`/sleep/latest?userId=${user.id}`)
+        authFetch('/sleep/latest')
             .then(r => r.ok ? r.json() : null)
             .then(d => {
                 if (d?.quality != null && isToday(d.createdAt)) {
@@ -123,7 +123,7 @@ export default function DashboardPage() {
             })
             .catch(() => {});
 
-        authFetch(`/mindful/history?userId=${user.id}`)
+        authFetch('/mindful/history')
             .then(r => r.ok ? r.json() : [])
             .then((data: any[]) => {
                 setMindfulHistory(data.slice(0, 3));

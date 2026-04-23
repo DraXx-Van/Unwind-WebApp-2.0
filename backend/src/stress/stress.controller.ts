@@ -1,14 +1,16 @@
-import { Controller, Get, Post, Body, Query, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, BadRequestException, UseGuards, Req } from '@nestjs/common';
 import { StressService } from './stress.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('stress')
+@UseGuards(JwtAuthGuard)
 export class StressController {
   constructor(private readonly stressService: StressService) {}
 
   @Post()
-  async createEntry(@Body() body: { userId: string; value: number; stressor: string; impact: string }) {
-    if (!body.userId) throw new BadRequestException('userId is required');
-    return this.stressService.createEntry(body.userId, {
+  async createEntry(@Req() req: any, @Body() body: { value: number; stressor: string; impact: string }) {
+    const userId = req.user.sub;
+    return this.stressService.createEntry(userId, {
       value: body.value,
       stressor: body.stressor,
       impact: body.impact,
@@ -16,14 +18,14 @@ export class StressController {
   }
 
   @Get('latest')
-  async getLatestEntry(@Query('userId') userId: string) {
-    if (!userId) throw new BadRequestException('userId is required');
+  async getLatestEntry(@Req() req: any) {
+    const userId = req.user.sub;
     return this.stressService.getLatestEntry(userId);
   }
 
   @Get('history')
-  async getHistory(@Query('userId') userId: string) {
-    if (!userId) throw new BadRequestException('userId is required');
+  async getHistory(@Req() req: any) {
+    const userId = req.user.sub;
     return this.stressService.getHistory(userId);
   }
 }

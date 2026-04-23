@@ -95,13 +95,7 @@ export function DailyCheckCard() {
     setGone(goneSet);
     setMounted(true);
     initTimer();
-    fetchTodayMood();
-    fetchJournals();
-    if (userId) {
-      fetchStress(userId);
-      fetchSleep(userId);
-    }
-  }, [fetchTodayMood, fetchJournals, fetchStress, fetchSleep, initTimer, userId]);
+  }, [initTimer]);
 
   const dismiss = (key: string) => {
     localStorage.setItem(`ucd_${key}`, Date.now().toString());

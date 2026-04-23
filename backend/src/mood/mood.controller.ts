@@ -13,8 +13,8 @@ export class MoodController {
     }
 
     @Get('today')
-    async getTodayMood(@Req() req: any) {
-        return this.moodService.getMoodByDate(req.user.sub);
+    async getTodayMood(@Req() req: any, @Query('date') date?: string) {
+        return this.moodService.getMoodByDate(req.user.sub, date);
     }
 
     @Get('history')
