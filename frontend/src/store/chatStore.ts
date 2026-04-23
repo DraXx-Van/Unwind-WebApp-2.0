@@ -1,37 +1,42 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { authFetch } from '@/lib/api';
 
 export interface Message {
     id: string;
-    text: string;
-    sender: 'user' | 'bot' | 'mentor';
-    timestamp: string;
-    emotion?: string;
-    dataUpdated?: boolean;
+    role: 'user' | 'model';
+    content: string;
+    createdAt?: string;
 }
 
 export interface Conversation {
     id: string;
     title: string;
-    lastMessage: string;
-    totalMessages: number;
-    lastEmotion: string;
+    lastMessage?: string;
+    totalMessages?: number;
+    lastEmotion?: string;
     type: 'ai' | 'mentor';
-    mentorCode?: string;
     updatedAt: string;
+    isPinned?: boolean;
 }
 
 interface ChatState {
     conversations: Conversation[];
     currentMessages: Message[];
     isLoading: boolean;
-    
+    isTyping: boolean;
+    pinnedMentors: string[];
+
     // Actions
     fetchConversations: () => Promise<void>;
     fetchMessages: (conversationId: string) => Promise<void>;
-    sendMessage: (conversationId: string, text: string) => Promise<void>;
-    joinMentor: (code: string) => Promise<boolean>;
+    sendAiMessage: (conversationId: string, text: string) => Promise<void>;
+    joinMentor: (code: string) => Promise<string | null>;
     startNewAiChat: (initialMessage: string) => Promise<string>;
+    deleteConversation: (id: string) => void;
+    togglePinConversation: (id: string) => void;
+    togglePinMentor: (id: string) => void;
+    clearCurrentMessages: () => void;
 }
 
 export const useChatStore = create<ChatState>()(
@@ -40,121 +45,180 @@ export const useChatStore = create<ChatState>()(
             conversations: [],
             currentMessages: [],
             isLoading: false,
+            isTyping: false,
+            pinnedMentors: [],
 
             fetchConversations: async () => {
                 set({ isLoading: true });
-                // Mocking for now, will link to real backend later
-                const mockConvs: Conversation[] = [
-                    {
-                        id: 'ai-1',
-                        title: 'Recent Breakup, felt s...',
-                        lastMessage: 'I understand how you feel...',
-                        totalMessages: 478,
-                        lastEmotion: 'Sad',
-                        type: 'ai',
-                        updatedAt: new Date().toISOString(),
-                    },
-                    {
-                        id: 'ai-2',
-                        title: 'Shitty Teacher at Uni...',
-                        lastMessage: 'That sounds frustrating...',
-                        totalMessages: 478,
-                        lastEmotion: 'Happy',
-                        type: 'ai',
-                        updatedAt: new Date(Date.now() - 86400000).toISOString(),
-                    },
-                    {
-                        id: 'ai-3',
-                        title: 'Just wanna stop exist...',
-                        lastMessage: 'Please know that you matter...',
-                        totalMessages: 478,
-                        lastEmotion: 'Overjoyed',
-                        type: 'ai',
-                        updatedAt: new Date(Date.now() - 172800000).toISOString(),
-                    },
-                ];
-                set({ conversations: mockConvs, isLoading: false });
-            },
-
-            fetchMessages: async (id) => {
-                set({ isLoading: true });
-                // Mock messages
-                const mockMsgs: Message[] = [
-                    {
-                        id: '1',
-                        text: "I can't believe this is happening! Everything is falling apart, and I feel so overwhelmed! F*** this world and everyone!",
-                        sender: 'user',
-                        timestamp: new Date().toISOString(),
-                    },
-                    {
-                        id: '2',
-                        text: "Emotion: Anger, Despair. Data Updated.",
-                        sender: 'bot',
-                        timestamp: new Date().toISOString(),
-                        emotion: 'Anger',
-                        dataUpdated: true,
-                    },
-                    {
-                        id: '3',
-                        text: "Shinomiya, Let's work on coping strategies. You're not alone in this journey. I'm with you ALL THE WAY THROUGH!! 💯😊😊",
-                        sender: 'bot',
-                        timestamp: new Date().toISOString(),
+                try {
+                    const res = await authFetch('/ai/conversations');
+                    if (res.ok) {
+                        const data = await res.json();
+                        const convs: Conversation[] = data.map((c: any) => ({
+                            id: c.id,
+                            title: c.title,
+                            lastMessage: c.messages?.[0]?.content || '',
+                            totalMessages: c._count?.messages || 0,
+                            lastEmotion: 'Neutral',
+                            type: 'ai',
+                            updatedAt: c.updatedAt,
+                        }));
+                        set({ conversations: convs });
                     }
-                ];
-                set({ currentMessages: mockMsgs, isLoading: false });
+                } catch (e) {
+                    console.error('Failed to fetch conversations', e);
+                } finally {
+                    set({ isLoading: false });
+                }
             },
 
-            sendMessage: async (id, text) => {
-                const newMessage: Message = {
-                    id: Date.now().toString(),
-                    text,
-                    sender: 'user',
-                    timestamp: new Date().toISOString(),
+            fetchMessages: async (conversationId: string) => {
+                set({ isLoading: true, currentMessages: [] });
+                try {
+                    const res = await authFetch(`/ai/conversations/${conversationId}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        const msgs: Message[] = (data.messages || []).map((m: any) => ({
+                            id: m.id,
+                            role: m.role,
+                            content: m.content,
+                            createdAt: m.createdAt,
+                        }));
+                        set({ currentMessages: msgs });
+                    }
+                } catch (e) {
+                    console.error('Failed to fetch messages', e);
+                } finally {
+                    set({ isLoading: false });
+                }
+            },
+
+            sendAiMessage: async (conversationId: string, text: string) => {
+                // Optimistically add user message
+                const userMsg: Message = {
+                    id: 'temp-' + Date.now(),
+                    role: 'user',
+                    content: text,
                 };
-                
                 set(state => ({
-                    currentMessages: [...state.currentMessages, newMessage]
+                    currentMessages: [...state.currentMessages, userMsg],
+                    isTyping: true,
                 }));
 
-                // Simulate AI Response
-                setTimeout(() => {
-                    const botMsg: Message = {
-                        id: (Date.now() + 1).toString(),
-                        text: "I'm processing what you said. Let's look at this together.",
-                        sender: 'bot',
-                        timestamp: new Date().toISOString(),
+                try {
+                    const res = await authFetch('/ai/chat', {
+                        method: 'POST',
+                        body: JSON.stringify({ conversationId, message: text }),
+                    });
+
+                    if (res.ok) {
+                        const aiMsg = await res.json();
+                        const aiMessage: Message = {
+                            id: aiMsg.id,
+                            role: 'model',
+                            content: aiMsg.content,
+                        };
+                        set(state => ({
+                            currentMessages: [...state.currentMessages, aiMessage],
+                            isTyping: false,
+                        }));
+
+                        // Refresh conversations list to show updated title/timestamp
+                        get().fetchConversations();
+                    } else {
+                        const errorData = await res.json().catch(() => ({}));
+                        throw new Error(errorData.message || 'Failed to send message');
+                    }
+                } catch (e: any) {
+                    console.error('Failed to send AI message', e);
+                    const errorMsg: Message = {
+                        id: 'error-' + Date.now(),
+                        role: 'model',
+                        content: e.message || 'Sorry, I am currently experiencing issues. Please try again.',
                     };
                     set(state => ({
-                        currentMessages: [...state.currentMessages, botMsg]
+                        currentMessages: [...state.currentMessages, errorMsg],
+                        isTyping: false,
                     }));
-                }, 1000);
+                }
             },
 
             joinMentor: async (code) => {
-                // Mock success
-                return code === '123456';
+                try {
+                    const res = await authFetch('/mentor/code/join', {
+                        method: 'POST',
+                        body: JSON.stringify({ code })
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        return data.mentor.id;
+                    }
+                    return null;
+                } catch (e) {
+                    return null;
+                }
             },
 
-            startNewAiChat: async (initialMessage) => {
-                const newId = 'ai-' + Date.now();
-                const newConv: Conversation = {
-                    id: newId,
-                    title: initialMessage.slice(0, 25) + '...',
-                    lastMessage: initialMessage,
-                    totalMessages: 1,
-                    lastEmotion: 'Neutral',
-                    type: 'ai',
-                    updatedAt: new Date().toISOString(),
-                };
+            startNewAiChat: async (initialMessage: string) => {
+                const res = await authFetch('/ai/conversations', {
+                    method: 'POST',
+                    body: JSON.stringify({ title: initialMessage.slice(0, 30) }),
+                });
+                if (res.ok) {
+                    const conv = await res.json();
+                    const newConv: Conversation = {
+                        id: conv.id,
+                        title: conv.title,
+                        type: 'ai',
+                        updatedAt: conv.createdAt,
+                    };
+                    set(state => ({
+                        conversations: [newConv, ...state.conversations]
+                    }));
+                    return conv.id;
+                }
+                // fallback
+                return 'ai-' + Date.now();
+            },
+
+            deleteConversation: (id: string) => {
                 set(state => ({
-                    conversations: [newConv, ...state.conversations]
+                    conversations: state.conversations.filter(c => c.id !== id)
                 }));
-                return newId;
+                authFetch(`/ai/conversations/${id}`, { method: 'DELETE' }).catch(e => 
+                    console.error('Failed to delete conversation from backend', e)
+                );
+            },
+
+            togglePinConversation: (id: string) => {
+                set(state => ({
+                    conversations: state.conversations.map(c =>
+                        c.id === id ? { ...c, isPinned: !c.isPinned } : c
+                    )
+                }));
+            },
+
+            togglePinMentor: (id: string) => {
+                set(state => {
+                    const isPinned = state.pinnedMentors.includes(id);
+                    return {
+                        pinnedMentors: isPinned
+                            ? state.pinnedMentors.filter(mId => mId !== id)
+                            : [...state.pinnedMentors, id]
+                    };
+                });
+            },
+
+            clearCurrentMessages: () => {
+                set({ currentMessages: [] });
             },
         }),
         {
             name: 'unwind-chat-storage',
-            partialize: (state) => ({ conversations: state.conversations }),
+            partialize: (state) => ({
+                conversations: state.conversations,
+                pinnedMentors: state.pinnedMentors,
+            }),
         }
     )
 );

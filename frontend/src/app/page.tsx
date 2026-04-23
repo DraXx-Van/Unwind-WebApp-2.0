@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Leaf } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -21,7 +21,11 @@ const slides = [
                 <span style={{ color: '#9BB068' }}>Unwind</span>
             </>
         ),
-        subtitle: 'Your mindful mental health AI companion for everyone, anywhere 🌿',
+        subtitle: (
+            <span className="flex justify-center items-center gap-1.5">
+                Your mindful mental health AI companion for everyone, anywhere <Leaf className="w-[18px] h-[18px] text-[#9BB068]" />
+            </span>
+        ),
         tag: null as null | { label: string; bg: string; color: string },
     },
     {
@@ -35,7 +39,7 @@ const slides = [
                 <span style={{ color: '#4B3425' }}>Mood Tracking &amp; Emotion Insights</span>
             </>
         ),
-        subtitle: null as null | string,
+        subtitle: null as null | React.ReactNode,
         tag: { label: 'STEP 2', bg: '#FFD2C2', color: '#FE814B' },
     },
     {
@@ -50,7 +54,7 @@ const slides = [
                 <span style={{ color: '#4B3425' }}>That Makes You Happy</span>
             </>
         ),
-        subtitle: null as null | string,
+        subtitle: null as null | React.ReactNode,
         tag: { label: 'STEP 3', bg: '#FFEBC2', color: '#E0A500' },
     },
 ];

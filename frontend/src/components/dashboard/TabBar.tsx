@@ -47,7 +47,7 @@ export function TabBar() {
 
             {/* Add Button (Floating Center) */}
             <div className="relative -top-8">
-                <Link href="/journal">
+                <Link href={pathname === '/dashboard/chat' ? '/dashboard/chat/new' : (pathname === '/journal' ? '/journal/new' : '/journal')}>
                     <button className="w-16 h-16 bg-serenity-green-50 rounded-full flex items-center justify-center shadow-[0px_16px_32px_rgba(155,176,104,0.5)] transition-transform active:scale-95">
                         <Plus className="text-white w-8 h-8" strokeWidth={3} />
                     </button>

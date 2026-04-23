@@ -13,7 +13,7 @@ import { MindfulHoursCard } from '@/components/dashboard/MindfulHoursCard';
 import { StressLevelCard } from '@/components/dashboard/StressLevelCard';
 import { MoodTrackerCard } from '@/components/dashboard/MoodTrackerCard';
 import { DailyCheckCard } from '@/components/dashboard/DailyCheckCard';
-import { Bell } from 'lucide-react';
+import { Bell, Star, Activity, Smile, MoreVertical } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { authFetch } from '@/lib/api';
 import { isToday } from '@/lib/dateUtils';
@@ -210,13 +210,13 @@ export default function DashboardPage() {
                     <div>
                         <h1 className="text-2xl font-bold">Hi, {userName.split(' ')[0]}!</h1>
                         <div className="flex items-center gap-3 mt-1 text-sm font-medium opacity-90">
-                            <span className="flex items-center gap-1"><span className="text-[#FF9500]">★</span> Pro</span>
+                            <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-[#FF9500] fill-[#FF9500]" /> Pro</span>
                             <span className="flex items-center gap-1">
-                                <span className="text-[#FF9500]">✿</span>
+                                <Activity className="w-3.5 h-3.5 text-[#FF9500]" />
                                 {mentalScore != null ? `${mentalScore}%` : '--'}
                             </span>
                             <span className="flex items-center gap-1">
-                                <span className="text-[#FF9500]">☺</span>
+                                <Smile className="w-3.5 h-3.5 text-[#FF9500]" />
                                 {mentalLabel ?? (checkinComplete ? '...' : 'Log today')}
                             </span>
                         </div>
@@ -231,7 +231,7 @@ export default function DashboardPage() {
                 <div className="flex flex-col gap-3">
                     <div className="px-6 flex justify-between items-center">
                         <h2 className="text-[#4F3422] font-bold text-lg">Mental Health Metrics</h2>
-                        <button className="text-[#926247]"><span className="text-xl">⋮</span></button>
+                        <button className="text-[#926247]"><MoreVertical className="w-5 h-5" /></button>
                     </div>
                     <div className="overflow-x-auto flex gap-4 px-6 pb-4 items-center hide-scrollbar">
                         <MentalScoreCard score={mentalScore} label={mentalLabel} />
@@ -244,7 +244,7 @@ export default function DashboardPage() {
                 <div className="px-6 flex flex-col gap-3">
                     <div className="flex justify-between items-center mb-1">
                         <h2 className="text-[#4F3422] font-bold text-lg">Mindful Tracker</h2>
-                        <button className="text-[#926247]"><span className="text-xl">⋮</span></button>
+                        <button className="text-[#926247]"><MoreVertical className="w-5 h-5" /></button>
                     </div>
                     <div className="flex flex-col gap-3">
                         <MindfulHoursCard totalMinutes={mindfulTotalToday} done={mindfulToday} />

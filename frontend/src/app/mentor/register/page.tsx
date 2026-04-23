@@ -3,31 +3,31 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Smile, Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react';
-import { useAuthStore } from '@/store/authStore';
+import { UserCircle2, Eye, EyeOff, Mail, Lock, User, ArrowRight, Stethoscope } from 'lucide-react';
+import { useMentorAuthStore } from '@/store/mentorAuthStore';
 import { motion } from 'framer-motion';
 
-export default function LoginPage() {
+export default function MentorRegisterPage() {
     const router = useRouter();
-    const { login, isLoading, error, clearError } = useAuthStore();
+    const { register, isLoading, error, clearError } = useMentorAuthStore();
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [specialization, setSpecialization] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!email || !password) return;
-        const success = await login(email, password);
+        if (!name || !email || !password) return;
+        const success = await register(name, email, password, specialization);
         if (success) {
-            router.push('/dashboard');
+            router.push('/mentor/dashboard');
         }
     };
 
     return (
         <div className="min-h-screen bg-mindful-brown-10 flex flex-col">
-            {/* Top Decorative Section */}
-            <div className="bg-[#4F3422] rounded-b-[48px] px-6 pt-16 pb-14 text-white relative overflow-hidden">
-                {/* Decorative circles */}
+            <div className="bg-[#4B3425] rounded-b-[48px] px-6 pt-16 pb-14 text-white relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3" />
                 <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/3" />
 
@@ -36,15 +36,14 @@ export default function LoginPage() {
                     animate={{ opacity: 1, y: 0 }}
                     className="relative z-10 flex flex-col items-center text-center"
                 >
-                    <div className="w-20 h-20 bg-serenity-green-50 rounded-full flex items-center justify-center shadow-lg mb-6">
-                        <Smile size={40} className="text-white" />
+                    <div className="w-20 h-20 bg-[#9BB068] rounded-full flex items-center justify-center shadow-lg mb-6">
+                        <UserCircle2 size={40} className="text-white" />
                     </div>
-                    <h1 className="text-3xl font-extrabold tracking-tight mb-2">Welcome Back</h1>
-                    <p className="text-white/70 font-medium text-lg">Sign in to continue your journey</p>
+                    <h1 className="text-3xl font-extrabold tracking-tight mb-2">Join as Mentor</h1>
+                    <p className="text-white/70 font-medium text-lg">Create your professional account</p>
                 </motion.div>
             </div>
 
-            {/* Form Section */}
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -52,36 +51,61 @@ export default function LoginPage() {
                 className="flex-1 px-6 pt-10 pb-8 max-w-md mx-auto w-full"
             >
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                    {/* Email Input */}
+                    <div className="flex flex-col gap-2">
+                        <label className="text-[#4F3422] font-bold text-sm pl-1">Full Name</label>
+                        <div className="bg-white rounded-full px-5 py-4 shadow-sm border border-gray-100 flex items-center gap-3">
+                            <User className="w-5 h-5 text-[#926247]/50" />
+                            <input
+                                type="text"
+                                placeholder="Dr. John Doe"
+                                className="bg-transparent outline-none flex-1 text-[#4F3422] text-lg font-medium placeholder:text-gray-300"
+                                value={name}
+                                onChange={(e) => { setName(e.target.value); clearError(); }}
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <label className="text-[#4F3422] font-bold text-sm pl-1">Specialization</label>
+                        <div className="bg-white rounded-full px-5 py-4 shadow-sm border border-gray-100 flex items-center gap-3">
+                            <Stethoscope className="w-5 h-5 text-[#926247]/50" />
+                            <input
+                                type="text"
+                                placeholder="e.g. Cognitive Behavioral Therapy"
+                                className="bg-transparent outline-none flex-1 text-[#4F3422] text-lg font-medium placeholder:text-gray-300"
+                                value={specialization}
+                                onChange={(e) => { setSpecialization(e.target.value); clearError(); }}
+                            />
+                        </div>
+                    </div>
+
                     <div className="flex flex-col gap-2">
                         <label className="text-[#4F3422] font-bold text-sm pl-1">Email</label>
                         <div className="bg-white rounded-full px-5 py-4 shadow-sm border border-gray-100 flex items-center gap-3">
                             <Mail className="w-5 h-5 text-[#926247]/50" />
                             <input
                                 type="email"
-                                placeholder="you@example.com"
+                                placeholder="mentor@example.com"
                                 className="bg-transparent outline-none flex-1 text-[#4F3422] text-lg font-medium placeholder:text-gray-300"
                                 value={email}
                                 onChange={(e) => { setEmail(e.target.value); clearError(); }}
                                 required
-                                autoComplete="email"
                             />
                         </div>
                     </div>
 
-                    {/* Password Input */}
                     <div className="flex flex-col gap-2">
                         <label className="text-[#4F3422] font-bold text-sm pl-1">Password</label>
                         <div className="bg-white rounded-full px-5 py-4 shadow-sm border border-gray-100 flex items-center gap-3">
                             <Lock className="w-5 h-5 text-[#926247]/50" />
                             <input
                                 type={showPassword ? 'text' : 'password'}
-                                placeholder="Enter your password"
+                                placeholder="Create a password"
                                 className="bg-transparent outline-none flex-1 text-[#4F3422] text-lg font-medium placeholder:text-gray-300"
                                 value={password}
                                 onChange={(e) => { setPassword(e.target.value); clearError(); }}
                                 required
-                                autoComplete="current-password"
                             />
                             <button
                                 type="button"
@@ -93,7 +117,6 @@ export default function LoginPage() {
                         </div>
                     </div>
 
-                    {/* Error Message */}
                     {error && (
                         <motion.div
                             initial={{ opacity: 0, y: -10 }}
@@ -104,35 +127,25 @@ export default function LoginPage() {
                         </motion.div>
                     )}
 
-                    {/* Submit Button */}
                     <button
                         type="submit"
-                        disabled={isLoading || !email || !password}
-                        className="w-full h-16 bg-[#4F3422] text-white rounded-full font-extrabold text-xl shadow-xl flex items-center justify-center gap-3 mt-4 transition-all hover:bg-[#3d281a] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
+                        disabled={isLoading || !name || !email || !password}
+                        className="w-full h-16 bg-[#9BB068] text-white rounded-full font-extrabold text-xl shadow-xl flex items-center justify-center gap-3 mt-4 transition-all hover:bg-[#8ca05a] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
                         {isLoading ? (
                             <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin" />
                         ) : (
                             <>
-                                Sign In <ArrowRight className="w-6 h-6" strokeWidth={2.5} />
+                                Create Account <ArrowRight className="w-6 h-6" strokeWidth={2.5} />
                             </>
                         )}
                     </button>
                 </form>
 
-                {/* Alternative Actions */}
-                <div className="flex flex-col gap-3 mt-8">
-                    <Link
-                        href="/register"
-                        className="w-full py-4 border-2 border-[#4F3422] text-[#4F3422] rounded-full font-bold text-lg text-center hover:bg-[#4F3422]/5 transition-colors"
-                    >
-                        Sign Up
-                    </Link>
-                    <Link
-                        href="/mentor/register"
-                        className="w-full py-4 bg-[#F7F4F2] text-[#4F3422] rounded-full font-bold text-lg text-center hover:bg-[#EAE6E1] transition-colors"
-                    >
-                        Register as a Mentor
+                <div className="text-center mt-8">
+                    <span className="text-[#926247] font-medium">Already registered? </span>
+                    <Link href="/mentor/login" className="text-[#4F3422] font-bold hover:underline">
+                        Sign In
                     </Link>
                 </div>
             </motion.div>

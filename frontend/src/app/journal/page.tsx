@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Plus } from 'lucide-react';
+import { ArrowLeft, Plus, Smile, Frown, Meh } from 'lucide-react';
 import { useJournalStore } from '@/store/journalStore';
 import { JournalHeatmap } from '@/components/journal/JournalHeatmap';
 import { TabBar } from '@/components/dashboard/TabBar';
@@ -86,14 +86,7 @@ export default function JournalPage() {
                     </svg>
                 </div>
 
-                {/* Add Button (Floating Center) - Absolute to move it correctly over the tab bar */}
-                <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
-                    <div className="relative top-[-72px] pointer-events-auto">
-                        <button className="w-16 h-16 bg-[#9BB068] rounded-full flex items-center justify-center shadow-[0px_16px_32px_rgba(155,176,104,0.5)] transition-transform active:scale-95 border-4 border-white">
-                            <Plus className="text-white w-8 h-8" strokeWidth={3} />
-                        </button>
-                    </div>
-                </div>
+
                 <JournalHeatmap journals={journals} />
 
                 {/* Recent Entries List */}
@@ -105,7 +98,13 @@ export default function JournalPage() {
                                 <div key={j.id || i} className="bg-white rounded-[24px] p-4 shadow-sm border border-gray-100 flex flex-col gap-2">
                                     <div className="flex justify-between items-start">
                                         <div className="flex items-center gap-2">
-                                            <span className="text-2xl">{j.emotion === 'happy' ? '🙂' : j.emotion === 'sad' ? '☹️' : j.emotion === 'angry' ? '😡' : j.emotion === 'calm' ? '😌' : '😐'}</span>
+                                            <div className="text-[#926247]">
+                                                {j.emotion === 'happy' ? <Smile className="w-6 h-6" /> : 
+                                                 j.emotion === 'sad' ? <Frown className="w-6 h-6" /> : 
+                                                 j.emotion === 'angry' ? <Frown className="w-6 h-6 text-red-500" /> : 
+                                                 j.emotion === 'calm' ? <Smile className="w-6 h-6 text-green-500" /> : 
+                                                 <Meh className="w-6 h-6" />}
+                                            </div>
                                             <h4 className="font-bold text-[#4F3422]">{j.title || 'Untitled'}</h4>
                                         </div>
                                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{new Date(j.createdAt).toLocaleDateString()}</span>

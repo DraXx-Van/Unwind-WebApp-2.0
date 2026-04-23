@@ -9,7 +9,7 @@ import { useSleepStore, sleptToday } from '@/store/sleepStore';
 import { useAuthStore } from '@/store/authStore';
 import {
   Sun, Moon, Sparkles, CheckCircle2, ArrowRight,
-  ChevronRight, Zap, BedDouble, Wind,
+  ChevronRight, Zap, BedDouble, Wind, ThumbsUp, Leaf
 } from 'lucide-react';
 
 // ─── Mood helpers ─────────────────────────────────────────────────────────────
@@ -164,7 +164,7 @@ export function DailyCheckCard() {
               <CheckCircle2 className="w-5 h-5 text-white" />
             </div>
             <div>
-              <p className="text-[#3B5C1A] font-bold text-[13px]">You've completed today's check-ins 👍</p>
+              <p className="text-[#3B5C1A] font-bold text-[13px] flex items-center gap-1">You've completed today's check-ins <ThumbsUp className="w-3.5 h-3.5" /></p>
               <p className="text-[#3B5C1A]/60 text-[11px] font-medium">
                 Feeling {moodLabel}
                 {stressToday !== null ? ` · Stress ${stressToday}/5` : ''}
@@ -189,8 +189,8 @@ export function DailyCheckCard() {
             </div>
             <button onClick={() => dismiss('poor_sleep')} className="text-white/30 text-xs hover:text-white/60 transition-colors">✕</button>
           </div>
-          <h3 className="text-white font-bold text-[17px] leading-snug mb-1">
-            You slept {formatDuration(sleepDuration!)} last night 😴
+          <h3 className="text-white font-bold text-[17px] leading-snug mb-1 flex items-center gap-1.5">
+            You slept {formatDuration(sleepDuration!)} last night <BedDouble className="w-5 h-5 opacity-80" />
           </h3>
           <p className="text-white/60 text-[12px] mb-5">
             That's below the recommended 7–8 hours. Take it slow today.
@@ -222,8 +222,8 @@ export function DailyCheckCard() {
             </div>
             <button onClick={() => dismiss('no_sleep')} className="text-white/30 text-xs hover:text-white/60 transition-colors">✕</button>
           </div>
-          <h3 className="text-white font-bold text-[17px] leading-snug mb-1">
-            We couldn't track your sleep last night 🌙
+          <h3 className="text-white font-bold text-[17px] leading-snug mb-1 flex items-center gap-1.5">
+            We couldn't track your sleep last night <Moon className="w-5 h-5 opacity-80" />
           </h3>
           <p className="text-white/60 text-[12px] mb-5">
             Set a sleep schedule so Unwind can help you build a consistent routine.
@@ -249,8 +249,8 @@ export function DailyCheckCard() {
             </div>
             <button onClick={() => dismiss('high_stress')} className="text-white/30 text-xs hover:text-white/60 transition-colors">✕</button>
           </div>
-          <h3 className="text-white font-bold text-[17px] leading-snug mb-1">
-            You seem a bit stressed today ⚡
+          <h3 className="text-white font-bold text-[17px] leading-snug mb-1 flex items-center gap-1.5">
+            You seem a bit stressed today <Zap className="w-5 h-5 text-[#FFCE5C]" />
           </h3>
           <p className="text-white/60 text-[12px] mb-5">
             Stress level at {stressToday}/5
@@ -341,8 +341,8 @@ export function DailyCheckCard() {
             </div>
             <button onClick={() => dismiss('midday')} className="text-[#4B3425]/30 text-xs hover:text-[#4B3425]/60 transition-colors">✕</button>
           </div>
-          <h3 className="text-[#4B3425] font-bold text-[16px] mb-1">
-            {bothMissing ? "Your daily logs are empty 🌿" : "Take a small break today 🌿"}
+          <h3 className="text-[#4B3425] font-bold text-[16px] mb-1 flex items-center gap-1.5">
+            {bothMissing ? "Your daily logs are empty" : "Take a small break today"} <Leaf className="w-4 h-4 text-[#8da666]" />
           </h3>
           <p className="text-[#4B3425]/60 text-[12px] mb-4">
             {bothMissing

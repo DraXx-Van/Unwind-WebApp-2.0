@@ -7,13 +7,7 @@ import Link from 'next/link';
 import { ChevronLeft, Check, Camera, FileText, X } from 'lucide-react';
 import { useJournalStore } from '@/store/journalStore';
 
-const EMOTIONS = [
-    { id: 'angry', emoji: '😡', label: 'Angry', color: 'bg-red-200' },
-    { id: 'sad', emoji: '☹️', label: 'Sad', color: 'bg-orange-200' },
-    { id: 'neutral', emoji: '😐', label: 'Neutral', color: 'bg-gray-200' },
-    { id: 'happy', emoji: '🙂', label: 'Happy', color: 'bg-yellow-200' },
-    { id: 'calm', emoji: '😌', label: 'Calm', color: 'bg-green-200' },
-];
+
 
 export default function AddJournalPage() {
     const router = useRouter();

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAssessmentStore } from '@/store/assessmentStore';
 import { motion } from 'framer-motion';
-import { CheckCircle, Loader2 } from 'lucide-react';
+import { CheckCircle, Loader2, PartyPopper, AlertTriangle } from 'lucide-react';
 
 export function StepComplete() {
     const router = useRouter();
@@ -61,7 +61,7 @@ export function StepComplete() {
                     </motion.div>
 
                     <h2 className="text-3xl font-extrabold text-mindful-brown-80 leading-tight">
-                        You're all set! 🎉
+                        You're all set! <PartyPopper className="inline w-7 h-7 ml-1" />
                     </h2>
                     <p className="text-mindful-brown-60 font-medium text-lg max-w-xs">
                         Your personal wellness profile is ready. Taking you to your dashboard now...
@@ -88,7 +88,7 @@ export function StepComplete() {
                     className="flex flex-col items-center gap-6"
                 >
                     <div className="w-24 h-24 rounded-full bg-red-50 flex items-center justify-center">
-                        <span className="text-4xl">⚠️</span>
+                        <AlertTriangle className="w-10 h-10 text-red-500" />
                     </div>
                     <h2 className="text-2xl font-extrabold text-mindful-brown-80">
                         Something went wrong

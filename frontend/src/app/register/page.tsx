@@ -150,14 +150,19 @@ export default function RegisterPage() {
                     </button>
                 </form>
 
-                {/* Login Link */}
-                <div className="text-center mt-8">
-                    <span className="text-[#926247] font-medium">Already have an account? </span>
+                {/* Alternative Actions */}
+                <div className="flex flex-col gap-3 mt-8">
                     <Link
                         href="/login"
-                        className="text-[#4F3422] font-bold hover:underline"
+                        className="w-full py-4 border-2 border-[#4F3422] text-[#4F3422] rounded-full font-bold text-lg text-center hover:bg-[#4F3422]/5 transition-colors"
                     >
                         Sign In
+                    </Link>
+                    <Link
+                        href="/mentor/register"
+                        className="w-full py-4 bg-[#F7F4F2] text-[#4F3422] rounded-full font-bold text-lg text-center hover:bg-[#EAE6E1] transition-colors"
+                    >
+                        Sign Up as a Mentor
                     </Link>
                 </div>
             </motion.div>
