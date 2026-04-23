@@ -48,7 +48,7 @@ export default function MentorStudentChatPage() {
     useEffect(() => {
         if (!token || !mentor || !studentId) return;
 
-        const newSocket = io('http://localhost:4000', {
+        const newSocket = io(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000', {
             auth: { token }
         });
 

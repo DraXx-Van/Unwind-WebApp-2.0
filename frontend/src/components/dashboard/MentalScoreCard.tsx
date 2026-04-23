@@ -57,7 +57,7 @@ export function MentalScoreCard({ score, label, checkinComplete }: MentalScoreCa
                             <span className="text-[#E5EAD7] font-semibold text-xs mt-1">{label}</span>
                         </>
                     ) : (
-                        <Link href="/mood/log" className="flex flex-col items-center gap-0.5">
+                        <Link href="/mood/stats" className="flex flex-col items-center gap-0.5">
                             <span className="text-[#F2F5EB] font-extrabold text-2xl leading-none">--</span>
                             <span className="text-[#E5EAD7] font-semibold text-[10px] mt-1 text-center leading-tight">
                                 Log mood &amp; stress

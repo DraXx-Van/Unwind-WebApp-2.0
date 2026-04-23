@@ -32,7 +32,7 @@ export function MentorChatClient({ mentorId }: { mentorId: string }) {
     useEffect(() => {
         if (!token || !user) return;
 
-        const newSocket = io('http://localhost:4000', {
+        const newSocket = io(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000', {
             auth: { token }
         });
 

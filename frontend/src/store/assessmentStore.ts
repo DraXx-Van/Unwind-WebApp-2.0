@@ -146,8 +146,12 @@ export const useAssessmentStore = create<AssessmentState>()(
             fetchLatest: async () => {
                 try {
                     const response = await authFetch('/assessment/latest');
-                    if (!response.ok) return;
-                    const data = await response.json();
+                    if (!response.ok || response.status === 204) return;
+                    
+                    const text = await response.text();
+                    if (!text) return;
+                    
+                    const data = JSON.parse(text);
                     if (data) {
                         set({
                             id: data.id,

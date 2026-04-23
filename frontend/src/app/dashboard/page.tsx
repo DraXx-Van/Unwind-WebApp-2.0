@@ -114,7 +114,7 @@ export default function DashboardPage() {
             })
             .catch(() => {});
 
-        fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/sleep/latest?userId=${user.id}`)
+        authFetch(`/sleep/latest?userId=${user.id}`)
             .then(r => r.ok ? r.json() : null)
             .then(d => {
                 if (d?.quality != null && isToday(d.createdAt)) {
