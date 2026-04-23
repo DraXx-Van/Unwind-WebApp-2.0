@@ -160,6 +160,16 @@ export class InsightsService {
       ? this.generateTasks({ todayMood, todayStress, todaySleep: todaySleepRaw, mindfulSessions, journalEntries })
       : [];
 
+    const weeklyMoodAvg = moodHistory.length > 0
+      ? moodHistory.reduce((s, m) => s + (MOOD_VALUES[m.mood] ?? 3), 0) / moodHistory.length
+      : null;
+    const weeklyStressAvg = stressHistory.length > 0
+      ? stressHistory.reduce((s, e) => s + e.value, 0) / stressHistory.length
+      : null;
+    const weeklySleepAvg = effectiveSleepHistory.length > 0
+      ? effectiveSleepHistory.reduce((s, e) => s + e.duration, 0) / effectiveSleepHistory.length
+      : null;
+
     return {
       score: score.value ?? null,
       label: score.incomplete ? null : score.label,
@@ -168,6 +178,7 @@ export class InsightsService {
       insights, tasks,
       sleepIsEstimated,
       today: { mood: todayMood, stress: todayStress, sleep: todaySleepRaw },
+      weekly: { mood: weeklyMoodAvg, stress: weeklyStressAvg, sleep: weeklySleepAvg },
       state: !hasData ? 'empty' : !hasEnoughData ? 'partial' : 'ready',
     };
   }

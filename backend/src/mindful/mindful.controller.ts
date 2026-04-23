@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Param, Body, Query, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, Query, BadRequestException } from '@nestjs/common';
 import { MindfulService } from './mindful.service';
 
 @Controller('mindful')
@@ -21,6 +21,12 @@ export class MindfulController {
   async updateEntry(@Param('id') id: string, @Body() body: { additionalDuration: number }) {
     if (!body.additionalDuration) throw new BadRequestException('additionalDuration is required');
     return this.mindfulService.updateEntry(id, body.additionalDuration);
+  }
+
+  @Delete(':id')
+  async deleteEntry(@Param('id') id: string) {
+    if (!id) throw new BadRequestException('id is required');
+    return this.mindfulService.deleteEntry(id);
   }
 
   @Get('latest')

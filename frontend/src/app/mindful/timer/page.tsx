@@ -1,10 +1,35 @@
+
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMindfulStore } from '@/store/mindfulStore';
 import { useAuthStore } from '@/store/authStore';
-import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, AlertCircle, Save, LogOut, Play, Volume2, VolumeX, Minus, Plus, Settings2 } from 'lucide-react';
+
+// Background animated element component
+const FloatingElement = ({ children, delay = 0, duration = 10, x = [0, 20, 0], y = [0, 30, 0], rotate = [0, 10, 0], className = "" }: any) => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ 
+      opacity: [0.1, 0.3, 0.1],
+      x: x,
+      y: y,
+      rotate: rotate
+    }}
+    transition={{
+      duration: duration,
+      repeat: Infinity,
+      repeatType: "reverse",
+      ease: "easeInOut",
+      delay: delay
+    }}
+    className={`absolute pointer-events-none ${className}`}
+  >
+    {children}
+  </motion.div>
+);
 
 function TimerPageContent() {
   const router = useRouter();
@@ -12,19 +37,96 @@ function TimerPageContent() {
   const { addEntry, updateEntry } = useMindfulStore();
   const { user } = useAuthStore();
 
-  const activity = searchParams.get('activity') || 'Mindful Session';
+  const activity = searchParams.get('activityName') || searchParams.get('activity') || 'Mindful Session';
   const category = searchParams.get('category') || 'NATURE';
-  const initialMin = parseInt(searchParams.get('min') || '25', 10);
-  const initialSec = parseInt(searchParams.get('sec') || '0', 10);
-  const sessionId = searchParams.get('sessionId');
+  const soundFile = searchParams.get('soundFile');
+  const soundName = searchParams.get('soundName');
   
+  const urlDuration = searchParams.get('duration');
+  const initialMin = urlDuration ? parseInt(urlDuration, 10) : parseInt(searchParams.get('min') || '25', 10);
+  const initialSec = urlDuration ? 0 : parseInt(searchParams.get('sec') || '0', 10);
+  
+  const sessionId = searchParams.get('sessionId');
   const initialTotalSeconds = initialMin * 60 + initialSec;
 
   const [timeLeft, setTimeLeft] = useState(initialTotalSeconds);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isResumed, setIsResumed] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+  const [showExitModal, setShowExitModal] = useState(false);
+  const [showVolumeControl, setShowVolumeControl] = useState(false);
+  
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const playPromiseRef = useRef<Promise<void> | null>(null);
 
-  // Persistence: Initialize/Resume Timer
+  // Initialize audio
+  useEffect(() => {
+    if (soundFile && typeof window !== 'undefined') {
+      const audio = new Audio(soundFile);
+      audio.loop = true;
+      audio.volume = volume;
+      audio.muted = isMuted;
+      audioRef.current = audio;
+      
+      if (isPlaying && !isMuted) {
+        playPromiseRef.current = audio.play();
+        playPromiseRef.current.catch(e => {
+            if (e.name !== 'AbortError') console.log("Audio play failed:", e);
+        });
+      }
+    }
+    
+    return () => {
+      if (audioRef.current) {
+        const audio = audioRef.current;
+        if (playPromiseRef.current) {
+            playPromiseRef.current.then(() => {
+                audio.pause();
+                audio.src = "";
+            }).catch(() => {
+                audio.pause();
+                audio.src = "";
+            });
+        } else {
+            audio.pause();
+            audio.src = "";
+        }
+        audioRef.current = null;
+      }
+    };
+  }, [soundFile]);
+
+  // Handle Play/Pause & Mute changes
+  useEffect(() => {
+    if (!audioRef.current) return;
+    const audio = audioRef.current;
+
+    if (isPlaying && !isMuted) {
+        playPromiseRef.current = audio.play();
+        playPromiseRef.current.catch(e => {
+            if (e.name !== 'AbortError') console.log("Play failed:", e);
+        });
+    } else {
+        if (playPromiseRef.current) {
+            playPromiseRef.current.then(() => {
+                audio.pause();
+            }).catch(() => {
+                audio.pause();
+            });
+        } else {
+            audio.pause();
+        }
+    }
+  }, [isPlaying, isMuted]);
+
+  // Handle Volume & Mute property directly
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+      audioRef.current.muted = isMuted;
+    }
+  }, [volume, isMuted]);
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -32,7 +134,6 @@ function TimerPageContent() {
     const storedDuration = localStorage.getItem('mindful_timer_duration');
     const storedActivity = localStorage.getItem('mindful_timer_activity');
 
-    // Only resume if it's the SAME activity and it's still running
     if (storedStart && storedDuration && storedActivity === activity) {
       const startTime = parseInt(storedStart, 10);
       const duration = parseInt(storedDuration, 10);
@@ -41,21 +142,18 @@ function TimerPageContent() {
 
       if (remaining > 0) {
         setTimeLeft(remaining);
-        setIsResumed(true);
       } else {
-        // Was already finished while away
         setTimeLeft(0);
         localStorage.removeItem('mindful_timer_start');
       }
     } else {
-      // Fresh start: save state
       localStorage.setItem('mindful_timer_start', Date.now().toString());
       localStorage.setItem('mindful_timer_duration', initialTotalSeconds.toString());
       localStorage.setItem('mindful_timer_activity', activity);
+      setTimeLeft(initialTotalSeconds);
     }
   }, [activity, initialTotalSeconds]);
 
-  // Timer logic
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isPlaying && timeLeft > 0) {
@@ -98,26 +196,12 @@ function TimerPageContent() {
      router.push(`/mindful/complete?activity=${encodeURIComponent(activity)}&durationSec=${initialTotalSeconds}`);
   };
 
-  const handleExitEarly = async () => {
+  const handleExitConfirm = async (shouldSave: boolean) => {
      const durationPlayedSec = initialTotalSeconds - timeLeft;
-     
-     // Guard: Too short to be a real session (< 30 seconds)
-     if (durationPlayedSec < 30) {
-        const confirmExit = window.confirm("This session is very short. Exit without saving?");
-        if (confirmExit) {
-           localStorage.removeItem('mindful_timer_start');
-           router.push('/mindful');
-        }
-        return;
-     }
-
-     const confirmSave = window.confirm(`You've completed ${Math.floor(durationPlayedSec / 60)}m ${durationPlayedSec % 60}s. Save progress and exit?`);
-     if (!confirmSave) return;
-
      localStorage.removeItem('mindful_timer_start');
-     const playedMinutesFloat = parseFloat((durationPlayedSec / 60).toFixed(2));
      
-     if (durationPlayedSec > 0) {
+     if (shouldSave && durationPlayedSec > 10) {
+         const playedMinutesFloat = parseFloat((durationPlayedSec / 60).toFixed(2));
          if (sessionId) {
               await updateEntry(sessionId, playedMinutesFloat);
          } else {
@@ -130,14 +214,12 @@ function TimerPageContent() {
               });
          }
      }
-     router.push('/mindful');
+     router.push('/dashboard');
   };
 
-  // Format time
   const displayMin = Math.floor(timeLeft / 60).toString().padStart(2, '0');
   const displaySec = (timeLeft % 60).toString().padStart(2, '0');
 
-  // Ring calculation
   const radius = 80;
   const circumference = 2 * Math.PI * radius;
   const progressPercent = timeLeft / initialTotalSeconds;
@@ -146,64 +228,105 @@ function TimerPageContent() {
   return (
     <div className="min-h-screen bg-[#9BB068] relative flex flex-col font-sans overflow-hidden">
       
-      {/* Background Vectors based on timer_css.txt */}
-      {/* Top right wave curve */}
-      <div className="absolute top-[35px] right-[25px] opacity-40">
-         <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 0 80 Q 30 110 60 70 T 120 60" stroke="#7D944D" strokeWidth="12" strokeLinecap="round" fill="none" />
+      {/* Background Animated Elements */}
+      <FloatingElement 
+        duration={15} 
+        x={[0, 40, 0]} 
+        y={[0, 20, 0]} 
+        rotate={[0, 5, 0]}
+        className="top-[10%] right-[-5%]"
+      >
+         <svg width="240" height="240" viewBox="0 0 120 120" fill="none">
+            <path d="M 0 80 Q 30 110 60 70 T 120 60" stroke="white" strokeWidth="6" strokeLinecap="round" fill="none" />
          </svg>
-      </div>
+      </FloatingElement>
 
-      <div className="absolute top-[-30px] right-[100px] opacity-40">
-         <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="32" cy="32" r="26" stroke="#7D944D" strokeWidth="10" fill="none" strokeDasharray="60 30" />
-         </svg>
-      </div>
+      <FloatingElement 
+        duration={12} 
+        x={[0, -30, 0]} 
+        y={[0, 40, 0]} 
+        delay={2}
+        className="top-[40%] left-[-10%]"
+      >
+         <div className="w-64 h-64 rounded-full border-[20px] border-white/20" />
+      </FloatingElement>
 
-      <div className="absolute top-[280px] right-[30px] opacity-[0.32]">
-         <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="40" cy="40" r="12" fill="#7D944D" />
-         </svg>
-      </div>
-
-      {/* Vector: left: -204px; top: 140px; w:280, h:272 */}
-      <div className="absolute w-[280px] h-[272px] rounded-full bg-[#7D944D] opacity-[0.32]" style={{ left: '-204px', top: '140px' }}></div>
-      
-      {/* Vector: left: -37px; top: 593px; w:149, h:137 */}
-      <div className="absolute w-[180px] h-[70px] rounded-[100px] border-[14px] border-[#7D944D] opacity-[0.32] rotate-[-45deg]" style={{ left: '-30px', top: '580px' }}></div>
-
-      {/* Vector: bottom right opacity 64 */}
-      <div className="absolute w-[140px] h-[140px] rounded-full bg-[#7D944D] opacity-[0.24] border-[26px] border-[#7D944D]" style={{ right: '-50px', bottom: '-50px', background: 'transparent' }}></div>
-
-      {/* Top Nav */}
-      <div className="relative z-10 pt-14 px-6 flex items-center mb-8">
-        <button onClick={handleExitEarly} className="w-[42px] h-[42px] rounded-full border-[1.5px] border-[#FFFFFF] flex items-center justify-center text-[#FFFFFF] hover:bg-white/10 transition-colors absolute left-6 z-20">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 19L8 12L15 5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+      {/* Top Nav - INCREASED Z-INDEX AND HIT AREA */}
+      <div className="relative z-[60] pt-14 px-6 flex items-center justify-between mb-8 pointer-events-auto">
+        <button 
+            onClick={() => setShowExitModal(true)} 
+            className="w-[48px] h-[48px] rounded-full border-[1.5px] border-[#FFFFFF]/40 flex items-center justify-center text-[#FFFFFF] hover:bg-white/10 transition-all active:scale-[0.8] cursor-pointer"
+        >
+          <X className="w-6 h-6" strokeWidth={3} />
         </button>
-        <h1 className="w-full text-center font-extrabold text-[19px] text-[#FFFFFF] tracking-wide ml-4">Mindful Exercise</h1>
+        <h1 className="font-black text-[19px] text-[#FFFFFF] tracking-wide pointer-events-none">Mindful Session</h1>
+        <div className="flex gap-2">
+            <button 
+                onClick={() => setShowVolumeControl(!showVolumeControl)} 
+                className={`w-[48px] h-[48px] rounded-full border-[1.5px] border-[#FFFFFF]/40 flex items-center justify-center text-[#FFFFFF] transition-all active:scale-[0.8] cursor-pointer ${showVolumeControl ? 'bg-white text-[#9BB068]' : 'hover:bg-white/10'}`}
+            >
+              <Settings2 className="w-6 h-6" />
+            </button>
+            <button 
+                onClick={() => setIsMuted(!isMuted)} 
+                className={`w-[48px] h-[48px] rounded-full border-[1.5px] border-[#FFFFFF]/40 flex items-center justify-center text-[#FFFFFF] transition-all active:scale-[0.8] cursor-pointer ${isMuted ? 'bg-white text-[#9BB068]' : 'hover:bg-white/10'}`}
+            >
+              {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
+            </button>
+        </div>
       </div>
 
-      <div className="relative z-10 flex-1 px-8 flex flex-col items-center">
+      {/* Volume Slider - Animated Overlay */}
+      <AnimatePresence>
+        {showVolumeControl && (
+            <motion.div 
+                initial={{ opacity: 0, scale: 0.9, y: -20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: -20 }}
+                className="absolute top-36 right-6 z-[70] bg-white rounded-[32px] p-5 shadow-2xl flex flex-col items-center gap-5 border border-gray-100"
+            >
+                <button onClick={(e) => { e.stopPropagation(); setVolume(v => Math.min(1, v + 0.1)) }} className="w-10 h-10 bg-[#F7F4F2] rounded-2xl text-[#4B3425] active:scale-90 transition-transform flex items-center justify-center">
+                    <Plus className="w-5 h-5" />
+                </button>
+                <div className="h-40 w-2.5 bg-[#F7F4F2] rounded-full relative overflow-hidden">
+                    <motion.div 
+                        className="absolute bottom-0 left-0 right-0 bg-[#9BB068]"
+                        initial={{ height: "50%" }}
+                        animate={{ height: `${volume * 100}%` }}
+                    />
+                </div>
+                <button onClick={(e) => { e.stopPropagation(); setVolume(v => Math.max(0, v - 0.1)) }} className="w-10 h-10 bg-[#F7F4F2] rounded-2xl text-[#4B3425] active:scale-90 transition-transform flex items-center justify-center">
+                    <Minus className="w-5 h-5" />
+                </button>
+                <span className="text-[12px] font-black text-[#4B3425] opacity-40">{Math.round(volume * 100)}%</span>
+            </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="relative z-10 flex-1 px-8 flex flex-col items-center justify-center -mt-20">
         
-        {/* Main Title - Task Name */}
-        <h2 className="text-white text-[38px] leading-[1.1] font-extrabold text-center mt-[48px] mb-[64px] tracking-tight max-w-[300px] break-words">
+        <div className="mb-4">
+             <div className="px-4 py-1.5 rounded-full bg-white/10 border border-white/10 backdrop-blur-md flex items-center gap-2">
+                <Volume2 className="w-3 h-3 text-white/60" />
+                <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">{soundName || 'No Sound'}</span>
+            </div>
+        </div>
+
+        <h2 className="text-white text-[32px] leading-[1.1] font-black text-center mb-16 tracking-tight max-w-[300px] break-words">
           {activity}
         </h2>
 
         {/* Circular Timer Ring */}
-        <div className="relative w-[180px] h-[180px] flex items-center justify-center">
-            {/* Background Ring */}
-            <svg viewBox="0 0 200 200" className="absolute top-0 left-0 w-[180px] h-[180px] -rotate-90">
-                <circle cx="100" cy="100" r={80} fill="none" stroke="#B4C48D" strokeWidth="16" />
-                <circle 
+        <div className="relative w-[240px] h-[240px] flex items-center justify-center mb-12">
+            <svg viewBox="0 0 200 200" className="absolute top-0 left-0 w-full h-full -rotate-90">
+                <circle cx="100" cy="100" r={80} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="12" />
+                <motion.circle 
                   cx="100" 
                   cy="100" 
                   r={80} 
                   fill="none" 
                   stroke="#FFFFFF" 
-                  strokeWidth="16" 
+                  strokeWidth="12" 
                   strokeDasharray={circumference}
                   strokeDashoffset={strokeDashoffset}
                   strokeLinecap="round"
@@ -211,45 +334,87 @@ function TimerPageContent() {
                 />
             </svg>
 
-            {/* Play / Pause Toggle inside Ring */}
             <button 
                onClick={() => setIsPlaying(!isPlaying)}
-               className="w-[80px] h-[80px] rounded-full flex items-center justify-center z-10 outline-none transform transition-transform active:scale-[0.85]"
+               className="w-[100px] h-[100px] rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center z-10 outline-none transform transition-all active:scale-[0.85] hover:bg-white/20 cursor-pointer"
             >
                {isPlaying ? (
-                  // Pause Icon (two thick white bars)
-                  <div className="flex gap-[8px] items-center justify-center">
-                     <div className="w-[12px] h-[36px] bg-white rounded-full"></div>
-                     <div className="w-[12px] h-[36px] bg-white rounded-full"></div>
+                  <div className="flex gap-2 items-center justify-center pointer-events-none">
+                     <div className="w-[8px] h-[28px] bg-white rounded-full"></div>
+                     <div className="w-[8px] h-[28px] bg-white rounded-full"></div>
                   </div>
                ) : (
-                  // Play Icon
-                  <div className="ml-1 w-0 h-0 border-t-[16px] border-t-transparent border-l-[26px] border-l-white border-b-[16px] border-b-transparent rounded-sm"></div>
+                  <Play className="fill-white text-white w-8 h-8 ml-1 pointer-events-none" />
                )}
             </button>
         </div>
 
-        {/* Time Remaining */}
-        <div className="mt-[48px] text-[40px] font-extrabold text-white tracking-tight leading-none drop-shadow-sm">
+        <div className="text-[72px] font-black text-white tracking-tighter leading-none mb-4">
            {displayMin}:{displaySec}
         </div>
+        <p className="text-white/40 font-black uppercase tracking-[0.2em] text-[10px]">Minutes Remaining</p>
 
       </div>
 
-      {/* Sticky Bottom Home Button */}
-      <div className="absolute bottom-8 left-0 px-6 w-full z-20">
+      {/* Exit Early Button */}
+      <div className="px-8 pb-12 w-full z-20">
           <button 
-             onClick={handleExitEarly}
-             className="w-full bg-[#4B3425] text-white py-[20px] rounded-[32px] font-extrabold text-[18px] tracking-wide hover:scale-[1.02] active:scale-95 transition-transform shadow-[0_8px_30px_rgba(75,52,37,0.2)] flex items-center justify-center gap-3"
+             onClick={() => setShowExitModal(true)}
+             className="w-full bg-[#4B3425] text-white py-5 rounded-[24px] font-black text-lg tracking-wide shadow-xl flex items-center justify-center gap-3 transition-transform active:scale-95 cursor-pointer"
           >
-             Back to Home
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 8C7.97056 3.02944 16.0294 3.02944 21 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M6 6V14C6 17.3137 8.68629 20 12 20C15.3137 20 18 17.3137 18 14V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <rect x="10" y="12" width="4" height="4" rx="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-             </svg>
+             End Session Early
           </button>
       </div>
+
+      {/* Exit Confirmation Modal */}
+      <AnimatePresence>
+        {showExitModal && (
+          <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowExitModal(false)}
+              className="absolute inset-0 bg-[#4B3425]/80 backdrop-blur-sm"
+            />
+            <motion.div 
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 100, opacity: 0 }}
+              className="relative w-full max-w-sm bg-white rounded-[40px] p-8 text-center shadow-2xl"
+            >
+              <div className="w-16 h-16 rounded-full bg-[#FE814B]/10 flex items-center justify-center mx-auto mb-6">
+                <AlertCircle className="w-8 h-8 text-[#FE814B]" />
+              </div>
+              <h3 className="text-2xl font-black text-[#4B3425] mb-2">End your session?</h3>
+              <p className="text-[#4B3425]/40 font-bold mb-8">You're doing great! Would you like to save your progress or just exit?</p>
+              
+              <div className="space-y-3">
+                <button 
+                  onClick={() => handleExitConfirm(true)}
+                  className="w-full py-4 bg-[#4B3425] text-white rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-[#3A281D] transition-colors cursor-pointer"
+                >
+                  <Save className="w-5 h-5" />
+                  Save and Exit
+                </button>
+                <button 
+                  onClick={() => handleExitConfirm(false)}
+                  className="w-full py-4 bg-[#F7F4F2] text-[#4B3425] rounded-2xl font-black flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <LogOut className="w-5 h-5" />
+                  Exit Without Saving
+                </button>
+                <button 
+                  onClick={() => setShowExitModal(false)}
+                  className="w-full py-4 text-[#4B3425]/40 font-black cursor-pointer"
+                >
+                  Resume Session
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
     </div>
   );
@@ -257,7 +422,7 @@ function TimerPageContent() {
 
 export default function TimerPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#9BB068] flex items-center justify-center font-bold text-white">Loading...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[#9BB068] flex items-center justify-center font-bold text-white uppercase tracking-widest text-sm">Initializing Timer...</div>}>
       <TimerPageContent />
     </Suspense>
   );

@@ -1,31 +1,41 @@
-"use client";
+'use client';
 
-import { Smile } from 'lucide-react';
+import { SmilePlus, TrendingUp } from 'lucide-react';
+import Link from 'next/link';
 
 export function MoodTrackerCard() {
     return (
-        <div
-            onClick={() => window.location.href = '/mood/stats'}
-            className="w-full bg-[#f5f5f5] rounded-32px p-4 pr-6 flex items-center justify-between shadow-sm h-24 mb-4 cursor-pointer hover:bg-gray-100 transition-colors"
-        >
-            <div className="flex items-center gap-4">
-                {/* Icon Container */}
-                <div className="w-16 h-16 rounded-[24px] bg-[#e5e5e5] flex items-center justify-center text-[#5c4d44] shrink-0">
-                    <Smile className="w-6 h-6" strokeWidth={2.5} />
+        <Link href="/mood/stats" className="block w-full h-full">
+            <div className="w-full bg-[#FFF9E5] rounded-[32px] p-5 flex flex-col justify-between shadow-sm border border-white h-full min-h-[180px] active:scale-[0.98] transition-all cursor-pointer overflow-hidden group">
+                <div className="flex items-start justify-between mb-2">
+                    <div className="w-12 h-12 rounded-2xl bg-[#FFEBB0] flex items-center justify-center text-[#FFCE5C] shadow-sm">
+                        <SmilePlus className="w-6 h-6 fill-[#FFCE5C] stroke-[#4B3425]" strokeWidth={2.5} />
+                    </div>
+                    <div className="text-right">
+                        <p className="text-[#FFCE5C]/80 text-[9px] font-black uppercase tracking-widest leading-none mb-1">Trends</p>
+                        <p className="text-[#4B3425] font-black text-xs leading-none">Mood Patterns</p>
+                    </div>
                 </div>
 
-                {/* Text */}
-                <div className="flex flex-col">
-                    <span className="text-[#3a2e26] font-bold text-lg leading-tight">Mood Tracker</span>
-                    <div className="flex items-center gap-2 mt-1">
-                        <span className="bg-[#ffe4db] text-[#ff814b] text-[10px] font-bold px-2 py-0.5 rounded-full">SAD</span>
-                        <span className="text-[#3a2e26] text-xs">→</span>
-                        <span className="bg-[#f2f2f2] text-[#3a2e26] text-[10px] font-bold px-2 py-0.5 rounded-full border border-gray-200">NEUTRAL</span>
-                        <span className="text-[#3a2e26] text-xs">→</span>
-                        <span className="bg-[#e2ead5] text-[#8da666] text-[10px] font-bold px-2 py-0.5 rounded-full">HAPPY</span>
+                <div className="flex flex-col mb-4">
+                    <span className="text-[#4B3425] font-black text-2xl leading-none">Improving</span>
+                    <div className="flex items-center gap-1 mt-1">
+                         <div className="w-1.5 h-1.5 rounded-full bg-[#9BB068]" />
+                         <span className="text-[#9BB068] font-black text-[9px] uppercase tracking-widest">Upwards Trend</span>
+                    </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                    <div className="flex -space-x-2">
+                         <div className="w-6 h-6 rounded-full bg-[#FE814B] border-2 border-[#FFF9E5]" />
+                         <div className="w-6 h-6 rounded-full bg-[#FFCE5C] border-2 border-[#FFF9E5]" />
+                         <div className="w-6 h-6 rounded-full bg-[#9BB068] border-2 border-[#FFF9E5]" />
+                    </div>
+                    <div className="flex-1 text-right">
+                        <TrendingUp className="w-5 h-5 text-[#9BB068] ml-auto" />
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 }

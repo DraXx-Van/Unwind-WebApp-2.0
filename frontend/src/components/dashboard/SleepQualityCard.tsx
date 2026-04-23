@@ -2,82 +2,46 @@
 
 import { Moon } from 'lucide-react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
-interface SleepQualityCardProps {
-    quality: number | null;
-    /** If true, quality is estimated from schedule/history, not from an actual logged session */
-    isEstimated?: boolean;
-    /** Live quality from today's sleep entry (0-100 scale) */
-    liveQuality?: number | null;
-}
-
-export function SleepQualityCard({ quality, isEstimated, liveQuality }: SleepQualityCardProps) {
-    // Prefer live tracked quality (0-100) over assessment baseline (1-5)
-    const displayQuality = liveQuality != null ? liveQuality : quality;
-
-    const getLabel = () => {
-        if (liveQuality != null) {
-            // Real tracked sleep — show score out of 100
-            if (liveQuality >= 80) return `${liveQuality}% · Great Sleep`;
-            if (liveQuality >= 60) return `${liveQuality}% · Fair Sleep`;
-            if (liveQuality >= 40) return `${liveQuality}% · Light Sleep`;
-            return `${liveQuality}% · Poor Sleep`;
-        }
-        if (!quality) return 'Not set — tap to configure';
-        // Assessment baseline (1-5 → description)
-        const SLEEP_LABELS: Record<number, string> = {
-            1: 'Baseline: Very poor (~2h)',
-            2: 'Baseline: Poor (~4h)',
-            3: 'Baseline: Fair (~5h)',
-            4: 'Baseline: Good (~7h)',
-            5: 'Baseline: Excellent (~8h)',
-        };
-        return isEstimated
-            ? `${SLEEP_LABELS[quality] || 'Estimated'} ✦`
-            : (SLEEP_LABELS[quality] || 'Set up your schedule');
-    };
-
-    const cardColor = liveQuality != null
-        ? liveQuality >= 70 ? '#e8f5e1' : liveQuality >= 40 ? '#f0efff' : '#fef0ea'
-        : '#f0efff';
-    const iconBg = liveQuality != null
-        ? liveQuality >= 70 ? '#d4edbe' : liveQuality >= 40 ? '#e0deff' : '#fde0c8'
-        : '#e0deff';
-    const iconColor = liveQuality != null
-        ? liveQuality >= 70 ? '#5a8a2e' : liveQuality >= 40 ? '#8e85ee' : '#d06030'
-        : '#8e85ee';
+export function SleepQualityCard({ quality, liveQuality }: { quality: number | null; liveQuality: number | null }) {
+    // Priority: liveQuality (tracked) > quality (assessment baseline)
+    const displayValue = liveQuality ?? (quality ? quality * 20 : null);
+    const score = displayValue ?? 0;
+    
+    const r = 24;
+    const circ = 2 * Math.PI * r;
+    const offset = circ - (score / 100) * circ;
 
     return (
-        <Link href="/sleep" className="block w-full mb-4">
-            <div
-                className="w-full rounded-[32px] p-4 pr-6 flex items-center justify-between shadow-sm h-24 hover:scale-[1.02] transition-transform cursor-pointer"
-                style={{ backgroundColor: cardColor }}
-            >
-                <div className="flex items-center gap-4">
-                    {/* Icon */}
-                    <div className="w-16 h-16 rounded-[24px] flex items-center justify-center" style={{ backgroundColor: iconBg, color: iconColor }}>
-                        <Moon className="w-6 h-6" strokeWidth={2.5} />
+        <Link href="/sleep" className="block w-full">
+            <div className="w-full bg-[#EEF0FF] rounded-[32px] p-6 flex items-center justify-between shadow-sm border border-white hover:scale-[1.01] transition-transform cursor-pointer overflow-hidden">
+                <div className="flex items-center gap-5">
+                    <div className="w-16 h-16 rounded-[24px] bg-[#D7DCFF] flex items-center justify-center text-[#7C6AFF] shadow-sm">
+                        <Moon className="w-8 h-8 fill-[#7C6AFF]" strokeWidth={2.5} />
                     </div>
-
-                    {/* Text */}
-                    <div className="flex flex-col">
-                        <span className="text-[#3a2e26] font-bold text-lg leading-tight">
-                            {liveQuality != null ? "Tonight's Sleep" : "Daily Sleep"}
-                        </span>
-                        <span className="text-[#3a2e26]/60 font-medium text-sm">{getLabel()}</span>
-                        {isEstimated && liveQuality == null && (
-                            <span className="text-[#3a2e26]/40 text-xs mt-0.5">✦ Estimated from your baseline</span>
-                        )}
+                    <div>
+                        <h3 className="text-[#4B3425] font-black text-xl leading-tight mb-1">Sleep Quality</h3>
+                        <p className="text-[#7C6AFF]/60 text-[10px] font-black uppercase tracking-widest">Optimal Sleep · {score}%</p>
                     </div>
                 </div>
 
-                {/* Visual */}
-                <div className="relative w-16 h-16 flex items-center justify-center">
-                    <img
-                        src="/assets/dashboard_assets/sleep.svg"
-                        alt="Sleep"
-                        className="w-full h-full object-contain"
-                    />
+                <div className="relative w-20 h-20 flex items-center justify-center">
+                    <svg className="w-full h-full -rotate-90">
+                        <circle cx="40" cy="40" r={r} fill="none" stroke="rgba(124, 106, 255, 0.1)" strokeWidth="6" />
+                        <motion.circle 
+                            initial={{ strokeDashoffset: circ }}
+                            animate={{ strokeDashoffset: offset }}
+                            transition={{ duration: 1, ease: "easeOut" }}
+                            cx="40" cy="40" r={r} fill="none" 
+                            stroke="#7C6AFF" strokeWidth="6" 
+                            strokeDasharray={circ}
+                            strokeLinecap="round" 
+                        />
+                    </svg>
+                    <span className="absolute inset-0 flex items-center justify-center text-[#7C6AFF] font-black text-sm">
+                        {score}%
+                    </span>
                 </div>
             </div>
         </Link>

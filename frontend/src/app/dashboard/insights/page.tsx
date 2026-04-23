@@ -9,7 +9,9 @@ import {
   Wind, Brain, ChevronRight, ArrowRight, CheckCircle2, Circle,
   Sparkles, TrendingUp, TrendingDown, BarChart2,
   Moon, HeartPulse, PenLine, Dumbbell,
+  Search, Filter, Activity, Info, Calendar
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Insight {
@@ -22,6 +24,7 @@ interface InsightsData {
   scoreIncomplete?: boolean;
   insights: Insight[]; tasks: Task[];
   today: { mood: any; stress: any; sleep: any; };
+  weekly: { mood: number | null; stress: number | null; sleep: number | null; };
   state: 'empty' | 'partial' | 'ready';
 }
 
@@ -54,71 +57,49 @@ function taskIcon(type: string): { icon: React.ReactNode; bg: string } {
   return { icon: <BookOpen className="w-5 h-5 text-white" />, bg: 'bg-[#926247]' };
 }
 
-// ─── Library data (Lucide icons only) ────────────────────────────────────────
+// ─── Library data ────────────────────────────────────────────────────────────
 const LIBRARY = [
-  { title: 'How sleep shapes your mood', tag: 'SLEEP', Icon: Moon, color: '#7C6AFF', bg: '#EEF0FF' },
-  { title: 'Managing stress at work', tag: 'STRESS', Icon: Zap, color: '#FE814B', bg: '#FFF3ED' },
-  { title: 'Mindfulness for beginners', tag: 'MINDFUL', Icon: Wind, color: '#9BB068', bg: '#F0F7E8' },
-  { title: 'The power of journaling', tag: 'JOURNAL', Icon: PenLine, color: '#926247', bg: '#F5F0EC' },
+  { title: 'Sleep & Mood', tag: 'SLEEP', Icon: Moon, color: '#7C6AFF', bg: '#EEF0FF' },
+  { title: 'Stress Management', tag: 'STRESS', Icon: Zap, color: '#FE814B', bg: '#FFF3ED' },
+  { title: 'Mindfulness 101', tag: 'MINDFUL', Icon: Wind, color: '#9BB068', bg: '#F0F7E8' },
+  { title: 'Journaling Benefits', tag: 'JOURNAL', Icon: PenLine, color: '#926247', bg: '#F5F0EC' },
 ];
 
 // ─── Circular score ring ──────────────────────────────────────────────────────
-function ScoreRing({ score, label }: { score: number | null; label: string | null }) {
-  const r = 44;
+function ScoreRing({ score, label, dark = false }: { score: number | null; label: string | null; dark?: boolean }) {
+  const r = 40;
   const circ = 2 * Math.PI * r;
   const filled = score != null ? circ * (score / 100) : 0;
 
   const ringColor =
-    score == null   ? 'rgba(255,255,255,0.2)' :
+    score == null   ? (dark ? 'rgba(75,52,37,0.1)' : 'rgba(255,255,255,0.2)') :
     score >= 75     ? '#9BB068' :
     score >= 55     ? '#FFCE5C' :
     score >= 35     ? '#FE814B' : '#E05252';
 
   return (
-    <div className="relative w-28 h-28 flex items-center justify-center">
-      <svg className="absolute inset-0 -rotate-90" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r={r} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="9" />
-        <circle
+    <div className="relative w-32 h-32 flex items-center justify-center">
+      <svg className="absolute inset-0 -rotate-90 w-full h-full" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r={r} fill="none" stroke={dark ? "rgba(75,52,37,0.06)" : "rgba(255,255,255,0.1)"} strokeWidth="10" />
+        <motion.circle
+          initial={{ strokeDashoffset: circ }}
+          animate={{ strokeDashoffset: circ - filled }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
           cx="50" cy="50" r={r} fill="none"
-          stroke={ringColor} strokeWidth="9"
-          strokeDasharray={`${filled} ${circ - filled}`}
+          stroke={ringColor} strokeWidth="10"
+          strokeDasharray={circ}
           strokeLinecap="round"
         />
       </svg>
       <div className="z-10 text-center">
         {score != null ? (
           <>
-            <p className="text-white font-black text-3xl leading-none">{score}</p>
-            <p className="text-white/70 text-[11px] font-semibold mt-0.5">{label}</p>
+            <p className={`font-black text-4xl leading-none tracking-tighter ${dark ? 'text-[#4B3425]' : 'text-white'}`}>{score}</p>
+            <p className={`text-[10px] font-black uppercase tracking-widest mt-1 ${dark ? 'text-[#4B3425]/40' : 'text-white/60'}`}>PTS</p>
           </>
         ) : (
-          <p className="text-white/50 font-black text-2xl leading-none">--</p>
+          <p className="text-[#4B3425]/20 font-black text-2xl leading-none">--</p>
         )}
-      </div>
-    </div>
-  );
-}
-
-// ─── Reusable header (matches dashboard exactly) ──────────────────────────────
-function PageHeader({ dateStr }: { dateStr: string }) {
-  return (
-    <div className="bg-[#4F3422] rounded-b-[40px] px-6 pt-6 pb-8 mb-6 text-white shadow-lg relative z-10 overflow-hidden">
-      <img src="/assets/Journal_assets/bg.svg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-20 z-0 pointer-events-none select-none" />
-      <div className="flex justify-between items-center mb-5 relative z-10">
-        <span className="text-sm font-medium opacity-80">{dateStr}</span>
-        <button className="w-10 h-10 rounded-full bg-[#654630] flex items-center justify-center relative">
-          <Bell className="w-5 h-5 text-white" />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-[#FF9500] rounded-full border border-[#4F3422]" />
-        </button>
-      </div>
-      <div className="flex items-center gap-3 relative z-10">
-        <div className="w-11 h-11 rounded-full bg-[#654630] flex items-center justify-center">
-          <BarChart2 className="w-5 h-5 text-white" />
-        </div>
-        <div>
-          <h1 className="text-[22px] font-black leading-tight">Today's Insights</h1>
-          <p className="text-white/50 text-[12px] font-medium">Your mental wellness snapshot</p>
-        </div>
       </div>
     </div>
   );
@@ -130,12 +111,21 @@ export default function InsightsPage() {
   const [loading, setLoading] = useState(true);
   const [completedTasks, setCompletedTasks] = useState<Set<string>>(new Set());
   const [dateStr, setDateStr] = useState('');
+  const [weekRange, setWeekRange] = useState('');
 
   useEffect(() => {
-    setDateStr(new Date().toLocaleDateString('en-US', {
-      weekday: 'short', day: 'numeric', month: 'short',
+    const now = new Date();
+    setDateStr(now.toLocaleDateString('en-US', {
+      weekday: 'long', day: 'numeric', month: 'long',
     }));
-    // Use authFetch so the JWT token is sent
+
+    const first = now.getDate() - now.getDay();
+    const last = first + 6;
+    const firstDay = new Date(new Date().setDate(first));
+    const lastDay = new Date(new Date().setDate(last));
+    const range = `${firstDay.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${lastDay.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+    setWeekRange(range);
+
     authFetch('/insights/today')
       .then(r => r.json())
       .then(d => { setData(d); setLoading(false); })
@@ -150,229 +140,263 @@ export default function InsightsPage() {
     });
   };
 
-  // ── Loading skeleton ──
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FAFAFA] pb-32">
-        <div className="bg-[#4F3422] rounded-b-[40px] px-6 pt-6 pb-8 mb-6">
-          <div className="h-5 w-28 bg-white/10 rounded-full animate-pulse mb-5" />
-          <div className="h-8 w-44 bg-white/10 rounded-full animate-pulse" />
-        </div>
-        <div className="px-6 flex flex-col gap-4">
-          {[1, 2, 3].map(i => <div key={i} className="h-24 bg-gray-100 rounded-[24px] animate-pulse" />)}
+      <div className="min-h-screen bg-[#FDFBF9] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-[#4B3425]/10 border-t-[#4B3425] rounded-full animate-spin" />
+          <p className="text-[#4B3425]/40 font-black uppercase tracking-widest text-xs">Analyzing Insights...</p>
         </div>
         <TabBar />
       </div>
     );
   }
 
-  // ── Always render full layout ──────────────────────────────────────────────
-  const completedCount = (data?.tasks ?? []).filter(t => completedTasks.has(t.id)).length;
-  const totalTasks = (data?.tasks ?? []).length;
+  // ── Dynamic Factor Helpers (Weekly Averages) ────────────────────────────────
+  // Safe access using optional chaining and nullish coalescing to prevent TypeError
+  const getSleepStatus = () => {
+    const dur = data?.weekly?.sleep;
+    if (dur === undefined || dur === null) return { label: 'No Data', color: 'text-[#4B3425]/40', bg: 'bg-[#4B3425]/5' };
+    if (dur >= 7) return { label: 'Healthy', color: 'text-[#7C6AFF]', bg: 'bg-[#EEF0FF]' };
+    if (dur >= 6) return { label: 'Okay', color: 'text-[#7C6AFF]', bg: 'bg-[#EEF0FF]' };
+    return { label: 'Poor', color: 'text-[#E05252]', bg: 'bg-[#FFF0F0]' };
+  };
+
+  const getStressStatus = () => {
+    const val = data?.weekly?.stress;
+    if (val === undefined || val === null) return { label: 'No Data', color: 'text-[#4B3425]/40', bg: 'bg-[#4B3425]/5' };
+    if (val <= 2.2) return { label: 'Low', color: 'text-[#9BB068]', bg: 'bg-[#F0F7E8]' };
+    if (val <= 3.5) return { label: 'Normal', color: 'text-[#FE814B]', bg: 'bg-[#FFF3ED]' };
+    return { label: 'High', color: 'text-[#E05252]', bg: 'bg-[#FFF0F0]' };
+  };
+
+  const getMoodStatus = () => {
+    const avgMood = data?.weekly?.mood;
+    if (avgMood === undefined || avgMood === null) return { label: 'No Data', color: 'text-[#4B3425]/40', bg: 'bg-[#4B3425]/5' };
+    if (avgMood >= 3.8) return { label: 'Positive', color: 'text-[#9BB068]', bg: 'bg-[#F0F7E8]' };
+    if (avgMood >= 2.8) return { label: 'Neutral', color: 'text-[#FE814B]', bg: 'bg-[#FFF3ED]' };
+    return { label: 'Low', color: 'text-[#E05252]', bg: 'bg-[#FFF0F0]' };
+  };
+
+  const sleep = getSleepStatus();
+  const stress = getStressStatus();
+  const mood = getMoodStatus();
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] pb-36">
-      <PageHeader dateStr={dateStr} />
-
-      <div className="flex flex-col gap-5 px-6">
-
-        {/* ── Score Card (matches FreudScoreCard style) ── */}
-        <div className="bg-white rounded-[28px] shadow-sm overflow-hidden">
-          <div className="flex items-stretch">
-            {/* Left: score ring on brown bg */}
-            <div className="bg-gradient-to-br from-[#4F3422] to-[#7A5236] p-5 flex items-center justify-center rounded-[28px]">
-              <ScoreRing score={data?.score ?? null} label={data?.label ?? null} />
+    <div className="min-h-screen bg-[#FDFBF9] pb-32">
+      
+      {/* Brown Header Section */}
+      <div className="bg-[#4B3425] rounded-b-[48px] pt-16 pb-32 px-8 relative overflow-hidden">
+        <img src="/assets/Journal_assets/bg.svg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none select-none" />
+        <div className="relative z-10">
+          <div className="flex justify-between items-start">
+            <div>
+              <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.2em] mb-1.5">{dateStr}</p>
+              <h1 className="text-white text-3xl font-black tracking-tight leading-none">Weekly Insights</h1>
             </div>
-            {/* Right: detail */}
-            <div className="flex-1 px-5 py-4 flex flex-col justify-center">
-              <div className="flex items-center gap-1.5 mb-2">
-                <BarChart2 className="w-3.5 h-3.5 text-[#926247]" />
-                <span className="text-[#926247] text-[10px] font-black uppercase tracking-widest">Your Score</span>
-              </div>
-              {data?.score != null ? (
-                <>
-                  <p className="text-[#4F3422] font-black text-[32px] leading-none">{data.score}</p>
-                  <p className="text-[#4F3422] font-bold text-[15px]">{data.label}</p>
-                  <p className="text-[#4F3422]/40 text-[11px] mb-3">Based on your recent activity</p>
-                  <div className={`inline-flex items-center gap-1 self-start rounded-full px-3 py-1.5 text-[11px] font-bold ${
-                    data.delta >= 0 ? 'bg-[#F0F7E8] text-[#3B5C1A]' : 'bg-[#FFF3ED] text-[#A4431B]'
-                  }`}>
-                    {data.delta >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                    {data.delta >= 0 ? '+' : ''}{data.delta} from yesterday
-                  </div>
-                </>
-              ) : (
-                <>
-                  <p className="text-[#4F3422] font-black text-[32px] leading-none">--</p>
-                  <p className="text-[#4F3422] font-bold text-[14px] mt-1">Score not ready yet</p>
-                  <p className="text-[#4F3422]/50 text-[11px] mt-1 leading-snug">
-                    Log your <Link href="/mood/log" className="text-[#9BB068] font-bold">mood</Link> and <Link href="/stress" className="text-[#FE814B] font-bold">stress</Link> to unlock your daily score.
-                  </p>
-                </>
-              )}
-            </div>
+            <button className="w-11 h-11 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-white relative mt-1">
+              <Bell className="w-5 h-5" />
+              <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-[#FE814B] rounded-full border-2 border-[#4B3425]" />
+            </button>
+          </div>
+          
+          {/* Week Selector / Indicator */}
+          <div className="mt-6 flex items-center gap-3">
+             <div className="px-4 py-2 bg-white/10 backdrop-blur-md rounded-xl border border-white/10 flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-white/60" />
+                <span className="text-white font-black text-xs uppercase tracking-widest">{weekRange}</span>
+             </div>
+             <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest">Active Week</p>
           </div>
         </div>
+      </div>
 
-        {/* ── Insights ── */}
-        <div>
-          <h2 className="text-[#4F3422] font-black text-[19px] mb-3">Today's Insights</h2>
-          {(!data?.insights || data.insights.length === 0) ? (
-            <div className="bg-white rounded-[20px] shadow-sm px-5 py-5 flex items-center gap-4">
-              <div className="w-11 h-11 rounded-full bg-[#F5F0EC] flex items-center justify-center flex-shrink-0">
-                <Sparkles className="w-5 h-5 text-[#926247]" />
-              </div>
+      <div className="px-6 -mt-20 relative z-20 space-y-10">
+        
+        {/* Wellness Index Card */}
+        <motion.div 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="bg-white rounded-[40px] p-7 shadow-[0_30px_70px_rgba(75,52,37,0.15)] border border-white flex flex-col relative overflow-hidden group"
+        >
+            <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#9BB068]/5 rounded-full blur-3xl group-hover:bg-[#9BB068]/10 transition-colors pointer-events-none" />
+            
+            <div className="flex items-center gap-8 relative z-10">
+              <ScoreRing score={data?.score ?? null} label={data?.label ?? null} dark={true} />
+              
               <div className="flex-1">
-                <p className="text-[#4F3422] font-bold text-[14px]">Log data for insights</p>
-                <p className="text-[#4F3422]/50 text-[12px] mt-0.5">Log your mood, stress and sleep to get personalised insights</p>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-xl bg-[#4B3425]/5 flex items-center justify-center">
+                    <Activity className="w-4 h-4 text-[#4B3425]" />
+                  </div>
+                  <span className="text-[#4B3425]/40 text-[10px] font-black uppercase tracking-widest">Wellness Index</span>
+                </div>
+
+                {data?.score ? (
+                  <>
+                    <h2 className="text-[#4B3425] text-3xl font-black mb-2 leading-none">{data.label}</h2>
+                    <div className="flex items-center gap-3">
+                       <div className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-[10px] font-black shadow-sm ${
+                         data.delta >= 0 ? 'bg-[#9BB068] text-white' : 'bg-[#FE814B] text-white'
+                       }`}>
+                         {data.delta >= 0 ? <TrendingUp className="w-3.5 h-3.5" /> : <TrendingDown className="w-3.5 h-3.5" />}
+                         {data.delta >= 0 ? '+' : ''}{data.delta}% Trend
+                       </div>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-[#4B3425]/30 text-xs font-bold leading-relaxed pr-8">Complete daily logs to unlock your personalized score.</p>
+                )}
               </div>
             </div>
-          ) : (
-            <div className="flex flex-col gap-2.5">
-              {data.insights.map((insight, i) => {
-                const route = insight.actionLink ?? null;
-                const isCTA = insight.isLogPrompt === true;
-                const cardClass = isCTA
-                  ? 'border border-dashed border-[#D0C5BC] bg-white rounded-[20px] px-5 py-4 flex items-center gap-4 active:scale-[0.98] transition-all'
-                  : 'bg-white shadow-sm rounded-[20px] px-5 py-4 flex items-center gap-4 active:scale-[0.98] transition-all';
-                const inner = (
-                  <>
-                    <div className={`w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 ${insightBg(insight.icon)}`}>
-                      {insightIcon(insight.icon)}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[#4F3422] font-bold text-[14px] leading-snug">{insight.title}</p>
-                      <p className="text-[#4F3422]/50 text-[12px] leading-snug mt-0.5">{insight.subtitle}</p>
-                    </div>
-                    {isCTA
-                      ? <span className="text-[10px] font-black text-[#926247] bg-[#F5F0EC] px-2 py-1 rounded-full flex-shrink-0">+ Log</span>
-                      : <ChevronRight className="w-4 h-4 text-[#C5B8B0] flex-shrink-0" />}
-                  </>
-                );
-                return route
-                  ? <Link key={i} href={route} className={cardClass}>{inner}</Link>
-                  : <div key={i} className={cardClass}>{inner}</div>;
-              })}
-            </div>
-          )}
-        </div>
 
-        {/* ── Tasks ── */}
-        <div>
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-[#4F3422] font-black text-[19px]">Today's Tasks</h2>
-            {(data?.tasks?.length ?? 0) > 0 && (
-              <div className="flex items-center gap-3">
-                <span className="text-[#926247] text-[12px] font-bold">{completedCount}/{totalTasks} done</span>
-                <Link href="/activities" className="text-[#926247] text-[12px] font-bold flex items-center gap-0.5 hover:opacity-70">
-                  Browse <ChevronRight className="w-3.5 h-3.5" />
-                </Link>
+            {/* Weekly Performance Breakdown */}
+            <div className="mt-8 pt-8 border-t border-[#4B3425]/5 grid grid-cols-3 gap-4 relative z-10">
+              <div className="flex flex-col items-center text-center">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-2 shadow-sm ${sleep.bg}`}>
+                    <Moon className={`w-6 h-6 ${sleep.color}`} />
+                  </div>
+                  <p className="text-[#4B3425] font-black text-xs">Sleep</p>
+                  <p className={`${sleep.color} text-[9px] font-black uppercase tracking-widest mt-1`}>{sleep.label}</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-2 shadow-sm ${stress.bg}`}>
+                    <Zap className={`w-6 h-6 ${stress.color}`} />
+                  </div>
+                  <p className="text-[#4B3425] font-black text-xs">Stress</p>
+                  <p className={`${stress.color} text-[9px] font-black uppercase tracking-widest mt-1`}>{stress.label}</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-2 shadow-sm ${mood.bg}`}>
+                    <SmilePlus className={`w-6 h-6 ${mood.color}`} />
+                  </div>
+                  <p className="text-[#4B3425] font-black text-xs">Mood</p>
+                  <p className={`${mood.color} text-[9px] font-black uppercase tracking-widest mt-1`}>{mood.label}</p>
+              </div>
+            </div>
+            
+            {/* Context Label */}
+            <div className="mt-4 flex items-center justify-center gap-1.5">
+               <div className="w-1 h-1 rounded-full bg-[#4B3425]/20" />
+               <p className="text-[#4B3425]/30 text-[9px] font-black uppercase tracking-widest">7-Day Performance Averages</p>
+               <div className="w-1 h-1 rounded-full bg-[#4B3425]/20" />
+            </div>
+        </motion.div>
+
+        {/* Focus Tasks Section */}
+        <section>
+          <div className="flex justify-between items-end mb-5 px-2">
+            <div>
+              <h2 className="text-[#4B3425] text-xl font-black tracking-tight">Focus Tasks</h2>
+              <p className="text-[#4B3425]/40 text-xs font-bold mt-1">Recommended for your state</p>
+            </div>
+            <div className="text-right">
+              <p className="text-[#4B3425] text-xs font-black mb-1.5">{data?.tasks ? (data.tasks.filter(t => completedTasks.has(t.id)).length) : 0}/{data?.tasks ? data.tasks.length : 0} Done</p>
+              <div className="w-20 h-1.5 bg-[#4B3425]/5 rounded-full overflow-hidden">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${(data?.tasks && data.tasks.length > 0) ? (data.tasks.filter(t => completedTasks.has(t.id)).length / data.tasks.length) * 100 : 0}%` }}
+                  className="h-full bg-[#9BB068]" 
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            {data?.tasks && data.tasks.length > 0 ? (
+              data.tasks.map((task) => {
+                const done = completedTasks.has(task.id);
+                const { icon, bg } = taskIcon(task.type);
+                
+                return (
+                  <motion.div
+                    layout
+                    key={task.id}
+                    className={`group relative overflow-hidden rounded-[28px] p-5 shadow-[0_4px_20px_rgba(75,52,37,0.04)] border border-white transition-all ${
+                      done ? 'bg-[#9BB068] text-white' : 'bg-white text-[#4B3425]'
+                    }`}
+                  >
+                    <div className="flex items-center gap-4 relative z-10">
+                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-colors ${
+                        done ? 'bg-white/20' : bg
+                      }`}>
+                        {icon}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className={`font-black text-base leading-tight mb-0.5 ${done ? 'text-white' : 'text-[#4B3425]'}`}>
+                          {task.title}
+                        </h4>
+                        <p className={`text-xs font-bold line-clamp-1 ${done ? 'text-white/70' : 'text-[#4B3425]/40'}`}>
+                          {task.description}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => toggleTask(task.id)}
+                        className={`w-10 h-10 rounded-2xl border-2 flex items-center justify-center transition-all ${
+                          done ? 'bg-white border-white' : 'bg-transparent border-[#4B3425]/10'
+                        }`}
+                      >
+                        {done ? <CheckCircle2 className="w-6 h-6 text-[#9BB068]" /> : <Circle className="w-6 h-6 text-[#4B3425]/10" />}
+                      </button>
+                    </div>
+                  </motion.div>
+                );
+              })
+            ) : (
+              <div className="bg-white rounded-[28px] p-8 text-center border-2 border-dashed border-[#4B3425]/5">
+                <Sparkles className="w-8 h-8 text-[#4B3425]/10 mx-auto mb-3" />
+                <p className="text-[#4B3425]/40 text-sm font-black">Log data to unlock tasks</p>
               </div>
             )}
           </div>
+        </section>
 
-          {(!data?.tasks || data.tasks.length === 0) ? (
-            <div className="bg-white rounded-[20px] shadow-sm px-5 py-5 flex items-center gap-4">
-              <div className="w-11 h-11 rounded-full bg-[#F5F0EC] flex items-center justify-center flex-shrink-0">
-                <CheckCircle2 className="w-5 h-5 text-[#926247]" />
-              </div>
-              <div className="flex-1">
-                <p className="text-[#4F3422] font-bold text-[14px]">Log data to get your tasks</p>
-                <p className="text-[#4F3422]/50 text-[12px] mt-0.5">Your personalised daily tasks will appear once you log today's data</p>
-              </div>
-            </div>
-          ) : (
-            <>
-              {/* Thin progress bar */}
-              <div className="h-1 bg-[#F0EBE6] rounded-full mb-3 overflow-hidden">
-                <div
-                  className="h-full bg-[#9BB068] rounded-full transition-all duration-500"
-                  style={{ width: `${totalTasks > 0 ? (completedCount / totalTasks) * 100 : 0}%` }}
-                />
-              </div>
-
-            <div className="flex flex-col gap-2.5">
-              {data.tasks.map((task) => {
-                const done = completedTasks.has(task.id);
-                const { icon, bg } = taskIcon(task.type);
-                const isNavigable = task.type !== 'real' && !!task.actionLink && !done;
-
-                const cardContent = (
-                  <>
-                    <div className={`w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 ${
-                      done ? 'bg-white/25' : bg
+        {/* Growth Insights */}
+        <section>
+          <h2 className="text-[#4B3425] text-xl font-black tracking-tight mb-4 px-2">Growth Insights</h2>
+          <div className="grid grid-cols-1 gap-4">
+            {data?.insights && data.insights.length > 0 ? (
+              data.insights.map((insight, i) => {
+                const isCTA = insight.isLogPrompt === true;
+                return (
+                  <Link 
+                    key={i} 
+                    href={insight.actionLink || '#'} 
+                    className={`flex items-center gap-4 p-5 rounded-[28px] shadow-sm transition-all active:scale-[0.98] ${
+                      isCTA ? 'bg-[#4B3425] text-white' : 'bg-white border border-[#4B3425]/5'
+                    }`}
+                  >
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 ${
+                      isCTA ? 'bg-white/10' : insightBg(insight.icon)
                     }`}>
-                      {icon}
+                      {insightIcon(insight.icon)}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className={`font-bold text-[15px] leading-snug ${done ? 'text-white' : 'text-[#4F3422]'}`}>
-                        {task.title}
-                      </p>
-                      <p className={`text-[12px] leading-snug mt-0.5 ${done ? 'text-white/65' : 'text-[#4F3422]/50'}`}>
-                        {task.description}
+                      <h4 className={`font-black text-[15px] leading-tight mb-1 ${isCTA ? 'text-white' : 'text-[#4B3425]'}`}>
+                        {insight.title}
+                      </h4>
+                      <p className={`text-xs font-bold leading-snug ${isCTA ? 'text-white/60' : 'text-[#4B3425]/40'}`}>
+                        {insight.subtitle}
                       </p>
                     </div>
-                    {/* Checkbox — always on the right */}
-                    <button
-                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleTask(task.id); }}
-                      className={`w-8 h-8 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${
-                        done ? 'border-white/40 bg-white/20' : 'border-[#E8DDD9] bg-transparent'
-                      }`}>
-                      {done
-                        ? <CheckCircle2 className="w-4 h-4 text-white" />
-                        : <Circle className="w-4 h-4 text-[#E8DDD9]" />}
-                    </button>
-                  </>
-                );
-
-                return isNavigable ? (
-                  <Link key={task.id} href={task.actionLink!}
-                    className={`rounded-[20px] shadow-sm px-5 py-4 flex items-center gap-4 transition-all duration-300 active:scale-[0.98] ${
-                      done ? 'bg-[#9BB068]' : 'bg-white'
+                    <div className={`w-10 h-10 rounded-2xl flex items-center justify-center ${
+                      isCTA ? 'bg-[#9BB068] text-white' : 'bg-[#4B3425]/5 text-[#4B3425]'
                     }`}>
-                    {cardContent}
+                      <ChevronRight className="w-5 h-5" />
+                    </div>
                   </Link>
-                ) : (
-                  <div key={task.id}
-                    className={`rounded-[20px] shadow-sm px-5 py-4 flex items-center gap-4 transition-all duration-300 ${
-                      done ? 'bg-[#9BB068]' : 'bg-white'
-                    }`}>
-                    {cardContent}
-                  </div>
                 );
-              })}
-            </div>
-            </>
-          )}
-        </div>
-
-        {/* ── Library ── */}
-        <div>
-          <div className="flex justify-between items-center mb-3">
-            <h2 className="text-[#4F3422] font-black text-[17px]">Library</h2>
-            <button className="text-[#926247] text-[12px] font-bold flex items-center gap-0.5">
-              See All <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            {LIBRARY.map((item, i) => (
-              <div key={i} className="bg-white rounded-[20px] shadow-sm p-4 flex flex-col gap-3 cursor-pointer active:scale-95 transition-all">
-                {/* Icon pill */}
-                <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: item.bg }}>
-                  <item.Icon className="w-5 h-5" style={{ color: item.color }} />
-                </div>
-                <div>
-                  <span className="text-[9px] font-black uppercase tracking-widest"
-                    style={{ color: item.color }}>{item.tag}</span>
-                  <p className="text-[#4F3422] font-bold text-[12px] leading-snug mt-0.5">{item.title}</p>
-                </div>
+              })
+            ) : (
+              <div className="bg-white rounded-[28px] p-8 text-center border-2 border-dashed border-[#4B3425]/5">
+                <p className="text-[#4B3425]/40 text-sm font-black">No insights available yet</p>
               </div>
-            ))}
+            )}
           </div>
-        </div>
+        </section>
 
       </div>
+
       <TabBar />
     </div>
   );

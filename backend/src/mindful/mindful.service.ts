@@ -24,6 +24,12 @@ export class MindfulService {
     });
   }
 
+  async deleteEntry(id: string): Promise<MindfulSession> {
+    return this.prisma.mindfulSession.delete({
+      where: { id }
+    });
+  }
+
   async getLatestEntry(userId: string): Promise<MindfulSession | null> {
     return this.prisma.mindfulSession.findFirst({
       where: { userId },

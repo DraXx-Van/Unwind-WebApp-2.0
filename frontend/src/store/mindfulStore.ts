@@ -21,6 +21,7 @@ interface MindfulState {
   fetchHistory: (userId?: string) => Promise<void>;
   addEntry: (userId: string, data: { activity: string; duration: number; plannedDuration: number; category: string; timeOfDay: string }) => Promise<void>;
   updateEntry: (id: string, additionalDuration: number) => Promise<void>;
+  deleteEntry: (id: string) => Promise<void>;
 }
 
 const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/mindful`;
@@ -91,6 +92,24 @@ export const useMindfulStore = create<MindfulState>((set) => ({
       set((state) => ({
         latestEntry: state.latestEntry?.id === id ? updatedEntry : state.latestEntry,
         history: state.history.map(entry => entry.id === id ? updatedEntry : entry),
+        isLoading: false,
+      }));
+    } catch (error) {
+      set({ error: (error as Error).message, isLoading: false });
+    }
+  },
+
+  deleteEntry: async (id: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await fetch(`${API_BASE_URL}/${id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Failed to delete entry');
+      
+      set((state) => ({
+        latestEntry: state.latestEntry?.id === id ? null : state.latestEntry,
+        history: state.history.filter(entry => entry.id !== id),
         isLoading: false,
       }));
     } catch (error) {

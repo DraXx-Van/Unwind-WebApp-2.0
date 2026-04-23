@@ -3,12 +3,21 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Plus } from 'lucide-react';
+import { ArrowLeft, Plus, ChevronRight } from 'lucide-react';
 import { useJournalStore } from '@/store/journalStore';
 import { JournalHeatmap } from '@/components/journal/JournalHeatmap';
 import { TabBar } from '@/components/dashboard/TabBar';
 
 import { isToday } from '@/lib/dateUtils';
+
+// ─── Mood Helper ─────────────────────────────────────────────────────────────
+function getMoodIcon(emotion: string) {
+    const e = emotion?.toLowerCase() || 'neutral';
+    if (e === 'happy' || e === 'overjoyed' || e === 'good') return '/assets/Solid mood happy.svg';
+    if (e === 'sad' || e === 'depressed' || e === 'bad') return '/assets/Solid mood sad.svg';
+    if (e === 'angry' || e === 'frustrated') return '/assets/Solid mood depressed.svg';
+    return '/assets/Solid mood neutral.svg';
+}
 
 export default function JournalPage() {
     const { journals, fetchJournals } = useJournalStore();
@@ -44,8 +53,6 @@ export default function JournalPage() {
 
                 {/* Content Overlay */}
                 <div className="relative z-10 w-full flex flex-col items-center">
-                    {/* Check if we need to adjust z-index or opacity based on the SVG content */}
-
                     {/* Nav */}
                     <div className="w-full flex items-center justify-between mb-8">
                         <Link href="/dashboard" className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center hover:bg-white/10 transition-colors">
@@ -78,7 +85,7 @@ export default function JournalPage() {
             </div>
 
             {/* Body Content with Upward Curve using SVG */}
-            <div className="flex-1 bg-[#FAFAFA] relative z-20 px-6 pt-6 pb-10 -mt-20">
+            <div className="flex-1 bg-[#FAFAFA] relative z-20 px-6 pt-6 pb-32 -mt-20">
                 {/* Custom SVG Curve */}
                 <div className="absolute top-[-40px] left-0 w-full h-[40px] overflow-hidden">
                     <svg viewBox="0 0 375 40" preserveAspectRatio="none" className="w-full h-full">
@@ -86,34 +93,44 @@ export default function JournalPage() {
                     </svg>
                 </div>
 
-                {/* Add Button (Floating Center) - Absolute to move it correctly over the tab bar */}
-                <div className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
-                    <div className="relative top-[-72px] pointer-events-auto">
-                        <button className="w-16 h-16 bg-[#9BB068] rounded-full flex items-center justify-center shadow-[0px_16px_32px_rgba(155,176,104,0.5)] transition-transform active:scale-95 border-4 border-white">
+                {/* Add Button (Centered on the peak of the curve) */}
+                <div className="absolute top-[-72px] left-1/2 -translate-x-1/2 z-30">
+                    <Link href="/journal/new">
+                        <button className="w-16 h-16 bg-[#9BB068] rounded-full flex items-center justify-center shadow-[0px_16px_32px_rgba(155,176,104,0.3)] transition-transform active:scale-95">
                             <Plus className="text-white w-8 h-8" strokeWidth={3} />
                         </button>
-                    </div>
+                    </Link>
                 </div>
+
                 <JournalHeatmap journals={journals} />
 
                 {/* Recent Entries List */}
                 <div className="mt-10">
-                    <h3 className="text-[#4F3422] font-bold text-lg mb-4">Recent Entries</h3>
+                    <div className="flex justify-between items-center mb-4">
+                        <h3 className="text-[#4F3422] font-bold text-lg">Recent Entries</h3>
+                        <Link href="/journal/history" className="text-[#9BB068] text-xs font-bold flex items-center gap-1 hover:underline">
+                            See All <ChevronRight className="w-3 h-3" />
+                        </Link>
+                    </div>
                     <div className="flex flex-col gap-4">
                         {filteredJournals.length > 0 ? (
-                            filteredJournals.slice(0, 10).map((j, i) => (
-                                <div key={j.id || i} className="bg-white rounded-[24px] p-4 shadow-sm border border-gray-100 flex flex-col gap-2">
-                                    <div className="flex justify-between items-start">
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-2xl">{j.emotion === 'happy' ? '🙂' : j.emotion === 'sad' ? '☹️' : j.emotion === 'angry' ? '😡' : j.emotion === 'calm' ? '😌' : '😐'}</span>
-                                            <h4 className="font-bold text-[#4F3422]">{j.title || 'Untitled'}</h4>
+                            filteredJournals.slice(0, 3).map((j, i) => (
+                                <Link key={j.id || i} href={`/journal/view/${j.id}`} className="block active:scale-[0.98] transition-transform">
+                                    <div className="bg-white rounded-[24px] p-5 shadow-sm border border-gray-100 flex flex-col gap-2">
+                                        <div className="flex justify-between items-start">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center overflow-hidden">
+                                                    <img src={getMoodIcon(j.emotion)} alt={j.emotion} className="w-7 h-7" />
+                                                </div>
+                                                <h4 className="font-bold text-[#4F3422]">{j.title || 'Untitled Reflection'}</h4>
+                                            </div>
+                                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{new Date(j.createdAt).toLocaleDateString()}</span>
                                         </div>
-                                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{new Date(j.createdAt).toLocaleDateString()}</span>
+                                        <p className="text-[#4F3422]/70 text-sm line-clamp-2 leading-relaxed px-1">
+                                            {j.content}
+                                        </p>
                                     </div>
-                                    <p className="text-[#4F3422]/70 text-sm line-clamp-2 leading-relaxed">
-                                        {j.content}
-                                    </p>
-                                </div>
+                                </Link>
                             ))
                         ) : (
                             <div className="text-center py-10 opacity-40">

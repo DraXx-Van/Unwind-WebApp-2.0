@@ -1,0 +1,2505 @@
+/* Resource */
+
+width: 375px;
+height: 834px;
+
+/* Mindful Brown/10 */
+background: #F7F4F2;
+border-radius: 40px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 32px;
+
+position: absolute;
+width: 466px;
+height: 446px;
+left: 16px;
+top: 334px;
+
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+gap: 12px;
+
+width: 466px;
+height: 287px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Sub Nav */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+padding: 0px;
+gap: 131px;
+
+width: 343px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Chat */
+
+width: 87px;
+height: 22px;
+
+/* Text lg/ExtraBold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 18px;
+line-height: 22px;
+/* identical to box height */
+letter-spacing: -0.01em;
+
+/* Mindful Brown/80 */
+color: #4B3425;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Solid more vertical */
+
+width: 24px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Vector */
+
+position: absolute;
+left: 41.67%;
+right: 41.67%;
+top: 12.5%;
+bottom: 12.5%;
+
+/* Mindful Brown/100 Alpha 32% */
+background: rgba(31, 22, 15, 0.32);
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 0px;
+gap: 8px;
+
+width: 466px;
+height: 251px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Blog Card */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+
+width: 229px;
+height: 251px;
+
+/* Card Shadow Gray80 5% */
+filter: drop-shadow(0px 8px 16px rgba(75, 52, 37, 0.05));
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Image Container */
+
+width: 229px;
+height: 162px;
+
+/* Mindful Brown/10 */
+background: #F7F4F2;
+border-radius: 24px 24px 0px 0px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* unsplash XYjMmmnw */
+
+position: absolute;
+width: 343px;
+height: 506px;
+left: calc(50% - 343px/2);
+top: calc(50% - 506px/2 + 29px);
+
+background: url(.jpg);
+
+
+/* Tag */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 6px 10px;
+
+position: absolute;
+width: 100px;
+height: 24px;
+left: 16px;
+top: 16px;
+
+/* Serenity Green/20 */
+background: #E5EAD7;
+border-radius: 100px;
+
+
+/* pricing */
+
+width: 80px;
+height: 12px;
+
+/* Label/xs */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 10px;
+line-height: 12px;
+/* identical to box height */
+text-align: center;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+
+/* Serenity Green/50 */
+color: #9BB068;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Text */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 16px;
+gap: 10px;
+
+width: 229px;
+height: 89px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 0px 0px 24px 24px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Content */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px;
+gap: 54px;
+
+width: 197px;
+height: 57px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Mindfulness Tips in the Age of AI you should do today */
+
+width: 197px;
+height: 57px;
+
+/* Text md/Bold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 19px;
+letter-spacing: -0.01em;
+
+/* Mindful Brown/80 */
+color: #4B3425;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 1;
+
+
+/* Button */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 10px;
+
+display: none;
+width: 48px;
+height: 48px;
+
+/* Mindful Brown/10 */
+background: #F7F4F2;
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+
+width: 229px;
+height: 251px;
+
+/* Card Shadow Gray80 5% */
+filter: drop-shadow(0px 8px 16px rgba(75, 52, 37, 0.05));
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Image Container */
+
+width: 229px;
+height: 162px;
+
+/* Mindful Brown/10 */
+background: #F7F4F2;
+border-radius: 24px 24px 0px 0px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* unsplash XYjMmmnw */
+
+position: absolute;
+width: 343px;
+height: 506px;
+left: calc(50% - 343px/2);
+top: calc(50% - 506px/2 + 29px);
+
+background: url(.jpg);
+
+
+/* Tag */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 6px 10px;
+
+position: absolute;
+width: 100px;
+height: 24px;
+left: 16px;
+top: 16px;
+
+/* Serenity Green/20 */
+background: #E5EAD7;
+border-radius: 100px;
+
+
+/* pricing */
+
+width: 80px;
+height: 12px;
+
+/* Label/xs */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 10px;
+line-height: 12px;
+/* identical to box height */
+text-align: center;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+
+/* Serenity Green/50 */
+color: #9BB068;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Text */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 16px;
+gap: 10px;
+
+width: 229px;
+height: 89px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 0px 0px 24px 24px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Content */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px;
+gap: 54px;
+
+width: 197px;
+height: 57px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Mindfulness Tips in the Age of AI you should do today */
+
+width: 197px;
+height: 57px;
+
+/* Text md/Bold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 19px;
+letter-spacing: -0.01em;
+
+/* Mindful Brown/80 */
+color: #4B3425;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 1;
+
+
+/* Button */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 10px;
+
+display: none;
+width: 48px;
+height: 48px;
+
+/* Mindful Brown/10 */
+background: #F7F4F2;
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+gap: 16px;
+
+width: 464px;
+height: 127px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Sub Nav */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+padding: 0px;
+gap: 131px;
+
+width: 343px;
+height: 22px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Chat */
+
+width: 142px;
+height: 22px;
+
+/* Text lg/ExtraBold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 18px;
+line-height: 22px;
+/* identical to box height */
+letter-spacing: -0.01em;
+
+/* Mindful Brown/80 */
+color: #4B3425;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* See All */
+
+width: 37px;
+height: 14px;
+
+/* Text xs/SemiBold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+line-height: 14px;
+letter-spacing: -0.01em;
+
+/* Mindful Brown/60 */
+color: #926247;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 0px;
+gap: 16px;
+
+width: 464px;
+height: 89px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 8px;
+
+width: 64px;
+height: 89px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Icon Container */
+
+width: 64px;
+height: 64px;
+
+/* Mindful Brown/60 */
+background: #926247;
+/* Card Shadow Gray80 5% */
+box-shadow: 0px 8px 16px rgba(75, 52, 37, 0.05);
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Monotone brain */
+
+position: absolute;
+width: 24px;
+height: 24px;
+left: calc(50% - 24px/2);
+top: calc(50% - 24px/2);
+
+
+
+/* Vector */
+
+position: absolute;
+left: 12.5%;
+right: 50%;
+top: 12.5%;
+bottom: 12.5%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+transform: matrix(-1, 0, 0, 1, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 37.5%;
+right: 50%;
+top: 25%;
+bottom: 62.5%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+border-radius: 123px;
+
+
+/* Vector */
+
+position: absolute;
+left: 25%;
+right: 62.5%;
+top: 62.5%;
+bottom: 25%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+border-radius: 1234px;
+
+
+/* Vector */
+
+position: absolute;
+left: 25%;
+right: 62.5%;
+top: 37.5%;
+bottom: 50%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+border-radius: 1234px;
+
+
+/* Vector */
+
+position: absolute;
+left: 50%;
+right: 12.5%;
+top: 12.5%;
+bottom: 12.5%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 50%;
+right: 37.5%;
+top: 25%;
+bottom: 62.5%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+border-radius: 123px;
+transform: matrix(-1, 0, 0, 1, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 62.5%;
+right: 25%;
+top: 62.5%;
+bottom: 25%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+border-radius: 1234px;
+transform: matrix(-1, 0, 0, 1, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 62.5%;
+right: 25%;
+top: 37.5%;
+bottom: 50%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+border-radius: 1234px;
+transform: matrix(-1, 0, 0, 1, 0, 0);
+
+
+/* Text */
+
+width: 64px;
+height: 17px;
+
+/* Text sm/Bold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+text-align: center;
+letter-spacing: -0.01em;
+
+/* Mindful Brown/100 Alpha 64% */
+color: rgba(31, 22, 15, 0.64);
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 8px;
+
+width: 64px;
+height: 89px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Icon Container */
+
+width: 64px;
+height: 64px;
+
+/* Gentle Purple/30 */
+background: #A28FFF;
+/* Card Shadow Gray80 5% */
+box-shadow: 0px 8px 16px rgba(75, 52, 37, 0.05);
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Monotone hourglass */
+
+position: absolute;
+width: 24px;
+height: 24px;
+left: calc(50% - 24px/2);
+top: calc(50% - 24px/2);
+
+
+
+/* Vector */
+
+position: absolute;
+left: 29.17%;
+right: 29.17%;
+top: 70.83%;
+bottom: 29.17%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+border-radius: 4px;
+
+
+/* Vector */
+
+position: absolute;
+left: 25%;
+right: 25%;
+top: 12.5%;
+bottom: 12.5%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 12.5%;
+right: 12.5%;
+top: 12.5%;
+bottom: 87.5%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 12.5%;
+right: 12.5%;
+top: 87.5%;
+bottom: 12.5%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+/* Text */
+
+width: 64px;
+height: 17px;
+
+/* Text sm/Bold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+text-align: center;
+letter-spacing: -0.01em;
+
+/* Mindful Brown/100 Alpha 64% */
+color: rgba(31, 22, 15, 0.64);
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 8px;
+
+width: 64px;
+height: 89px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Icon Container */
+
+width: 64px;
+height: 64px;
+
+/* Empathy Orange/40 */
+background: #FE814B;
+/* Card Shadow Gray80 5% */
+box-shadow: 0px 8px 16px rgba(75, 52, 37, 0.05);
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Monotone briefcase */
+
+position: absolute;
+width: 24px;
+height: 24px;
+left: calc(50% - 24px/2);
+top: calc(50% - 24px/2);
+
+
+
+/* Vector */
+
+position: absolute;
+left: 16.67%;
+right: 83.33%;
+top: 50%;
+bottom: -16.67%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+transform: rotate(90deg);
+
+
+/* Vector */
+
+position: absolute;
+left: 12.5%;
+right: 12.5%;
+top: 33.33%;
+bottom: 16.67%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+border-radius: 1234px;
+
+
+/* Vector */
+
+position: absolute;
+left: 37.5%;
+right: 37.5%;
+top: 16.67%;
+bottom: 66.67%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+border-radius: 1234px;
+transform: matrix(1, 0, 0, -1, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 41.67%;
+right: 41.67%;
+top: 50%;
+bottom: 37.5%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+border-radius: 1234px;
+
+
+/* Text */
+
+width: 64px;
+height: 17px;
+
+/* Text sm/Bold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+text-align: center;
+letter-spacing: -0.01em;
+
+/* Mindful Brown/100 Alpha 64% */
+color: rgba(31, 22, 15, 0.64);
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 8px;
+
+width: 64px;
+height: 89px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 3;
+flex-grow: 0;
+
+
+/* Icon Container */
+
+width: 64px;
+height: 64px;
+
+/* Zen Yellow/40 */
+background: #FFCE5C;
+/* Card Shadow Gray80 5% */
+box-shadow: 0px 8px 16px rgba(75, 52, 37, 0.05);
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Monotone syringe */
+
+position: absolute;
+width: 24px;
+height: 24px;
+left: calc(50% - 24px/2);
+top: calc(50% - 24px/2);
+
+
+
+/* Vector */
+
+position: absolute;
+left: 50%;
+right: 33.33%;
+top: 75%;
+bottom: 25%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+transform: rotate(-90deg);
+
+
+/* Vector */
+
+position: absolute;
+left: 33.33%;
+right: 33.33%;
+top: 29.17%;
+bottom: 25%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+transform: rotate(180deg);
+
+
+/* Vector */
+
+position: absolute;
+left: 20.83%;
+right: 20.83%;
+top: 29.17%;
+bottom: 70.83%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+transform: rotate(180deg);
+
+
+/* Vector */
+
+position: absolute;
+left: 50%;
+right: 25%;
+top: 12.5%;
+bottom: 62.5%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 25%;
+right: 50%;
+top: 12.5%;
+bottom: 62.5%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+transform: matrix(-1, 0, 0, 1, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 33.33%;
+right: 33.33%;
+top: 41.67%;
+bottom: 25%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+/* Text */
+
+width: 64px;
+height: 17px;
+
+/* Text sm/Bold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+text-align: center;
+letter-spacing: -0.01em;
+
+/* Mindful Brown/100 Alpha 64% */
+color: rgba(31, 22, 15, 0.64);
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 8px;
+
+width: 64px;
+height: 89px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 4;
+flex-grow: 0;
+
+
+/* Icon Container */
+
+width: 64px;
+height: 64px;
+
+/* Mindful Brown/40 */
+background: #BDA193;
+/* Card Shadow Gray80 5% */
+box-shadow: 0px 8px 16px rgba(75, 52, 37, 0.05);
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Monotone calendar health */
+
+position: absolute;
+width: 24px;
+height: 24px;
+left: calc(50% - 24px/2);
+top: calc(50% - 24px/2);
+
+
+
+/* Vector */
+
+position: absolute;
+left: 33.33%;
+right: 66.67%;
+top: 16.67%;
+bottom: 75%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 66.67%;
+right: 33.33%;
+top: 16.67%;
+bottom: 75%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+
+
+/* Vector */
+
+position: absolute;
+left: 16.67%;
+right: 83.33%;
+top: 41.67%;
+bottom: -8.33%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+transform: rotate(90deg);
+
+
+/* Vector */
+
+position: absolute;
+left: 12.5%;
+right: 12.5%;
+top: 25%;
+bottom: 16.67%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+border-radius: 1234px;
+
+
+/* Vector */
+
+position: absolute;
+left: 37.5%;
+right: 37.5%;
+top: 62.5%;
+bottom: 37.5%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+border-radius: 0.5px;
+
+
+/* Vector */
+
+position: absolute;
+left: 50%;
+right: 25%;
+top: 50%;
+bottom: 50%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+border-radius: 0.5px;
+transform: rotate(90deg);
+
+
+/* Text */
+
+width: 64px;
+height: 17px;
+
+/* Text sm/Bold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+text-align: center;
+letter-spacing: -0.01em;
+
+/* Mindful Brown/100 Alpha 64% */
+color: rgba(31, 22, 15, 0.64);
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 8px;
+
+width: 64px;
+height: 89px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 5;
+flex-grow: 0;
+
+
+/* Icon Container */
+
+width: 64px;
+height: 64px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+/* Card Shadow Gray80 5% */
+box-shadow: 0px 8px 16px rgba(75, 52, 37, 0.05);
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Monotone brain */
+
+position: absolute;
+width: 24px;
+height: 24px;
+left: calc(50% - 24px/2);
+top: calc(50% - 24px/2);
+
+
+
+/* Vector */
+
+position: absolute;
+left: 12.5%;
+right: 50%;
+top: 12.5%;
+bottom: 12.5%;
+
+/* Mindful Brown/80 */
+border: 2px solid #4B3425;
+transform: matrix(-1, 0, 0, 1, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 37.5%;
+right: 50%;
+top: 25%;
+bottom: 62.5%;
+
+/* Mindful Brown/80 */
+border: 2px solid #4B3425;
+border-radius: 123px;
+
+
+/* Vector */
+
+position: absolute;
+left: 25%;
+right: 62.5%;
+top: 62.5%;
+bottom: 25%;
+
+/* Mindful Brown/80 */
+border: 2px solid #4B3425;
+border-radius: 1234px;
+
+
+/* Vector */
+
+position: absolute;
+left: 25%;
+right: 62.5%;
+top: 37.5%;
+bottom: 50%;
+
+/* Mindful Brown/80 */
+border: 2px solid #4B3425;
+border-radius: 1234px;
+
+
+/* Vector */
+
+position: absolute;
+left: 50%;
+right: 12.5%;
+top: 12.5%;
+bottom: 12.5%;
+
+/* Mindful Brown/80 */
+border: 2px solid #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 50%;
+right: 37.5%;
+top: 25%;
+bottom: 62.5%;
+
+/* Mindful Brown/80 */
+border: 2px solid #4B3425;
+border-radius: 123px;
+transform: matrix(-1, 0, 0, 1, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 62.5%;
+right: 25%;
+top: 62.5%;
+bottom: 25%;
+
+/* Mindful Brown/80 */
+border: 2px solid #4B3425;
+border-radius: 1234px;
+transform: matrix(-1, 0, 0, 1, 0, 0);
+
+
+/* Vector */
+
+position: absolute;
+left: 62.5%;
+right: 25%;
+top: 37.5%;
+bottom: 50%;
+
+/* Mindful Brown/80 */
+border: 2px solid #4B3425;
+border-radius: 1234px;
+transform: matrix(-1, 0, 0, 1, 0, 0);
+
+
+/* Text */
+
+width: 64px;
+height: 17px;
+
+/* Text sm/Bold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+text-align: center;
+letter-spacing: -0.01em;
+
+/* Mindful Brown/100 Alpha 64% */
+color: rgba(31, 22, 15, 0.64);
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Frame */
+
+position: absolute;
+width: 375px;
+height: 302px;
+left: 0px;
+top: 0px;
+
+/* Empathy Orange/40 */
+background: #FE814B;
+box-shadow: 0px 165px 66px rgba(254, 129, 75, 0.01), 0px 93px 56px rgba(254, 129, 75, 0.05), 0px 41px 41px rgba(254, 129, 75, 0.09), 0px 10px 23px rgba(254, 129, 75, 0.1), 0px 0px 0px rgba(254, 129, 75, 0.1);
+border-radius: 0px 0px 32px 32px;
+
+
+/* iPhone X or newer */
+
+position: absolute;
+height: 44px;
+left: 0%;
+right: 0%;
+top: 0px;
+
+
+
+/* Right Side */
+
+position: absolute;
+width: 66.66px;
+height: 11.34px;
+left: 293.67px;
+top: 17.33px;
+
+
+
+/* Battery */
+
+position: absolute;
+left: 89.6%;
+right: 3.91%;
+top: 39.39%;
+bottom: 34.85%;
+
+
+
+/* Vector */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 22px;
+height: 11.33px;
+right: 17px;
+top: 17.33px;
+
+mix-blend-mode: normal;
+opacity: 0.35;
+/* Mindful Brown/White */
+border: 1px solid #FFFFFF;
+border-radius: 2.66667px;
+
+
+/* Combined Shape */
+
+position: absolute;
+width: 1.33px;
+height: 4px;
+right: 14.67px;
+top: 21px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+mix-blend-mode: normal;
+opacity: 0.4;
+
+
+/* Vector */
+
+position: absolute;
+width: 18px;
+height: 7.33px;
+right: 19px;
+top: 19.33px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 1.33333px;
+
+
+/* Wifi */
+
+position: absolute;
+left: 84.18%;
+right: 11.74%;
+top: 39.39%;
+bottom: 35.69%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 15.27px;
+height: 4.74px;
+right: 44.03px;
+top: 17.33px;
+
+background: #DADADA;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 9.95px;
+height: 3.63px;
+right: 46.69px;
+top: 21.12px;
+
+background: #DADADA;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 4.63px;
+height: 3.37px;
+right: 49.36px;
+top: 24.92px;
+
+background: #DADADA;
+
+
+/* Mobile Signal */
+
+position: absolute;
+left: 78.31%;
+right: 17.16%;
+top: 40.15%;
+bottom: 35.61%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 4px;
+right: 78.33px;
+top: 24.33px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 6px;
+right: 73.67px;
+top: 22.33px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 8.33px;
+right: 69px;
+top: 20px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 10.67px;
+right: 64.33px;
+top: 17.67px;
+
+background: #DADADA;
+
+
+/* Recording Indicator */
+
+position: absolute;
+visibility: hidden;
+width: 6px;
+height: 6px;
+left: 298px;
+top: 8px;
+
+
+
+/* Indicator */
+
+position: absolute;
+width: 6px;
+height: 6px;
+right: 71px;
+top: 8px;
+
+/* SystemOrange / Light
+
+class var systemOrange: UIColor
+*/
+background: #FF9500;
+
+
+/* Left Side */
+
+position: absolute;
+width: 54px;
+height: 21px;
+left: 21px;
+top: 12px;
+
+
+
+/* Time */
+
+position: absolute;
+width: 54px;
+height: 21px;
+left: 21px;
+top: 12px;
+
+
+
+/* Time */
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+border-radius: 32px;
+
+
+/* Vector */
+
+position: absolute;
+width: 28.43px;
+height: 11.09px;
+left: 12.45px;
+top: 5.17px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Top Nav */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px;
+gap: 12px;
+
+position: absolute;
+width: 343px;
+height: 48px;
+left: 16px;
+top: 60px;
+
+
+
+/* Button Container */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 10px;
+
+width: 48px;
+height: 48px;
+
+/* Mindful Brown/White */
+border: 1px solid #FFFFFF;
+border-radius: 1234px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Monotone chevron left */
+
+width: 24px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Vector */
+
+position: absolute;
+left: 37.5%;
+right: -12.5%;
+top: 12.5%;
+bottom: 12.5%;
+
+/* Mindful Brown/White */
+border: 2px solid #FFFFFF;
+transform: matrix(-1, 0, 0, 1, 0, 0);
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+gap: 16px;
+
+position: absolute;
+width: 488px;
+height: 162px;
+left: 16px;
+top: 124px;
+
+
+
+/* Our Articles */
+
+width: 179px;
+height: 44px;
+
+/* Heading md/ExtraBold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 36px;
+line-height: 44px;
+/* identical to box height, or 122% */
+letter-spacing: -0.03em;
+
+/* Mindful Brown/White */
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 0px;
+gap: 8px;
+
+width: 488px;
+height: 30px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Tag */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px 12px;
+
+width: 75px;
+height: 30px;
+
+/* Mindful Brown/White */
+border: 1px solid #FFFFFF;
+border-radius: 100px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* pricing */
+
+width: 51px;
+height: 14px;
+
+/* Label/sm */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 12px;
+line-height: 14px;
+text-align: center;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+
+/* Mindful Brown/White */
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Tag */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px 12px;
+
+width: 107px;
+height: 30px;
+
+/* Mindful Brown/White */
+border: 1px solid #FFFFFF;
+border-radius: 100px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* pricing */
+
+width: 83px;
+height: 14px;
+
+/* Label/sm */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 12px;
+line-height: 14px;
+text-align: center;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+
+/* Mindful Brown/White */
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Tag */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px 12px;
+
+width: 74px;
+height: 30px;
+
+/* Mindful Brown/White */
+border: 1px solid #FFFFFF;
+border-radius: 100px;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* pricing */
+
+width: 50px;
+height: 14px;
+
+/* Label/sm */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 12px;
+line-height: 14px;
+text-align: center;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+
+/* Mindful Brown/White */
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Tag */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px 12px;
+
+width: 83px;
+height: 30px;
+
+/* Mindful Brown/White */
+border: 1px solid #FFFFFF;
+border-radius: 100px;
+
+/* Inside auto layout */
+flex: none;
+order: 3;
+flex-grow: 0;
+
+
+/* pricing */
+
+width: 59px;
+height: 14px;
+
+/* Label/sm */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 12px;
+line-height: 14px;
+text-align: center;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+
+/* Mindful Brown/White */
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Tag */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px 12px;
+
+width: 117px;
+height: 30px;
+
+/* Mindful Brown/White */
+border: 1px solid #FFFFFF;
+border-radius: 100px;
+
+/* Inside auto layout */
+flex: none;
+order: 4;
+flex-grow: 0;
+
+
+/* pricing */
+
+width: 93px;
+height: 14px;
+
+/* Label/sm */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 800;
+font-size: 12px;
+line-height: 14px;
+text-align: center;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+
+/* Mindful Brown/White */
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 16px;
+gap: 10px;
+
+width: 338px;
+height: 56px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 32px;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Frame */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+padding: 0px;
+gap: 132px;
+
+width: 306px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Search our articles */
+
+width: 153px;
+height: 17px;
+
+/* Text sm/SemiBold */
+font-family: 'Urbanist';
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+letter-spacing: -0.01em;
+
+/* Mindful Brown/100 Alpha 64% */
+color: rgba(31, 22, 15, 0.64);
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Monotone search */
+
+width: 24px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Vector */
+
+position: absolute;
+left: 12.5%;
+right: 37.5%;
+top: 12.5%;
+bottom: 37.5%;
+
+/* Mindful Brown/80 */
+border: 2px solid #4B3425;
+
+
+/* Vector */
+
+position: absolute;
+left: 54.17%;
+right: 16.67%;
+top: 54.17%;
+bottom: 16.67%;
+
+/* Mindful Brown/80 */
+border: 2px solid #4B3425;
+
+
+/* iPhone X or newer */
+
+position: absolute;
+height: 44px;
+left: 0%;
+right: 0%;
+top: 0px;
+
+
+
+/* Right Side */
+
+position: absolute;
+width: 66.66px;
+height: 11.34px;
+left: 293.67px;
+top: 17.33px;
+
+
+
+/* Battery */
+
+position: absolute;
+left: 89.6%;
+right: 3.91%;
+top: 39.39%;
+bottom: 34.85%;
+
+
+
+/* Vector */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 22px;
+height: 11.33px;
+right: 17px;
+top: 17.33px;
+
+mix-blend-mode: normal;
+opacity: 0.35;
+/* Mindful Brown/White */
+border: 1px solid #FFFFFF;
+border-radius: 2.66667px;
+
+
+/* Combined Shape */
+
+position: absolute;
+width: 1.33px;
+height: 4px;
+right: 14.67px;
+top: 21px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+mix-blend-mode: normal;
+opacity: 0.4;
+
+
+/* Vector */
+
+position: absolute;
+width: 18px;
+height: 7.33px;
+right: 19px;
+top: 19.33px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+border-radius: 1.33333px;
+
+
+/* Wifi */
+
+position: absolute;
+left: 84.18%;
+right: 11.74%;
+top: 39.39%;
+bottom: 35.69%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 15.27px;
+height: 4.74px;
+right: 44.03px;
+top: 17.33px;
+
+background: #DADADA;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 9.95px;
+height: 3.63px;
+right: 46.69px;
+top: 21.12px;
+
+background: #DADADA;
+
+
+/* Wifi-path */
+
+position: absolute;
+width: 4.63px;
+height: 3.37px;
+right: 49.36px;
+top: 24.92px;
+
+background: #DADADA;
+
+
+/* Mobile Signal */
+
+position: absolute;
+left: 78.31%;
+right: 17.16%;
+top: 40.15%;
+bottom: 35.61%;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 4px;
+right: 78.33px;
+top: 24.33px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 6px;
+right: 73.67px;
+top: 22.33px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 8.33px;
+right: 69px;
+top: 20px;
+
+background: #DADADA;
+
+
+/* Cellular_Connection-path */
+
+position: absolute;
+width: 3px;
+height: 10.67px;
+right: 64.33px;
+top: 17.67px;
+
+background: #DADADA;
+
+
+/* Recording Indicator */
+
+position: absolute;
+visibility: hidden;
+width: 6px;
+height: 6px;
+left: 298px;
+top: 8px;
+
+
+
+/* Indicator */
+
+position: absolute;
+width: 6px;
+height: 6px;
+right: 71px;
+top: 8px;
+
+/* SystemOrange / Light
+
+class var systemOrange: UIColor
+*/
+background: #FF9500;
+
+
+/* Left Side */
+
+position: absolute;
+width: 54px;
+height: 21px;
+left: 21px;
+top: 12px;
+
+
+
+/* Time */
+
+position: absolute;
+width: 54px;
+height: 21px;
+left: 21px;
+top: 12px;
+
+
+
+/* Time */
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+border-radius: 32px;
+
+
+/* Vector */
+
+position: absolute;
+width: 28.43px;
+height: 11.09px;
+left: 12.45px;
+top: 5.17px;
+
+/* Mindful Brown/White */
+background: #FFFFFF;
+
+
+/* Home Indicator */
+
+position: absolute;
+width: 375px;
+height: 34px;
+left: 0px;
+bottom: 0px;
+
+
+
+/* Home Indicator */
+
+position: absolute;
+width: 134px;
+height: 5px;
+left: calc(50% - 134px/2 + 0.5px);
+bottom: 8px;
+
+/* Mindful Brown/80 */
+background: #4B3425;
+border-radius: 100px;
