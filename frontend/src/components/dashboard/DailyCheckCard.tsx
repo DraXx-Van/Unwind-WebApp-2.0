@@ -65,6 +65,47 @@ function isFromToday(dateStr: string) {
   return new Date(dateStr).toDateString() === new Date().toDateString();
 }
 
+// Reusable Prompt Card Component
+const PromptCard = ({ icon: Icon, tag, title, subtitle, actionLabel, actionLink, onDismiss, color, bg, secondaryAction }: any) => (
+  <motion.div 
+    initial={{ y: 20, opacity: 0 }}
+    animate={{ y: 0, opacity: 1 }}
+    className="mx-6 mb-4 bg-white rounded-[32px] p-6 shadow-[0_15px_40px_rgba(75,52,37,0.08)] border border-[#4B3425]/5 flex flex-col relative overflow-hidden"
+  >
+    <div className="flex items-start justify-between mb-5">
+      <div className="flex items-center gap-3">
+        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${bg}`}>
+          <Icon className={`w-6 h-6 ${color}`} />
+        </div>
+        <div>
+          <p className={`${color} text-[10px] font-black uppercase tracking-[0.2em]`}>{tag}</p>
+          <h3 className="text-[#4B3425] font-black text-xl leading-tight mt-1">{title}</h3>
+        </div>
+      </div>
+      {onDismiss && (
+        <button onClick={onDismiss} className="w-8 h-8 rounded-full bg-[#4B3425]/5 flex items-center justify-center text-[#4B3425]/30 hover:bg-[#4B3425]/10 transition-colors">
+           ✕
+        </button>
+      )}
+    </div>
+
+    <p className="text-[#4B3425]/50 text-sm font-bold mb-6 leading-relaxed">
+      {subtitle}
+    </p>
+
+    <div className="flex gap-3">
+      <Link href={actionLink} className="flex-1 bg-[#4B3425] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all">
+        {actionLabel} <ArrowRight className="w-4 h-4" />
+      </Link>
+      {secondaryAction && (
+        <Link href={secondaryAction.link} className="px-5 py-4 rounded-2xl bg-[#4B3425]/5 text-[#4B3425] font-black text-sm flex items-center justify-center transition-colors hover:bg-[#4B3425]/10">
+          {secondaryAction.label}
+        </Link>
+      )}
+    </div>
+  </motion.div>
+);
+
 export function DailyCheckCard() {
   const { user } = useAuthStore();
   const userId = user?.id;
@@ -120,49 +161,6 @@ export function DailyCheckCard() {
     sleepDuration,
     isSleepingNow,
   });
-
-  // Reusable Prompt Card Component
-  const PromptCard = ({ icon: Icon, tag, title, subtitle, actionLabel, actionLink, onDismiss, color, bg, secondaryAction }: any) => (
-    <motion.div 
-      initial={{ y: 20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      className="mx-6 mb-4 bg-white rounded-[32px] p-6 shadow-[0_15px_40px_rgba(75,52,37,0.08)] border border-[#4B3425]/5 flex flex-col relative overflow-hidden"
-    >
-      <div className="flex items-start justify-between mb-5">
-        <div className="flex items-center gap-3">
-          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ${bg}`}>
-            <Icon className={`w-6 h-6 ${color}`} />
-          </div>
-          <div>
-            <p className={`${color} text-[10px] font-black uppercase tracking-[0.2em]`}>{tag}</p>
-            <h3 className="text-[#4B3425] font-black text-xl leading-tight mt-1">{title}</h3>
-          </div>
-        </div>
-        {onDismiss && (
-          <button onClick={onDismiss} className="w-8 h-8 rounded-full bg-[#4B3425]/5 flex items-center justify-center text-[#4B3425]/30 hover:bg-[#4B3425]/10 transition-colors">
-             ✕
-          </button>
-        )}
-      </div>
-
-      <p className="text-[#4B3425]/50 text-sm font-bold mb-6 leading-relaxed">
-        {subtitle}
-      </p>
-
-      <div className="flex gap-3">
-        <Link href={actionLink} className="flex-1 bg-[#4B3425] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all">
-          {actionLabel} <ArrowRight className="w-4 h-4" />
-        </Link>
-        {secondaryAction && (
-          <Link href={secondaryAction.link} className="px-5 py-4 rounded-2xl bg-[#4B3425]/5 text-[#4B3425] font-black text-sm flex items-center justify-center transition-colors hover:bg-[#4B3425]/10">
-            {secondaryAction.label}
-          </Link>
-        )}
-      </div>
-    </motion.div>
-  );
-
-  // ── COMPLETED ─────────────────────────────────────────────────────────────
   if (priority === 'completed') {
     return (
       <div className="mx-6 mb-2 rounded-[28px] bg-[#9BB068]/5 border border-[#9BB068]/10 px-6 py-5 flex items-center gap-4">

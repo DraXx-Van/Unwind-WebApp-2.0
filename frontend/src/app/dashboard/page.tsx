@@ -100,7 +100,8 @@ export default function DashboardPage() {
             })
             .catch(() => {});
 
-        authFetch('/mood/today')
+        const localDate = new Date().toLocaleDateString('en-CA');
+        authFetch(`/mood/today?date=${localDate}`)
             .then(r => r.ok ? r.json() : null)
             .then(d => { if (d?.mood) setLiveMoodStr(d.mood); })
             .catch(() => {});

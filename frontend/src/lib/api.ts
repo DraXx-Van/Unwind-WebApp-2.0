@@ -7,14 +7,30 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 export async function authFetch(path: string, options: RequestInit = {}): Promise<Response> {
     // Get token from localStorage (persisted by authStore)
     let token: string | null = null;
-    try {
-        const stored = localStorage.getItem('auth-storage');
-        if (stored) {
-            const parsed = JSON.parse(stored);
-            token = parsed?.state?.token || null;
+    
+    if (typeof window !== 'undefined') {
+        try {
+            const stored = localStorage.getItem('auth-storage');
+            if (stored) {
+                const parsed = JSON.parse(stored);
+                token = parsed?.state?.token || null;
+            }
+        } catch {
+            // ignore parse errors
         }
-    } catch {
-        // ignore parse errors
+    }
+
+    // If no token is found on the client side, we shouldn't make the request
+    // as it will definitely 401. Just redirect to login.
+    if (!token && typeof window !== 'undefined') {
+        if (!window.location.pathname.startsWith('/login')) {
+            window.location.href = '/login';
+        }
+        // Return a mock 401 response so the caller handles it gracefully
+        return new Response(JSON.stringify({ message: 'Unauthorized' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 
     const headers: Record<string, string> = {
@@ -33,11 +49,13 @@ export async function authFetch(path: string, options: RequestInit = {}): Promis
 
     // If unauthorized, clear auth and redirect
     if (response.status === 401) {
-        try {
-            localStorage.removeItem('auth-storage');
-        } catch { /* ignore */ }
-        if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/login')) {
-            window.location.href = '/login';
+        if (typeof window !== 'undefined') {
+            try {
+                localStorage.removeItem('auth-storage');
+            } catch { /* ignore */ }
+            if (!window.location.pathname.startsWith('/login')) {
+                window.location.href = '/login';
+            }
         }
     }
 
