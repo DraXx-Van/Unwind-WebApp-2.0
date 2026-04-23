@@ -13,10 +13,12 @@ import { ChatModule } from './chat/chat.module';
 import { AiModule } from './ai/ai.module';
 
 import { ConfigModule } from '@nestjs/config';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    PrismaModule,
     AuthModule, AssessmentModule, JournalModule, MoodModule, StressModule, SleepModule, MindfulModule, MentorModule, ChatModule, AiModule
   ],
   controllers: [AppController],
