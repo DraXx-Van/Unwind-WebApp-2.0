@@ -111,7 +111,7 @@ export default function SleepPopupOverlay() {
     }
 
     setIsEnding(true);
-    await endSleep(user?.id || 'user-1');
+    await endSleep();
     router.push('/sleep/stats');
   };
 
@@ -125,7 +125,7 @@ export default function SleepPopupOverlay() {
     if (isEnding) return;
     setIsEnding(true);
     setTooShort(false);
-    await endSleep(user?.id || 'user-1');
+    await endSleep();
     router.push('/sleep/stats');
   };
 

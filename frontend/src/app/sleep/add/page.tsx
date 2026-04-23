@@ -19,7 +19,7 @@ export default function AddSleep() {
   // Keeping it simple with manual slider + time inputs for now to match the user request.
 
   const handleSave = async () => {
-    await addEntry(user?.id || 'user-1', {
+    await addEntry({
       duration,
       sleepTime,
       wakeTime,

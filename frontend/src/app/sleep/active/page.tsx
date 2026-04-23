@@ -105,7 +105,7 @@ function SleepActiveContent() {
       const core = 6.04; 
       const post = 0.2;  // 12 mins
       
-      await addEntry(user?.id || 'user-1', {
+      await addEntry({
         duration,
         sleepTime,
         wakeTime,

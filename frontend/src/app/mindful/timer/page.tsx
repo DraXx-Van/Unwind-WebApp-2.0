@@ -183,7 +183,7 @@ function TimerPageContent() {
          if (sessionId) {
               await updateEntry(sessionId, playedMinutesFloat);
          } else {
-              await addEntry(user?.id || 'user-1', {
+              await addEntry({
                   activity: activity,
                   duration: playedMinutesFloat,
                   plannedDuration: parseFloat((initialTotalSeconds / 60).toFixed(2)),
@@ -205,7 +205,7 @@ function TimerPageContent() {
          if (sessionId) {
               await updateEntry(sessionId, playedMinutesFloat);
          } else {
-              await addEntry(user?.id || 'user-1', {
+              await addEntry({
                   activity: activity,
                   duration: playedMinutesFloat,
                   plannedDuration: parseFloat((initialTotalSeconds / 60).toFixed(2)),
