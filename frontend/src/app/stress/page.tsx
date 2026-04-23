@@ -14,8 +14,8 @@ export default function StressDashboard() {
 
   useEffect(() => {
     if (user?.id) {
-      fetchLatest(user.id);
-      fetchHistory(user.id);
+      fetchLatest();
+      fetchHistory();
     }
   }, [fetchLatest, fetchHistory, user?.id]);
 

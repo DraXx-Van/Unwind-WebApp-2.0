@@ -31,7 +31,7 @@ export default function StressStats() {
   const [isPreview, setIsPreview] = useState(false);
 
   useEffect(() => {
-    if (user?.id) fetchHistory(user.id);
+    if (user?.id) fetchHistory();
   }, [fetchHistory, user?.id]);
 
   const statsData = useMemo(() => {

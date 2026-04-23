@@ -14,7 +14,7 @@ export default function SleepStatsPage() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (user?.id) fetchLatest(user.id);
+    if (user?.id) fetchLatest();
     const t = setTimeout(() => setMounted(true), 150);
     return () => clearTimeout(t);
   }, [fetchLatest, user?.id]);

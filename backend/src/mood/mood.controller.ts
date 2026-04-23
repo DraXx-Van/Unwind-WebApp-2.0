@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards, Req, Query } from '@nestjs/common';
 import { MoodService } from './mood.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 

@@ -21,7 +21,7 @@ export default function SleepSchedulePage() {
 
   useEffect(() => {
     if (user?.id) {
-      fetchSchedule(user.id);
+      fetchSchedule();
     }
   }, [fetchSchedule, user?.id]);
 
@@ -47,7 +47,7 @@ export default function SleepSchedulePage() {
 
   const handleSetSchedule = async () => {
     if (!user?.id) return;
-    await setSchedule(user.id, {
+    await setSchedule({
       isEveryday: repeatMode === 'Everyday',
       isToday: repeatMode === 'Today',
       sleepTime,
