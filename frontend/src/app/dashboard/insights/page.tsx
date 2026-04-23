@@ -84,7 +84,7 @@ function ScoreRing({ score, label, dark = false }: { score: number | null; label
         <motion.circle
           initial={{ strokeDashoffset: circ }}
           animate={{ strokeDashoffset: circ - filled }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
+          transition={{ duration: 1.5, ease: "easeOut" as const }}
           cx="50" cy="50" r={r} fill="none"
           stroke={ringColor} strokeWidth="10"
           strokeDasharray={circ}

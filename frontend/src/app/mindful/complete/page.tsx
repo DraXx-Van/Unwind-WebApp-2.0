@@ -21,7 +21,7 @@ const FloatingConfetti = ({ delay = 0 }: { delay?: number }) => (
       duration: 3 + Math.random() * 2, 
       repeat: Infinity, 
       delay: delay,
-      ease: "easeOut"
+      ease: "easeOut" as const
     }}
     className="absolute z-20 pointer-events-none"
     style={{ 
@@ -127,7 +127,7 @@ function CompletePageContent() {
         <motion.div 
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            transition={{ duration: 1, ease: "easeOut" as const }}
             className="absolute bottom-0 left-0 w-full h-[65%] overflow-hidden z-0 pointer-events-none"
         >
            <div className="absolute top-0 left-[-50%] w-[200%] h-[150%] bg-[#FFD2C2]" style={{ borderRadius: '50% 50% 0 0' }}></div>
@@ -147,7 +147,7 @@ function CompletePageContent() {
                 transition={{ 
                     duration: 4, 
                     repeat: Infinity, 
-                    ease: "easeInOut" 
+                    ease: "easeInOut" as const
                 }}
                 className="w-[125%] max-w-[600px] mb-12 translate-x-[4%] sm:translate-x-[2%]"
              >

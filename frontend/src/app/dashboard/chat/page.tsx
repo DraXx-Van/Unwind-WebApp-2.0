@@ -90,12 +90,12 @@ export default function ConversationsPage() {
                 {/* Background Decor - with floating animation */}
                 <motion.div 
                     animate={{ x: [0, 10, 0], y: [0, -10, 0] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" as const }}
                     className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3" 
                 />
                 <motion.div 
                     animate={{ x: [0, -15, 0], y: [0, 10, 0] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" as const, delay: 1 }}
                     className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/3" 
                 />
                 

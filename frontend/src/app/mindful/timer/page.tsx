@@ -22,7 +22,7 @@ const FloatingElement = ({ children, delay = 0, duration = 10, x = [0, 20, 0], y
       duration: duration,
       repeat: Infinity,
       repeatType: "reverse",
-      ease: "easeInOut",
+      ease: "easeInOut" as const,
       delay: delay
     }}
     className={`absolute pointer-events-none ${className}`}
