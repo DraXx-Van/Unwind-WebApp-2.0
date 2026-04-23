@@ -7,6 +7,9 @@ export interface SleepEntry {
   sleepTime: string;
   wakeTime: string;
   quality: number;
+  rem?: number;
+  core?: number;
+  post?: number;
   createdAt: string;
 }
 
@@ -38,7 +41,7 @@ interface SleepState {
   fetchSchedule: (userId?: string) => Promise<void>;
   fetchWeeklyQuality: (userId?: string) => Promise<void>;
   setSchedule: (userId: string, data: Partial<SleepSchedule>) => Promise<void>;
-  addEntry: (userId: string, data: { duration: number; sleepTime: string; wakeTime: string }) => Promise<void>;
+  addEntry: (userId: string, data: { duration: number; sleepTime: string; wakeTime: string; quality?: number; rem?: number; core?: number; post?: number }) => Promise<void>;
 
   // Sleep timer actions
   initTimer: () => void;

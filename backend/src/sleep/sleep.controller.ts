@@ -20,12 +20,16 @@ export class SleepController {
 
   // --- Entries ---
   @Post()
-  async createEntry(@Body() body: { userId: string; duration: number; sleepTime: string; wakeTime: string }) {
+  async createEntry(@Body() body: { userId: string; duration: number; sleepTime: string; wakeTime: string; quality?: number; rem?: number; core?: number; post?: number }) {
     if (!body.userId) throw new BadRequestException('userId is required');
     return this.sleepService.createEntry(body.userId, {
       duration: body.duration,
       sleepTime: body.sleepTime,
       wakeTime: body.wakeTime,
+      quality: body.quality,
+      rem: body.rem,
+      core: body.core,
+      post: body.post
     });
   }
 

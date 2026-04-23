@@ -26,24 +26,21 @@ export class SleepService {
   }
 
   // --- Entry Management ---
-  async createEntry(userId: string, data: { duration: number; sleepTime: string; wakeTime: string }): Promise<SleepEntry> {
-    // New Algorithm: Better distribution
-    // 0-4h: 0-40 points
-    // 4-6h: 40-70 points
-    // 6-8h: 70-100 points
-    // 8h+: slight decline for oversleeping
+  async createEntry(userId: string, data: { duration: number; sleepTime: string; wakeTime: string; quality?: number; rem?: number; core?: number; post?: number }): Promise<SleepEntry> {
+    // If quality is provided, use it. Otherwise calculate.
+    let quality = data.quality;
     
-    let quality = 0;
-    const d = data.duration;
-    
-    if (d < 4) {
-      quality = (d / 4) * 40; // 0 to 40
-    } else if (d < 7) {
-      quality = 40 + ((d - 4) / 3) * 40; // 40 to 80
-    } else if (d <= 9) {
-      quality = 80 + ((d - 7) / 2) * 20; // 80 to 100
-    } else {
-      quality = Math.max(70, 100 - (d - 9) * 10); // Slight penalty for > 9h
+    if (quality === undefined || quality === null) {
+      const d = data.duration;
+      if (d < 4) {
+        quality = (d / 4) * 40; 
+      } else if (d < 7) {
+        quality = 40 + ((d - 4) / 3) * 40; 
+      } else if (d <= 9) {
+        quality = 80 + ((d - 7) / 2) * 20; 
+      } else {
+        quality = Math.max(70, 100 - (d - 9) * 10); 
+      }
     }
 
     return this.prisma.sleepEntry.create({
@@ -53,6 +50,9 @@ export class SleepService {
         sleepTime: data.sleepTime,
         wakeTime: data.wakeTime,
         quality: Math.round(quality),
+        rem: data.rem,
+        core: data.core,
+        post: data.post
       },
     });
   }
