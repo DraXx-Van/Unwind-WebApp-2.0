@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft, Search, SlidersHorizontal, ArrowRight, Sparkles, X } from 'lucide-react';
 import { LIBRARY_ACTIVITIES, ActivityCategory, Activity } from '@/data/libraryActivities';
@@ -10,7 +10,7 @@ import { LibraryCategoryFilter } from '@/components/library/LibraryCategoryFilte
 import { motion, AnimatePresence } from 'framer-motion';
 import { TabBar } from '@/components/dashboard/TabBar';
 
-export default function LibraryPage() {
+function LibraryContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [activeCategory, setActiveCategory] = useState<ActivityCategory | 'all'>('all');
@@ -191,5 +191,13 @@ export default function LibraryPage() {
             {/* Navigation Bar */}
             <TabBar />
         </div>
+    );
+}
+
+export default function LibraryPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-[#FDFDFD] flex items-center justify-center font-bold text-[#4B3425]">Loading Library...</div>}>
+            <LibraryContent />
+        </Suspense>
     );
 }
