@@ -2,6 +2,8 @@
 
 Unwind is a premium, holistic wellness platform designed to help users track, understand, and improve their mental health. It provides a comprehensive suite of tools for monitoring mood, managing stress, optimizing sleep, and practicing mindfulness.
 
+Demo Video : https://drive.google.com/file/d/1567uR0_j0Oat8rRypPrCG9HpSMtM7nxd/view?usp=sharing
+
 ## 🌟 Key Features
 
 - **Personalized Dashboard**: A high-level overview of your mental well-being, featuring a dynamic **Mental Score** calculated from your recent activity.
