@@ -1,3 +1,4 @@
+
 "use client";
 
 import { use, useState } from 'react';
@@ -30,7 +31,7 @@ const ICON_MAP: Record<string, any> = {
 const CATEGORY_COLORS: Record<ActivityCategory, string> = {
     stress: '#9BB068',
     anxiety: '#FE814B',
-    sleep: '#A18FFF',
+    sleep: '#7C6AFF',
     mood: '#FFCE5C',
     focus: '#BDA193',
     overthinking: '#4B3425',
@@ -85,11 +86,33 @@ export default function ActivityDetailPage({ params }: { params: Promise<{ id: s
                 className="pt-12 pb-24 px-6 rounded-b-[48px] relative overflow-hidden shadow-lg"
                 style={{ backgroundColor: headerBgColor }}
             >
+                {/* Brand Background Pattern */}
+                <img 
+                    src="/assets/Journal_assets/bg.svg" 
+                    alt="" 
+                    className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none select-none z-0" 
+                />
+
+                {/* Decorative Geometric Shapes (Triangle/Circle) */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none overflow-hidden">
+                    {/* Circle */}
+                    <div 
+                        className="absolute -top-10 -right-10 w-48 h-48 rounded-full border-[24px] border-white/10" 
+                    />
+                    {/* Triangle-ish / Diamond */}
+                    <div 
+                        className="absolute top-1/3 -left-12 w-32 h-32 rotate-[25deg] bg-white/5 rounded-3xl backdrop-blur-[2px]" 
+                    />
+                    {/* Secondary Circle */}
+                    <div 
+                        className="absolute bottom-4 right-1/4 w-16 h-16 rounded-full bg-white/10" 
+                    />
+                </div>
 
 
                 <button 
                     onClick={() => router.back()}
-                    className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-8 backdrop-blur-md shadow-sm border border-white/20 hover:bg-white/40 transition-all"
+                    className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-8 backdrop-blur-md shadow-sm border border-white/20 hover:bg-white/40 transition-all relative z-20"
                 >
                     <ChevronLeft className="w-6 h-6" style={{ color: textColor }} />
                 </button>
@@ -123,7 +146,7 @@ export default function ActivityDetailPage({ params }: { params: Promise<{ id: s
 
             {/* Content Section */}
             <div className="px-6 -mt-12 relative z-20">
-                <div className="bg-white rounded-32px p-6 shadow-[0px_24px_48px_rgba(75,52,37,0.1)] border border-[#F7F4F2]">
+                <div className="bg-white rounded-[32px] p-6 shadow-[0px_24px_48px_rgba(75,52,37,0.1)] border border-[#F7F4F2]">
                     
                     {/* Media Tabs (Only if media exists) */}
                     {(activity.imageUrl || activity.videoUrl) && (

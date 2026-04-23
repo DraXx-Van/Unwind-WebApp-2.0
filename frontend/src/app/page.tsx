@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
@@ -32,7 +33,7 @@ const slides = [
         title: (
             <>
                 <span style={{ color: '#FE631B' }}>Intelligent</span>{' '}
-                <span style={{ color: '#4B3425' }}>Mood Tracking &amp; Emotion Insights</span>
+                <span style={{ color: '#4B3425' }}>Mood Tracking & Emotion Insights</span>
             </>
         ),
         subtitle: null as null | string,
@@ -59,6 +60,15 @@ const slideVariants = {
     enter: (dir: number) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
     center: { x: 0, opacity: 1 },
     exit: (dir: number) => ({ x: dir > 0 ? '-100%' : '100%', opacity: 0 }),
+};
+
+const textVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (custom: number) => ({ 
+        opacity: 1, 
+        y: 0,
+        transition: { delay: custom * 0.15, duration: 0.5, ease: "easeOut" }
+    })
 };
 
 export default function Home() {
@@ -116,7 +126,7 @@ export default function Home() {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    transition={{ type: 'tween', duration: 0.38, ease: 'easeInOut' }}
+                    transition={{ type: 'spring', damping: 25, stiffness: 200, mass: 1 }}
                     className="flex flex-col min-h-screen"
                     style={{ background: slide.bg }}
                 >
@@ -127,47 +137,81 @@ export default function Home() {
                     {slide.id === 0 && (
                         <div className="flex flex-col items-center flex-1 px-4">
                             {/* Logo pill */}
-                            <div className="mt-16 w-16 h-16 rounded-full flex items-center justify-center" style={{ background: '#4B3425' }}>
+                            <motion.div 
+                                initial={{ scale: 0, rotate: -45 }}
+                                animate={{ scale: 1, rotate: 0 }}
+                                transition={{ type: 'spring', damping: 12, delay: 0.2 }}
+                                className="mt-16 w-16 h-16 rounded-full flex items-center justify-center shadow-lg" 
+                                style={{ background: '#4B3425' }}
+                            >
                                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                    <circle cx="9.78" cy="19.56" r="6.22" fill="white" />
-                                    <circle cx="0"    cy="9.78"  r="6.22" fill="white" />
-                                    <circle cx="9.78" cy="0"     r="6.22" fill="white" />
-                                    <circle cx="19.56" cy="9.78" r="6.22" fill="white" />
+                                    <circle cx="16" cy="24" r="5" fill="white" />
+                                    <circle cx="8"  cy="16" r="5" fill="white" />
+                                    <circle cx="16" cy="8"  r="5" fill="white" />
+                                    <circle cx="24" cy="16" r="5" fill="white" />
                                 </svg>
-                            </div>
+                            </motion.div>
 
                             {/* Title */}
-                            <h1
-                                className="mt-6 text-[30px] leading-[38px] font-extrabold text-center"
+                            <motion.h1
+                                custom={1}
+                                initial="hidden"
+                                animate="visible"
+                                variants={textVariants}
+                                className="mt-6 text-[30px] leading-[38px] font-black text-center"
                                 style={{ fontFamily: 'Urbanist, sans-serif', letterSpacing: '-0.02em', color: '#4B3425' }}
                             >
                                 {slide.title}
-                            </h1>
+                            </motion.h1>
 
                             {/* Subtitle */}
-                            <p
-                                className="mt-4 text-[18px] leading-[160%] font-medium text-center max-w-[311px]"
+                            <motion.p
+                                custom={2}
+                                initial="hidden"
+                                animate="visible"
+                                variants={textVariants}
+                                className="mt-4 text-[18px] leading-[160%] font-bold text-center max-w-[311px]"
                                 style={{ color: 'rgba(31, 22, 15, 0.64)', fontFamily: 'Urbanist, sans-serif', letterSpacing: '-0.01em' }}
                             >
                                 {slide.subtitle}
-                            </p>
+                            </motion.p>
 
-                            {/* Illustration — white circle background as in Figma */}
-                            <div className="relative mt-8 w-[300px] h-[300px] flex-shrink-0">
-                                <div className="absolute inset-0 bg-white rounded-full" />
-                                <Image
-                                    src={slide.illustrationSrc}
-                                    alt={slide.illustrationAlt}
-                                    fill
-                                    className="object-contain z-10"
-                                    priority
-                                />
-                            </div>
+                            {/* Illustration */}
+                            <motion.div 
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: 0.4, type: 'spring' }}
+                                className="relative mt-8 w-[300px] h-[300px] flex-shrink-0"
+                            >
+                                <div className="absolute inset-0 bg-white rounded-full shadow-inner" />
+                                <motion.div
+                                    animate={{ 
+                                        y: [0, -12, 0],
+                                    }}
+                                    transition={{
+                                        duration: 4,
+                                        repeat: Infinity,
+                                        ease: "easeInOut"
+                                    }}
+                                    className="relative w-full h-full"
+                                >
+                                    <Image
+                                        src={slide.illustrationSrc}
+                                        alt={slide.illustrationAlt}
+                                        fill
+                                        className="object-contain z-10 p-6"
+                                        priority
+                                    />
+                                </motion.div>
+                            </motion.div>
 
                             {/* Get Started button */}
-                            <button
+                            <motion.button
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.6 }}
                                 onClick={goNext}
-                                className="mt-10 flex items-center justify-center gap-4 px-6 active:scale-95 transition-transform"
+                                className="mt-10 flex items-center justify-center gap-4 px-8 active:scale-95 transition-transform shadow-xl"
                                 style={{
                                     height: 56,
                                     background: '#4B3425',
@@ -175,19 +219,25 @@ export default function Home() {
                                     fontFamily: 'Urbanist, sans-serif',
                                 }}
                             >
-                                <span className="text-white text-[18px] font-extrabold" style={{ letterSpacing: '-0.01em' }}>Get Started</span>
-                                <ArrowRight className="text-white w-6 h-6" strokeWidth={2.5} />
-                            </button>
+                                <span className="text-white text-[18px] font-black" style={{ letterSpacing: '-0.01em' }}>Get Started</span>
+                                <ArrowRight className="text-white w-6 h-6" strokeWidth={3} />
+                            </motion.button>
 
                             {/* Sign In link */}
-                            <div className="mt-8 mb-10 text-center" style={{ fontFamily: 'Urbanist, sans-serif' }}>
-                                <span className="text-sm font-medium" style={{ color: 'rgba(31, 22, 15, 0.64)' }}>
+                            <motion.div 
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.8 }}
+                                className="mt-8 mb-10 text-center" 
+                                style={{ fontFamily: 'Urbanist, sans-serif' }}
+                            >
+                                <span className="text-sm font-bold" style={{ color: 'rgba(31, 22, 15, 0.64)' }}>
                                     Already have an account?{' '}
                                 </span>
-                                <Link href="/login" className="text-sm font-bold hover:underline" style={{ color: '#FE814B' }}>
+                                <Link href="/login" className="text-sm font-black hover:underline" style={{ color: '#FE814B' }}>
                                     Sign In.
                                 </Link>
-                            </div>
+                            </motion.div>
                         </div>
                     )}
 
@@ -197,7 +247,7 @@ export default function Home() {
                     {slide.id !== 0 && (
                         <div className="flex flex-col flex-1">
 
-                            {/* ── Dot indicators (floating over coloured bg) ── */}
+                            {/* ── Dot indicators ── */}
                             <div className="flex justify-center gap-3 pt-16 z-30 relative">
                                 {slides.map((_, i) => (
                                     <button
@@ -207,13 +257,20 @@ export default function Home() {
                                         style={{
                                             background: i <= current ? '#4B3425' : 'transparent',
                                             border: i <= current ? 'none' : '1.5px solid #4B3425',
+                                            width: i === current ? 24 : 12,
                                         }}
                                     />
                                 ))}
                             </div>
 
-                            {/* ── Full-bleed illustration — sits on coloured background ── */}
-                            <div className="relative flex-1" style={{ minHeight: 280 }}>
+                            {/* ── Illustration ── */}
+                            <motion.div 
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.2 }}
+                                className="relative flex-1 z-0" 
+                                style={{ minHeight: 280 }}
+                            >
                                 <Image
                                     src={slide.illustrationSrc}
                                     alt={slide.illustrationAlt}
@@ -221,20 +278,19 @@ export default function Home() {
                                     className="object-cover object-top"
                                     priority
                                 />
-                            </div>
+                            </motion.div>
 
-                            {/* ── White curved card at bottom ──
-                                A very wide, very tall rounded rectangle whose top arc
-                                creates the concave curve seen in the Figma design.
-                            ── */}
-                            <div className="relative" style={{ marginTop: -40 }}>
-                                {/* The arc — overflow hidden on parent clips it */}
-                                <div
+                            {/* ── White curved card at bottom ── */}
+                            <div className="relative z-10" style={{ marginTop: -40 }}>
+                                {/* FIX: Use x: "-50%" in motion props to avoid transform clash, and ensure z-index */}
+                                <motion.div
+                                    initial={{ y: 200, x: "-50%" }}
+                                    animate={{ y: 0, x: "-50%" }}
+                                    transition={{ type: 'spring', damping: 25, stiffness: 120 }}
+                                    className="absolute z-0"
                                     style={{
-                                        position: 'absolute',
                                         top: -60,
                                         left: '50%',
-                                        transform: 'translateX(-50%)',
                                         width: '200vw',
                                         height: 160,
                                         background: '#FFFFFF',
@@ -243,53 +299,60 @@ export default function Home() {
                                     }}
                                 />
 
-                                {/* White content below the arc */}
                                 <div
                                     className="relative z-10 flex flex-col items-center px-6 pb-20"
                                     style={{ background: '#FFFFFF', paddingTop: 28 }}
                                 >
                                     {/* Step tag */}
                                     {slide.tag && (
-                                        <div
-                                            className="flex items-center justify-center rounded-full mb-6"
-                                            style={{ background: slide.tag.bg, padding: '8px 12px' }}
+                                        <motion.div
+                                            initial={{ opacity: 0, scale: 0.8 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{ delay: 0.4 }}
+                                            className="flex items-center justify-center rounded-full mb-6 shadow-sm border border-black/5"
+                                            style={{ background: slide.tag.bg, padding: '8px 16px' }}
                                         >
                                             <span
                                                 style={{
                                                     color: slide.tag.color,
                                                     fontFamily: 'Urbanist, sans-serif',
-                                                    fontSize: 12,
-                                                    fontWeight: 800,
-                                                    letterSpacing: '0.1em',
+                                                    fontSize: 13,
+                                                    fontWeight: 900,
+                                                    letterSpacing: '0.15em',
                                                     textTransform: 'uppercase',
                                                 }}
                                             >
                                                 {slide.tag.label}
                                             </span>
-                                        </div>
+                                        </motion.div>
                                     )}
 
                                     {/* Heading */}
-                                    <h2
-                                        className="text-[30px] leading-[38px] font-extrabold text-center max-w-[311px]"
+                                    <motion.h2
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.5 }}
+                                        className="text-[30px] leading-[38px] font-black text-center max-w-[311px]"
                                         style={{ fontFamily: 'Urbanist, sans-serif', letterSpacing: '-0.02em' }}
                                     >
                                         {slide.title}
-                                    </h2>
+                                    </motion.h2>
 
                                     {/* Arrow button */}
-                                    <button
+                                    <motion.button
+                                        initial={{ scale: 0 }}
+                                        animate={{ scale: 1 }}
+                                        transition={{ type: 'spring', damping: 10, delay: 0.6 }}
                                         onClick={goNext}
-                                        className="mt-8 flex items-center justify-center active:scale-90 transition-transform"
+                                        className="mt-8 flex items-center justify-center active:scale-90 transition-all shadow-2xl hover:shadow-[0_12px_32px_rgba(75,52,37,0.3)]"
                                         style={{
                                             width: 80, height: 80,
                                             background: '#4B3425',
                                             borderRadius: '50%',
-                                            boxShadow: '0 8px 24px rgba(75,52,37,0.25)',
                                         }}
                                     >
-                                        <ArrowRight className="text-white w-6 h-6" strokeWidth={2.5} />
-                                    </button>
+                                        <ArrowRight className="text-white w-7 h-7" strokeWidth={3} />
+                                    </motion.button>
                                 </div>
                             </div>
 

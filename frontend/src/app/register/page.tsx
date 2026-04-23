@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -5,7 +6,27 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Smile, Eye, EyeOff, Mail, Lock, User, ArrowRight, Sparkles } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.2
+        }
+    }
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { 
+        opacity: 1, 
+        y: 0,
+        transition: { type: 'spring', damping: 20 }
+    }
+};
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -26,84 +47,93 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="min-h-screen bg-mindful-brown-10 flex flex-col">
+        <div className="min-h-screen bg-[#FDFBF9] flex flex-col font-sans">
             {/* Top Decorative Section */}
             <div className="bg-[#4F3422] rounded-b-[48px] px-6 pt-16 pb-14 text-white relative overflow-hidden">
-                {/* Decorative circles */}
-                <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3" />
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/3" />
+                {/* Decorative circles - with floating animation */}
+                <motion.div 
+                    animate={{ x: [0, 10, 0], y: [0, -10, 0] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3" 
+                />
+                <motion.div 
+                    animate={{ x: [0, -15, 0], y: [0, 10, 0] }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/3" 
+                />
 
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ type: 'spring', damping: 15 }}
                     className="relative z-10 flex flex-col items-center text-center"
                 >
-                    <div className="w-20 h-20 bg-[#A28FFF] rounded-full flex items-center justify-center shadow-lg mb-6 relative">
+                    <div className="w-20 h-20 bg-[#A28FFF] rounded-[28px] flex items-center justify-center shadow-2xl mb-6 relative rotate-3">
                         <Smile size={40} className="text-white" />
                         <motion.div
-                            className="absolute -top-1 -right-1 w-7 h-7 bg-serenity-green-50 rounded-full flex items-center justify-center shadow-md"
-                            animate={{ scale: [1, 1.2, 1] }}
-                            transition={{ repeat: Infinity, duration: 2 }}
+                            className="absolute -top-2 -right-2 w-8 h-8 bg-[#9BB068] rounded-full flex items-center justify-center shadow-lg border-2 border-white"
+                            animate={{ scale: [1, 1.2, 1], rotate: [0, 15, 0] }}
+                            transition={{ repeat: Infinity, duration: 2.5 }}
                         >
-                            <Sparkles className="w-3.5 h-3.5 text-white" />
+                            <Sparkles className="w-4 h-4 text-white" />
                         </motion.div>
                     </div>
-                    <h1 className="text-3xl font-extrabold tracking-tight mb-2">Create Account</h1>
-                    <p className="text-white/70 font-medium text-lg">Begin your mental wellness journey</p>
+                    <h1 className="text-[34px] font-black tracking-tight mb-2">Create Account</h1>
+                    <p className="text-white/60 font-bold text-lg max-w-[240px]">Begin your mental wellness journey</p>
                 </motion.div>
             </div>
 
             {/* Form Section */}
             <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 }}
-                className="flex-1 px-6 pt-8 pb-8 max-w-md mx-auto w-full"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="flex-1 px-6 pt-10 pb-8 max-w-md mx-auto w-full"
             >
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                     {/* Name Input */}
-                    <div className="flex flex-col gap-2">
-                        <label className="text-[#4F3422] font-bold text-sm pl-1">Full Name</label>
-                        <div className="bg-white rounded-full px-5 py-4 shadow-sm border border-gray-100 flex items-center gap-3">
-                            <User className="w-5 h-5 text-[#926247]/50" />
+                    <motion.div variants={itemVariants} className="flex flex-col gap-2">
+                        <label className="text-[#4F3422] font-black text-[13px] uppercase tracking-widest pl-5 opacity-60">Full Name</label>
+                        <div className="bg-white rounded-[24px] px-6 py-4 shadow-[0_4px_20px_rgba(75,52,37,0.04)] border border-gray-100 flex items-center gap-4 focus-within:border-[#4F3422]/20 transition-all">
+                            <User className="w-5 h-5 text-[#926247]/40" />
                             <input
                                 type="text"
                                 placeholder="John Doe"
-                                className="bg-transparent outline-none flex-1 text-[#4F3422] text-lg font-medium placeholder:text-gray-300"
+                                className="bg-transparent outline-none flex-1 text-[#4F3422] text-[17px] font-bold placeholder:text-gray-200"
                                 value={name}
                                 onChange={(e) => { setName(e.target.value); clearError(); }}
                                 required
                                 autoComplete="name"
                             />
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Email Input */}
-                    <div className="flex flex-col gap-2">
-                        <label className="text-[#4F3422] font-bold text-sm pl-1">Email</label>
-                        <div className="bg-white rounded-full px-5 py-4 shadow-sm border border-gray-100 flex items-center gap-3">
-                            <Mail className="w-5 h-5 text-[#926247]/50" />
+                    <motion.div variants={itemVariants} className="flex flex-col gap-2">
+                        <label className="text-[#4F3422] font-black text-[13px] uppercase tracking-widest pl-5 opacity-60">Email Address</label>
+                        <div className="bg-white rounded-[24px] px-6 py-4 shadow-[0_4px_20px_rgba(75,52,37,0.04)] border border-gray-100 flex items-center gap-4 focus-within:border-[#4F3422]/20 transition-all">
+                            <Mail className="w-5 h-5 text-[#926247]/40" />
                             <input
                                 type="email"
                                 placeholder="you@example.com"
-                                className="bg-transparent outline-none flex-1 text-[#4F3422] text-lg font-medium placeholder:text-gray-300"
+                                className="bg-transparent outline-none flex-1 text-[#4F3422] text-[17px] font-bold placeholder:text-gray-200"
                                 value={email}
                                 onChange={(e) => { setEmail(e.target.value); clearError(); }}
                                 required
                                 autoComplete="email"
                             />
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Password Input */}
-                    <div className="flex flex-col gap-2">
-                        <label className="text-[#4F3422] font-bold text-sm pl-1">Password</label>
-                        <div className="bg-white rounded-full px-5 py-4 shadow-sm border border-gray-100 flex items-center gap-3">
-                            <Lock className="w-5 h-5 text-[#926247]/50" />
+                    <motion.div variants={itemVariants} className="flex flex-col gap-2">
+                        <label className="text-[#4F3422] font-black text-[13px] uppercase tracking-widest pl-5 opacity-60">Password</label>
+                        <div className="bg-white rounded-[24px] px-6 py-4 shadow-[0_4px_20px_rgba(75,52,37,0.04)] border border-gray-100 flex items-center gap-4 focus-within:border-[#4F3422]/20 transition-all">
+                            <Lock className="w-5 h-5 text-[#926247]/40" />
                             <input
                                 type={showPassword ? 'text' : 'password'}
-                                placeholder="Min. 6 characters"
-                                className="bg-transparent outline-none flex-1 text-[#4F3422] text-lg font-medium placeholder:text-gray-300"
+                                placeholder="At least 6 characters"
+                                className="bg-transparent outline-none flex-1 text-[#4F3422] text-[17px] font-bold placeholder:text-gray-200"
                                 value={password}
                                 onChange={(e) => { setPassword(e.target.value); clearError(); }}
                                 required
@@ -113,53 +143,57 @@ export default function RegisterPage() {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="text-[#926247]/50 hover:text-[#4F3422] transition-colors"
+                                className="text-[#926247]/30 hover:text-[#4F3422] transition-colors"
                             >
                                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                             </button>
                         </div>
-                        {password.length > 0 && password.length < 6 && (
-                            <span className="text-xs text-[#FE814B] font-medium pl-5">Password must be at least 6 characters</span>
-                        )}
-                    </div>
+                    </motion.div>
 
                     {/* Error Message */}
-                    {error && (
-                        <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="bg-red-50 text-red-600 px-5 py-3 rounded-2xl text-sm font-medium text-center"
-                        >
-                            {error}
-                        </motion.div>
-                    )}
+                    <AnimatePresence>
+                        {error && (
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                className="bg-red-50 text-red-600 px-6 py-3 rounded-2xl text-sm font-bold text-center"
+                            >
+                                {error}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
                     {/* Submit Button */}
-                    <button
+                    <motion.button
+                        variants={itemVariants}
                         type="submit"
                         disabled={isLoading || !name || !email || password.length < 6}
-                        className="w-full h-16 bg-[#4F3422] text-white rounded-full font-extrabold text-xl shadow-xl flex items-center justify-center gap-3 mt-4 transition-all hover:bg-[#3d281a] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
+                        className="w-full h-[72px] bg-[#4F3422] text-white rounded-[28px] font-black text-xl shadow-[0_12px_32px_rgba(79,52,34,0.3)] flex items-center justify-center gap-3 mt-4 transition-all hover:bg-[#3d281a] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
                         {isLoading ? (
-                            <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin" />
+                            <div className="w-6 h-6 border-4 border-white/20 border-t-white rounded-full animate-spin" />
                         ) : (
                             <>
-                                Create Account <ArrowRight className="w-6 h-6" strokeWidth={2.5} />
+                                Create Account <ArrowRight className="w-6 h-6" strokeWidth={3} />
                             </>
                         )}
-                    </button>
+                    </motion.button>
                 </form>
 
                 {/* Login Link */}
-                <div className="text-center mt-8">
-                    <span className="text-[#926247] font-medium">Already have an account? </span>
+                <motion.div 
+                    variants={itemVariants}
+                    className="text-center mt-10 mb-8"
+                >
+                    <span className="text-[#926247] font-bold opacity-60">Already have an account? </span>
                     <Link
                         href="/login"
-                        className="text-[#4F3422] font-bold hover:underline"
+                        className="text-[#4F3422] font-black hover:underline"
                     >
                         Sign In
                     </Link>
-                </div>
+                </motion.div>
             </motion.div>
         </div>
     );

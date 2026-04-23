@@ -280,7 +280,7 @@ export default function DashboardPage() {
                                 </div>
                             </div>
                             <Link 
-                                href={`/mindful/timer?activity=${encodeURIComponent(mindfulHistory[0].activity)}&category=${encodeURIComponent(mindfulHistory[0].category)}&min=${Math.floor(mindfulHistory[0].plannedDuration || 10)}&sec=0`}
+                                href={`/mindful/add?activityName=${encodeURIComponent(mindfulHistory[0].activity)}&duration=${Math.floor(mindfulHistory[0].plannedDuration || mindfulHistory[0].duration || 10)}`}
                                 className="bg-[#4B3425] text-white px-6 py-3 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg active:scale-95 group-hover:bg-[#3A281D] transition-all"
                             >
                                 Start
