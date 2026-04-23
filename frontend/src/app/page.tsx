@@ -130,7 +130,7 @@ export default function Home() {
                     initial="enter"
                     animate="center"
                     exit="exit"
-                    transition={{ type: 'spring', damping: 25, stiffness: 200, mass: 1 }}
+                    transition={{ type: 'spring' as const, damping: 25, stiffness: 200, mass: 1 }}
                     className="flex flex-col min-h-screen"
                     style={{ background: slide.bg }}
                 >
@@ -144,7 +144,7 @@ export default function Home() {
                             <motion.div 
                                 initial={{ scale: 0, rotate: -45 }}
                                 animate={{ scale: 1, rotate: 0 }}
-                                transition={{ type: 'spring', damping: 12, delay: 0.2 }}
+                                transition={{ type: 'spring' as const, damping: 12, delay: 0.2 }}
                                 className="mt-16 w-16 h-16 rounded-full flex items-center justify-center shadow-lg" 
                                 style={{ background: '#4B3425' }}
                             >
@@ -184,7 +184,7 @@ export default function Home() {
                             <motion.div 
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 0.4, type: 'spring' }}
+                                transition={{ delay: 0.4, type: 'spring' as const }}
                                 className="relative mt-8 w-[300px] h-[300px] flex-shrink-0"
                             >
                                 <div className="absolute inset-0 bg-white rounded-full shadow-inner" />
@@ -290,7 +290,7 @@ export default function Home() {
                                 <motion.div
                                     initial={{ y: 200, x: "-50%" }}
                                     animate={{ y: 0, x: "-50%" }}
-                                    transition={{ type: 'spring', damping: 25, stiffness: 120 }}
+                                    transition={{ type: 'spring' as const, damping: 25, stiffness: 120 }}
                                     className="absolute z-0"
                                     style={{
                                         top: -60,
@@ -346,7 +346,7 @@ export default function Home() {
                                     <motion.button
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
-                                        transition={{ type: 'spring', damping: 10, delay: 0.6 }}
+                                        transition={{ type: 'spring' as const, damping: 10, delay: 0.6 }}
                                         onClick={goNext}
                                         className="mt-8 flex items-center justify-center active:scale-90 transition-all shadow-2xl hover:shadow-[0_12px_32px_rgba(75,52,37,0.3)]"
                                         style={{

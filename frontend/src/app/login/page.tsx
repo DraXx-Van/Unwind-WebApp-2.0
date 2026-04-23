@@ -23,7 +23,7 @@ const itemVariants = {
     visible: { 
         opacity: 1, 
         y: 0,
-        transition: { type: 'spring', damping: 20 }
+        transition: { type: 'spring' as const, damping: 20 }
     }
 };
 
@@ -62,7 +62,7 @@ export default function LoginPage() {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ type: 'spring', damping: 15 }}
+                    transition={{ type: 'spring' as const, damping: 15 }}
                     className="relative z-10 flex flex-col items-center text-center"
                 >
                     <div className="w-20 h-20 bg-[#9BB068] rounded-[28px] flex items-center justify-center shadow-2xl mb-6 relative -rotate-3">

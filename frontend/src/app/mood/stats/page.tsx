@@ -194,7 +194,7 @@ export default function MoodStatsPage() {
                                             <motion.div
                                                 initial={{ height: 0 }}
                                                 animate={{ height: `${displayHeight}%` }}
-                                                transition={{ delay: index * 0.1, duration: 0.5, type: 'spring' }}
+                                                transition={{ delay: index * 0.1, duration: 0.5, type: 'spring' as const }}
                                                 className="w-full rounded-t-full rounded-b-lg relative shadow-md"
                                                 style={{
                                                     height: `${displayHeight}%`,
