@@ -1,10 +1,9 @@
-
 "use client";
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Smile, Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react';
+import { Smile, Eye, EyeOff, Mail, Lock, ArrowRight, UserPlus, LogIn } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -47,7 +46,7 @@ export default function LoginPage() {
     return (
         <div className="min-h-screen bg-[#FDFBF9] flex flex-col font-sans">
             {/* Top Decorative Section */}
-            <div className="bg-[#4F3422] rounded-b-[48px] px-6 pt-16 pb-14 text-white relative overflow-hidden">
+            <div className="bg-[#4F3422] rounded-b-[48px] px-6 pt-10 pb-8 text-white relative overflow-hidden">
                 {/* Decorative circles - with floating animation */}
                 <motion.div 
                     animate={{ x: [0, 10, 0], y: [0, -10, 0] }}
@@ -154,18 +153,34 @@ export default function LoginPage() {
                     </motion.button>
                 </form>
 
-                {/* Register Link */}
-                <motion.div 
-                    variants={itemVariants}
-                    className="text-center mt-12 mb-8"
-                >
-                    <span className="text-[#926247] font-bold opacity-60">Don&apos;t have an account? </span>
-                    <Link
-                        href="/register"
-                        className="text-[#4F3422] font-black hover:underline"
-                    >
-                        Sign Up
-                    </Link>
+                {/* Alternative Actions */}
+                <motion.div variants={itemVariants} className="flex flex-col gap-4 mt-10 mb-8">
+                    <div className="text-center mb-2">
+                        <span className="text-[#926247] font-bold opacity-60 text-sm">Don&apos;t have an account? </span>
+                        <Link
+                            href="/register"
+                            className="text-[#4F3422] font-black hover:underline"
+                        >
+                            Sign Up
+                        </Link>
+                    </div>
+                    
+                    <div className="h-px bg-[#4F3422]/10 w-full mb-2" />
+                    
+                    <div className="grid grid-cols-2 gap-3">
+                        <Link
+                            href="/mentor/register"
+                            className="w-full py-4 bg-white border border-[#4F3422]/10 text-[#4F3422] rounded-2xl font-black text-[10px] uppercase tracking-widest text-center shadow-sm hover:bg-white/80 active:scale-95 transition-all flex items-center justify-center gap-2"
+                        >
+                            <UserPlus className="w-4 h-4 text-[#9BB068]" /> Register Mentor
+                        </Link>
+                        <Link
+                            href="/mentor/login"
+                            className="w-full py-4 bg-[#4F3422]/5 border border-[#4F3422]/10 text-[#4F3422] rounded-2xl font-black text-[10px] uppercase tracking-widest text-center shadow-sm hover:bg-[#4F3422]/10 active:scale-95 transition-all flex items-center justify-center gap-2"
+                        >
+                            <LogIn className="w-4 h-4 text-[#FE814B]" /> Login Mentor
+                        </Link>
+                    </div>
                 </motion.div>
             </motion.div>
         </div>

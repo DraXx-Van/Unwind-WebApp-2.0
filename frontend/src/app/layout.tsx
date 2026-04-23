@@ -21,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+        suppressHydrationWarning
         className={`${urbanist.variable} antialiased`}
       >
         {children}

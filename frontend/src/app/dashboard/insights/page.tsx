@@ -126,16 +126,36 @@ export default function InsightsPage() {
     const range = `${firstDay.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${lastDay.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
     setWeekRange(range);
 
+    // Initial data fetch
     authFetch('/insights/today')
       .then(r => r.json())
       .then(d => { setData(d); setLoading(false); })
       .catch(() => setLoading(false));
+
+    // Load completed tasks from localStorage
+    const todayStr = new Date().toDateString();
+    const stored = localStorage.getItem(`completed_tasks_${todayStr}`);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          setCompletedTasks(new Set(parsed));
+        }
+      } catch (e) {
+        console.error('Failed to parse stored tasks', e);
+      }
+    }
   }, []);
 
   const toggleTask = (id: string) => {
     setCompletedTasks(prev => {
       const next = new Set(prev);
       next.has(id) ? next.delete(id) : next.add(id);
+      
+      // Save to localStorage
+      const todayStr = new Date().toDateString();
+      localStorage.setItem(`completed_tasks_${todayStr}`, JSON.stringify(Array.from(next)));
+      
       return next;
     });
   };

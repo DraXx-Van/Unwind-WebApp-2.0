@@ -19,11 +19,12 @@ interface AuthState {
     register: (name: string, email: string, password: string) => Promise<boolean>;
     logout: () => void;
     clearError: () => void;
+    updateProfile: (data: { name?: string; email?: string }) => Promise<boolean>;
 }
 
 export const useAuthStore = create<AuthState>()(
     persist(
-        (set) => ({
+        (set, get) => ({
             token: null,
             user: null,
             isLoading: false,
@@ -92,6 +93,31 @@ export const useAuthStore = create<AuthState>()(
             },
 
             clearError: () => set({ error: null }),
+
+            updateProfile: async (data: { name?: string; email?: string }) => {
+                const { token, user } = get() as AuthState;
+                if (!token) return false;
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/auth/profile`, {
+                        method: 'PATCH',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(data),
+                    });
+
+                    if (!response.ok) throw new Error('Update failed');
+
+                    const updatedUser = await response.json();
+                    set({ user: { ...user!, ...updatedUser } });
+                    return true;
+                } catch (error) {
+                    console.error('Update error:', error);
+                    return false;
+                }
+            },
         }),
         {
             name: 'auth-storage',

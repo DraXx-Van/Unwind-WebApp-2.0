@@ -1,13 +1,11 @@
-
 "use client";
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Plus, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Plus, ChevronRight, Smile, Frown, Meh } from 'lucide-react';
 import { useJournalStore } from '@/store/journalStore';
 import { JournalHeatmap } from '@/components/journal/JournalHeatmap';
 import { TabBar } from '@/components/dashboard/TabBar';
-
 import { isToday } from '@/lib/dateUtils';
 
 // ─── Mood Helper ─────────────────────────────────────────────────────────────
@@ -114,7 +112,7 @@ export default function JournalPage() {
                     </div>
                     <div className="flex flex-col gap-4">
                         {filteredJournals.length > 0 ? (
-                            filteredJournals.slice(0, 3).map((j, i) => (
+                            filteredJournals.slice(0, 5).map((j, i) => (
                                 <Link key={j.id || i} href={`/journal/view/${j.id}`} className="block active:scale-[0.98] transition-transform">
                                     <div className="bg-white rounded-[24px] p-5 shadow-sm border border-gray-100 flex flex-col gap-2">
                                         <div className="flex justify-between items-start">

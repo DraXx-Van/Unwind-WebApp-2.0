@@ -82,6 +82,14 @@ export class AuthService {
         return user;
     }
 
+    async updateProfile(userId: string, data: { name?: string; email?: string }) {
+        return this.prisma.user.update({
+            where: { id: userId },
+            data,
+            select: { id: true, name: true, email: true },
+        });
+    }
+
     async validateToken(token: string): Promise<{ sub: string; email: string } | null> {
         try {
             const payload = await this.jwtService.verifyAsync<{ sub: string; email: string }>(token);

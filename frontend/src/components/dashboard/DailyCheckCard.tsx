@@ -10,7 +10,7 @@ import { useAuthStore } from '@/store/authStore';
 import { motion } from 'framer-motion';
 import {
   Sun, Moon, Sparkles, CheckCircle2, ArrowRight,
-  ChevronRight, Zap, BedDouble, Wind, PenLine
+  ChevronRight, Zap, BedDouble, Wind, PenLine, ThumbsUp, Leaf
 } from 'lucide-react';
 
 // ─── Mood helpers ─────────────────────────────────────────────────────────────
@@ -175,8 +175,8 @@ export function DailyCheckCard() {
         <div className="w-12 h-12 rounded-2xl bg-[#9BB068] flex items-center justify-center shadow-sm">
           <CheckCircle2 className="w-6 h-6 text-white" />
         </div>
-        <div>
-          <h4 className="text-[#4B3425] font-black text-base">All caught up!</h4>
+        <div className="flex-1">
+          <h4 className="text-[#4B3425] font-black text-base flex items-center gap-2">All caught up! <ThumbsUp className="w-4 h-4 text-[#9BB068]" /></h4>
           <p className="text-[#4B3425]/40 text-xs font-bold mt-1">
             Feeling {moodLabel} · {stressToday !== null ? `Stress ${stressToday}/5` : 'Balanced'}
           </p>

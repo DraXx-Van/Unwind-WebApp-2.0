@@ -1,6 +1,6 @@
 "use client";
 
-import { User } from 'lucide-react';
+import { User, Frown, Smile } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface MessageBubbleProps {
@@ -24,8 +24,8 @@ export function MessageBubble({ text, sender, emotion, dataUpdated }: MessageBub
                             : "bg-[#9BB068]"
                     )}
                 >
-                    <span className="text-white text-xs font-bold">
-                        {emotion.toLowerCase() === 'anger' ? '😔' : '😊'} Emotion: {text}
+                    <span className="text-white text-xs font-bold flex items-center gap-1">
+                        {emotion.toLowerCase() === 'anger' ? <Frown className="w-3.5 h-3.5" /> : <Smile className="w-3.5 h-3.5" />} Emotion: {text}
                     </span>
                 </div>
             </div>

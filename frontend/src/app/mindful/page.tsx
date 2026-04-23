@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useMindfulStore } from '@/store/mindfulStore';
 import { useAuthStore } from '@/store/authStore';
 import Link from 'next/link';
-import { Plus, ChevronDown, Trash2, AlertCircle, X } from 'lucide-react';
+import { Plus, ChevronDown, Trash2, AlertCircle, X, Wind } from 'lucide-react';
 import { TabBar } from '@/components/dashboard/TabBar';
 import { isToday, isWithinDays } from '@/lib/dateUtils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -230,7 +230,7 @@ export default function MindfulDashboard() {
             ) : (
                 <div className="flex flex-col items-center justify-center py-16 text-center">
                 <div className="w-20 h-20 rounded-full bg-[#F6EBE5] flex items-center justify-center mb-4">
-                    <span className="text-4xl">🧘</span>
+                    <Wind className="w-10 h-10 text-[#A6785D]" />
                 </div>
                 <p className="text-[#4B3425] font-bold text-base">No sessions {filter === 'Daily' ? 'today' : 'this week'}</p>
                 <p className="text-[#A69B93] text-sm mt-1">Tap + to start a mindful exercise</p>

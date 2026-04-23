@@ -3,7 +3,7 @@
 import { useAssessmentStore } from '@/store/assessmentStore';
 import { Button } from '../ui/button';
 import { cn } from '../ui/button';
-import { X } from 'lucide-react';
+import { X, Frown, Moon, CloudRain, Meh } from 'lucide-react';
 
 const SYMPTOMS_LIST = [
     'Social Withdrawal', 'Feeling Numbness', 'Feeling Sad', 'Depressed',
@@ -34,13 +34,11 @@ export function StepSymptoms() {
             <div className="flex-1 flex flex-col">
                 {/* Visual header */}
                 <div className="w-full h-40 bg-gradient-to-br from-[#F5F0EB] to-[#EAE2D8] rounded-[32px] mb-6 flex items-center justify-center gap-4 overflow-hidden relative">
-                    <div className="flex gap-3 text-4xl select-none">
-                        <span className="animate-bounce" style={{ animationDelay: '0ms' }}>😔</span>
-                        <span className="animate-bounce" style={{ animationDelay: '150ms' }}>😰</span>
-                        <span className="animate-bounce" style={{ animationDelay: '300ms' }}>😴</span>
-                        <span className="animate-bounce" style={{ animationDelay: '450ms' }}>😤</span>
-                        <span className="animate-bounce" style={{ animationDelay: '600ms' }}>🥺</span>
-                    </div>
+                        <Frown className="w-10 h-10 text-mindful-brown-60 animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <Frown className="w-10 h-10 text-mindful-brown-60 animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <Moon className="w-10 h-10 text-blue-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+                        <CloudRain className="w-10 h-10 text-mindful-brown-60 animate-bounce" style={{ animationDelay: '450ms' }} />
+                        <Meh className="w-10 h-10 text-mindful-brown-60 animate-bounce" style={{ animationDelay: '600ms' }} />
                     <p className="absolute bottom-3 text-mindful-brown-60 text-xs font-medium">Select all that apply — or skip if none</p>
                 </div>
 

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Clock, ChevronUp, ArrowLeft } from 'lucide-react';
+import { Clock, ChevronUp, ArrowLeft, Moon, Sun } from 'lucide-react';
 import { useSleepStore, sleptToday } from '@/store/sleepStore';
 
 // Returns minutes until/since a given "HH:MM" time (positive = future, negative = past)
@@ -140,7 +140,7 @@ export default function SleepPopupOverlay() {
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 px-6">
           <div className="bg-[#1E1510] border border-white/10 rounded-3xl p-7 w-full max-w-sm flex flex-col items-center gap-5 shadow-2xl">
             <div className="w-16 h-16 rounded-full bg-[#FE814B]/15 flex items-center justify-center">
-              <span className="text-3xl">⏱️</span>
+              <Clock className="w-8 h-8 text-[#FE814B]" />
             </div>
             <div className="text-center">
               <h2 className="text-white font-bold text-xl mb-2">Too soon!</h2>
@@ -204,13 +204,13 @@ export default function SleepPopupOverlay() {
         </div>
 
         {/* Title */}
-        <h1 className="text-2xl font-bold text-white text-center leading-snug mb-6">
+        <h1 className="text-2xl font-bold text-white text-center leading-snug mb-6 flex flex-col items-center">
           {doneToday ? (
-            <>Sleep logged!<br />Rest well 🌙</>
+            <><span>Sleep logged!</span><span className="flex items-center gap-1.5">Rest well <Moon className="w-5 h-5 text-blue-300" /></span></>
           ) : mode === 'SLEEP' ? (
-            <>Its Time to bed<br />Sweet dreams! 🌙</>
+            <><span>It's Time to bed</span><span className="flex items-center gap-1.5">Sweet dreams! <Moon className="w-5 h-5 text-blue-300" /></span></>
           ) : (
-            <>Good Morning!<br />Time to Rise ☀️</>
+            <><span>Good Morning!</span><span className="flex items-center gap-1.5">Time to Rise <Sun className="w-5 h-5 text-yellow-400" /></span></>
           )}
         </h1>
 
@@ -242,7 +242,7 @@ export default function SleepPopupOverlay() {
         {!isSleeping && !doneToday && !canStart && minsLeft !== null && minsLeft > 0 && (
           <div className="mt-6 bg-white/10 rounded-2xl px-5 py-3 text-center">
             <p className="text-white/70 text-sm font-medium">
-              Sleep button unlocks {minsLeft > 10 ? `in ~${minsLeft} min` : 'soon'} 🕐
+              <span className="flex items-center justify-center gap-1">Sleep button unlocks {minsLeft > 10 ? `in ~${minsLeft} min` : 'soon'} <Clock className="w-3.5 h-3.5" /></span>
             </p>
             <p className="text-white/40 text-xs mt-1">Scheduled: {scheduledSleep}</p>
           </div>

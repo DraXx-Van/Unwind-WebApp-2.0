@@ -15,9 +15,46 @@ model User {
   password  String
   createdAt DateTime @default(now())
 
-  assessments Assessment[]
-  journals    Journal[]
-  dailyMoods  DailyMood[]
+  assessments    Assessment[]
+  journals       Journal[]
+  dailyMoods     DailyMood[]
+  mentors        MentorStudent[]
+  messages       Message[]
+  aiConversations AiConversation[]
+}
+
+model Mentor {
+  id             String   @id @default(uuid())
+  name           String
+  email          String   @unique
+  password       String
+  specialization String   @default("General")
+  createdAt      DateTime @default(now())
+
+  codes    MentorCode[]
+  students MentorStudent[]
+  messages Message[]
+}
+
+model MentorCode {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  mentorId  String
+  mentor    Mentor   @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model MentorStudent {
+  id        String   @id @default(uuid())
+  mentorId  String
+  mentor    Mentor   @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([mentorId, userId])
 }
 
 model Assessment {
@@ -109,4 +146,37 @@ model MindfulSession {
   timeOfDay       String
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+}
+
+model Message {
+  id         String   @id @default(uuid())
+  content    String
+  senderType String   // "student" or "mentor" or "ai"
+  
+  studentId  String
+  student    User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  mentorId   String?
+  mentor     Mentor?  @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  
+  createdAt  DateTime @default(now())
+}
+
+model AiConversation {
+  id        String      @id @default(uuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String      @default("New Conversation")
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  messages  AiMessage[]
+}
+
+model AiMessage {
+  id             String         @id @default(uuid())
+  conversationId String
+  conversation   AiConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  role           String         // "user" or "model"
+  content        String
+  createdAt      DateTime       @default(now())
 }

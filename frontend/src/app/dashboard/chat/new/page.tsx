@@ -14,17 +14,17 @@ export default function NewChatPage() {
 
     const handleJoinMentor = async () => {
         if (code.length === 6) {
-            const success = await joinMentor(code);
-            if (success) {
-                router.push(`/dashboard/chat/mentor-${code}`);
+            const mentorId = await joinMentor(code);
+            if (mentorId) {
+                router.push(`/dashboard/chat/mentor-${mentorId}`);
             } else {
-                setError('Invalid code. Please check with your mentor.');
+                setError('Invalid or expired code. Please check with your mentor.');
             }
         }
     };
 
     const handleStartAi = async () => {
-        const id = await startNewAiChat("Hello Doctor Freud");
+        const id = await startNewAiChat('');
         router.push(`/dashboard/chat/${id}`);
     };
 
@@ -49,7 +49,7 @@ export default function NewChatPage() {
                         </div>
                         <div>
                             <h3 className="text-[#4B3425] font-extrabold text-lg">AI Support</h3>
-                            <p className="text-[#4B3425]/60 text-sm font-bold">Chat with Doctor Freud.AI</p>
+                            <p className="text-[#4B3425]/60 text-sm font-bold">Chat with UnwindAI</p>
                         </div>
                     </div>
                     <ArrowRight className="text-[#4B3425]/30 group-hover:translate-x-1 transition-transform" />

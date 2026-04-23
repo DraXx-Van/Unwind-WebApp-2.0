@@ -1,10 +1,9 @@
-
 "use client";
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Smile, Eye, EyeOff, Mail, Lock, User, ArrowRight, Sparkles } from 'lucide-react';
+import { Smile, Eye, EyeOff, Mail, Lock, User, ArrowRight, Sparkles, UserPlus } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -49,7 +48,7 @@ export default function RegisterPage() {
     return (
         <div className="min-h-screen bg-[#FDFBF9] flex flex-col font-sans">
             {/* Top Decorative Section */}
-            <div className="bg-[#4F3422] rounded-b-[48px] px-6 pt-16 pb-14 text-white relative overflow-hidden">
+            <div className="bg-[#4F3422] rounded-b-[48px] px-6 pt-10 pb-8 text-white relative overflow-hidden">
                 {/* Decorative circles - with floating animation */}
                 <motion.div 
                     animate={{ x: [0, 10, 0], y: [0, -10, 0] }}
@@ -169,7 +168,7 @@ export default function RegisterPage() {
                         variants={itemVariants}
                         type="submit"
                         disabled={isLoading || !name || !email || password.length < 6}
-                        className="w-full h-[72px] bg-[#4F3422] text-white rounded-[28px] font-black text-xl shadow-[0_12px_32px_rgba(79,52,34,0.3)] flex items-center justify-center gap-3 mt-4 transition-all hover:bg-[#3d281a] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
+                        className="w-full h-[72px] bg-[#4F3422] text-white rounded-[28px] font-black text-xl shadow-[0_12px_32_rgba(79,52,34,0.3)] flex items-center justify-center gap-3 mt-4 transition-all hover:bg-[#3d281a] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
                         {isLoading ? (
                             <div className="w-6 h-6 border-4 border-white/20 border-t-white rounded-full animate-spin" />
@@ -181,17 +180,25 @@ export default function RegisterPage() {
                     </motion.button>
                 </form>
 
-                {/* Login Link */}
-                <motion.div 
-                    variants={itemVariants}
-                    className="text-center mt-10 mb-8"
-                >
-                    <span className="text-[#926247] font-bold opacity-60">Already have an account? </span>
+                {/* Alternative Actions */}
+                <motion.div variants={itemVariants} className="flex flex-col gap-4 mt-10 mb-8">
+                    <div className="text-center mb-2">
+                        <span className="text-[#926247] font-bold opacity-60 text-sm">Already have an account? </span>
+                        <Link
+                            href="/login"
+                            className="text-[#4F3422] font-black hover:underline"
+                        >
+                            Sign In
+                        </Link>
+                    </div>
+                    
+                    <div className="h-px bg-[#4F3422]/10 w-full mb-2" />
+                    
                     <Link
-                        href="/login"
-                        className="text-[#4F3422] font-black hover:underline"
+                        href="/mentor/register"
+                        className="w-full py-4 bg-white border border-[#4F3422]/10 text-[#4F3422] rounded-2xl font-black text-[12px] uppercase tracking-widest text-center shadow-sm hover:bg-white/80 active:scale-95 transition-all flex items-center justify-center gap-3"
                     >
-                        Sign In
+                        <UserPlus className="w-4 h-4 text-[#A28FFF]" /> Sign Up as a Mentor
                     </Link>
                 </motion.div>
             </motion.div>

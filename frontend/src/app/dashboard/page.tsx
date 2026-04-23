@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import { Bell, ChevronRight, Play, BookOpen, Sparkles, Star, Activity, Smile, MoreVertical } from 'lucide-react';
 import Link from 'next/link';
 import { TabBar } from '@/components/dashboard/TabBar';
 import { MentalScoreCard } from '@/components/dashboard/MentalScoreCard';
@@ -13,7 +14,6 @@ import { MindfulHoursCard } from '@/components/dashboard/MindfulHoursCard';
 import { StressLevelCard } from '@/components/dashboard/StressLevelCard';
 import { MoodTrackerCard } from '@/components/dashboard/MoodTrackerCard';
 import { DailyCheckCard } from '@/components/dashboard/DailyCheckCard';
-import { Bell, ChevronRight, Play, BookOpen, Compass, Sparkles } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { authFetch } from '@/lib/api';
 import { isToday } from '@/lib/dateUtils';
@@ -185,6 +185,13 @@ export default function DashboardPage() {
                     <div>
                         <p className="text-white/40 text-[9px] font-black uppercase tracking-[0.2em] mb-0.5">Your Daily Dashboard</p>
                         <h1 className="text-3xl font-black tracking-tight leading-none">Hi, {userName.split(' ')[0]}!</h1>
+                        <div className="flex items-center gap-3 mt-1.5 text-[10px] font-black uppercase tracking-widest opacity-60">
+                            <span className="flex items-center gap-1"><Star className="w-3 h-3 text-[#FF9500] fill-[#FF9500]" /> Pro</span>
+                            <span className="flex items-center gap-1">
+                                <Activity className="w-3 h-3 text-[#FF9500]" />
+                                {mentalScore != null ? `${mentalScore}%` : '--'}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -295,5 +302,4 @@ export default function DashboardPage() {
     );
 }
 
-// Helper icons needed for the library card
 import { ArrowRight } from 'lucide-react';

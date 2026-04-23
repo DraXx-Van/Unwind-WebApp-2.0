@@ -29,4 +29,11 @@ export class AssessmentService {
             orderBy: { createdAt: 'desc' },
         });
     }
+
+    async update(userId: string, id: number, data: any) {
+        return this.prisma.assessment.update({
+            where: { id: Number(id), userId },
+            data,
+        });
+    }
 }

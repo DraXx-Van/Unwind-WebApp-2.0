@@ -189,7 +189,7 @@ export default function SleepDashboard() {
                     <Moon className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-white font-bold text-[13px]">Time to sleep 🌙</p>
+                    <p className="text-white font-bold text-[13px] flex items-center gap-1">Time to sleep <Moon className="w-3.5 h-3.5" /></p>
                     <p className="text-white/60 text-[11px] font-medium">
                       {schedule ? `${formatTime(schedule.sleepTime)} → ${formatTime(schedule.wakeTime)}` : ''}
                     </p>

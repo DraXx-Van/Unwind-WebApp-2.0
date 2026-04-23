@@ -46,6 +46,9 @@ export interface AssessmentState {
 
     submitAssessment: () => Promise<void>;
     resetAssessment: () => void;
+    fetchLatest: () => Promise<void>;
+    updateAssessment: (data: Partial<AssessmentState>) => Promise<boolean>;
+    id: number | null;
 }
 
 export const useAssessmentStore = create<AssessmentState>()(
@@ -137,6 +140,53 @@ export const useAssessmentStore = create<AssessmentState>()(
                 submitError: null,
                 isSubmitted: false,
             }),
+
+            id: null,
+
+            fetchLatest: async () => {
+                try {
+                    const response = await authFetch('/assessment/latest');
+                    if (!response.ok) return;
+                    const data = await response.json();
+                    if (data) {
+                        set({
+                            id: data.id,
+                            goal: data.goal,
+                            gender: data.gender,
+                            age: data.age,
+                            weight: data.weight,
+                            weightUnit: data.weightUnit,
+                            mood: data.mood,
+                            hasSoughtProfessionalHelp: data.hasSoughtProfessionalHelp,
+                            physicalDistress: data.physicalDistress,
+                            sleepQuality: data.sleepQuality,
+                            medications: data.medications,
+                            symptoms: data.symptoms,
+                            stressLevel: data.stressLevel,
+                        });
+                    }
+                } catch (error) {
+                    console.error('Fetch assessment error:', error);
+                }
+            },
+
+            updateAssessment: async (data) => {
+                const state = get();
+                if (!state.id) return false;
+                try {
+                    const response = await authFetch(`/assessment/${state.id}`, {
+                        method: 'PATCH',
+                        body: JSON.stringify(data),
+                    });
+                    if (!response.ok) throw new Error('Update failed');
+                    const updated = await response.json();
+                    set(updated);
+                    return true;
+                } catch (error) {
+                    console.error('Update assessment error:', error);
+                    return false;
+                }
+            }
         }),
         {
             name: 'assessment-storage',
