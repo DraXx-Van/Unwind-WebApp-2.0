@@ -9,7 +9,7 @@ export function NotificationDemo() {
     const [show, setShow] = useState(false);
     const [demoNotification, setDemoNotification] = useState<{ title: string, body: string } | null>(null);
 
-    const triggerDemo = () => {
+    const triggerDemo = async () => {
         const notifications = [
             { title: "Time for Mindfulness", body: "You've been active for 4 hours. A 2-minute breather will boost your focus." },
             { title: "Sleep Nudge", body: "Your ideal bedtime is in 30 mins. Wind down now for a better tomorrow." },
@@ -19,6 +19,26 @@ export function NotificationDemo() {
         const random = notifications[Math.floor(Math.random() * notifications.length)];
         setDemoNotification(random);
         setShow(true);
+
+        // Request permission and show system notification
+        if ("Notification" in window) {
+            const permission = await Notification.requestPermission();
+            if (permission === "granted") {
+                // Try to use service worker for a better Android experience
+                if ("serviceWorker" in navigator) {
+                    const registration = await navigator.serviceWorker.ready;
+                    registration.showNotification(random.title, {
+                        body: random.body,
+                        icon: '/icon-192x192.png',
+                        badge: '/icon-192x192.png',
+                        vibrate: [200, 100, 200],
+                    });
+                } else {
+                    new Notification(random.title, { body: random.body });
+                }
+            }
+        }
+
         setTimeout(() => setShow(false), 5000);
     };
 
