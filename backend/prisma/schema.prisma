@@ -21,6 +21,7 @@ model User {
   mentors        MentorStudent[]
   messages       Message[]
   aiConversations AiConversation[]
+  appointments    Appointment[]
 }
 
 model Mentor {
@@ -34,6 +35,7 @@ model Mentor {
   codes    MentorCode[]
   students MentorStudent[]
   messages Message[]
+  appointments Appointment[]
 }
 
 model MentorCode {
@@ -155,6 +157,7 @@ model Message {
   id         String   @id @default(uuid())
   content    String
   senderType String   // "student" or "mentor" or "ai"
+  type       String   @default("text") // "text", "appointment_request", "appointment_confirmed"
   
   studentId  String
   student    User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
@@ -162,7 +165,28 @@ model Message {
   mentorId   String?
   mentor     Mentor?  @relation(fields: [mentorId], references: [id], onDelete: Cascade)
   
+  appointmentId String?
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id])
+
   createdAt  DateTime @default(now())
+}
+
+model Appointment {
+  id          String            @id @default(uuid())
+  studentId   String
+  student     User              @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  mentorId    String
+  mentor      Mentor            @relation(fields: [mentorId], references: [id], onDelete: Cascade)
+  startTime   DateTime
+  endTime     DateTime?
+  status      String            @default("PENDING") // PENDING, CONFIRMED, CANCELLED
+  meetLink    String?
+  topic       String?
+  
+  messages    Message[]
+  
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
 
 model AiConversation {

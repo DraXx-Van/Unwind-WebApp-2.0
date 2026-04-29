@@ -9,6 +9,8 @@ import { ChatInput } from '@/components/chat/ChatInput';
 import { motion, AnimatePresence } from 'framer-motion';
 import { authFetch } from '@/lib/api';
 import { useAuthStore } from '@/store/authStore';
+import { AppointmentModal } from './AppointmentModal';
+import { ConfirmSlotModal } from './ConfirmSlotModal';
 
 export function MentorChatClient({ mentorId }: { mentorId: string }) {
     const router = useRouter();
@@ -16,6 +18,9 @@ export function MentorChatClient({ mentorId }: { mentorId: string }) {
     const [messages, setMessages] = useState<any[]>([]);
     const [socket, setSocket] = useState<Socket | null>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
+    const [isBookingOpen, setIsBookingOpen] = useState(false);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [selectedAppointmentId, setSelectedAppointmentId] = useState<string | null>(null);
 
     useEffect(() => {
         // Fetch history first
@@ -66,6 +71,37 @@ export function MentorChatClient({ mentorId }: { mentorId: string }) {
         });
     };
 
+    const handleBookAppointment = async (data: { startTime: string; topic: string }) => {
+        if (!user) return;
+        try {
+            await authFetch('/appointments', {
+                method: 'POST',
+                body: JSON.stringify({
+                    mentorId,
+                    ...data,
+                }),
+            });
+            // The message will be broadcasted by the backend
+        } catch (e) {
+            console.error('Failed to book appointment', e);
+        }
+    };
+
+    const handleConfirmAppointment = async (meetLink: string) => {
+        if (!selectedAppointmentId) return;
+        try {
+            await authFetch(`/appointments/${selectedAppointmentId}/confirm`, {
+                method: 'PATCH',
+                body: JSON.stringify({ meetLink }),
+            });
+            setIsConfirmOpen(false);
+            setSelectedAppointmentId(null);
+            // The message will be broadcasted by the backend
+        } catch (e) {
+            console.error('Failed to confirm appointment', e);
+        }
+    };
+
     return (
         <div className="flex flex-col h-screen bg-[#F7F4F2]">
             <header className="bg-white px-6 pt-12 pb-6 rounded-b-[32px] shadow-sm z-10">
@@ -105,13 +141,34 @@ export function MentorChatClient({ mentorId }: { mentorId: string }) {
                             <MessageBubble 
                                 text={msg.content}
                                 sender={msg.senderType === 'student' ? 'user' : 'mentor'}
+                                type={msg.type}
+                                appointmentId={msg.appointmentId}
+                                onConfirm={(id) => {
+                                    setSelectedAppointmentId(id);
+                                    setIsConfirmOpen(true);
+                                }}
                             />
                         </motion.div>
                     ))}
                 </AnimatePresence>
             </div>
 
-            <ChatInput onSendMessage={handleSendMessage} />
+            <ChatInput 
+                onSendMessage={handleSendMessage} 
+                onOpenAppointment={() => setIsBookingOpen(true)}
+            />
+
+            <AppointmentModal 
+                isOpen={isBookingOpen}
+                onClose={() => setIsBookingOpen(false)}
+                onBook={handleBookAppointment}
+            />
+
+            <ConfirmSlotModal 
+                isOpen={isConfirmOpen}
+                onClose={() => setIsConfirmOpen(false)}
+                onConfirm={handleConfirmAppointment}
+            />
         </div>
     );
 }

@@ -8,6 +8,8 @@ import { ConversationCard } from '@/components/chat/ConversationCard';
 import { TabBar } from '@/components/dashboard/TabBar';
 import { motion, AnimatePresence } from 'framer-motion';
 import { authFetch } from '@/lib/api';
+import { cn } from '@/lib/utils';
+import { Clock } from 'lucide-react';
 
 export default function ConversationsPage() {
     const { conversations, fetchConversations, deleteConversation, togglePinConversation, togglePinMentor, pinnedMentors, isLoading } = useChatStore();
@@ -15,6 +17,7 @@ export default function ConversationsPage() {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [mentors, setMentors] = useState<any[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [appointments, setAppointments] = useState<any[]>([]);
 
     useEffect(() => {
         fetchConversations();
@@ -24,6 +27,14 @@ export default function ConversationsPage() {
             .then(res => res.json())
             .then(data => {
                 if (Array.isArray(data)) setMentors(data);
+            })
+            .catch(console.error);
+
+        // Fetch appointments
+        authFetch('/appointments')
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data)) setAppointments(data);
             })
             .catch(console.error);
     }, [fetchConversations]);
@@ -298,6 +309,71 @@ export default function ConversationsPage() {
                                         if (action === 'pin') togglePinMentor(mentor.id);
                                     }}
                                 />
+                            </motion.div>
+                        ))
+                    )}
+                </div>
+
+                {/* Section: My Appointments */}
+                <div className="flex items-center justify-between mt-10 mb-6">
+                    <h2 className="text-[#3a2e26] text-xl font-extrabold">My Appointments ({appointments.length})</h2>
+                </div>
+
+                <div className="space-y-4">
+                    {appointments.length === 0 ? (
+                        <p className="text-[#A69B93] text-sm font-bold text-center py-4 bg-[#F7F4F2] rounded-3xl border border-[#E8DDD9]">
+                            No upcoming appointments scheduled.
+                        </p>
+                    ) : (
+                        appointments.map((apt, idx) => (
+                            <motion.div
+                                key={apt.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: idx * 0.1 }}
+                                className="bg-white rounded-[32px] p-5 shadow-sm border border-[#F7F4F2] relative overflow-hidden"
+                            >
+                                <div className="flex justify-between items-start mb-3">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 bg-[#9BB068]/10 rounded-full flex items-center justify-center">
+                                            <Calendar className="text-[#9BB068] w-5 h-5" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-[#4B3425] font-black text-sm">Dr. {apt.mentor?.name}</h3>
+                                            <p className="text-[#A69B93] text-[10px] font-black uppercase tracking-wider">{apt.topic || 'General Session'}</p>
+                                        </div>
+                                    </div>
+                                    <div className={cn(
+                                        "px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest",
+                                        apt.status === 'CONFIRMED' ? "bg-[#9BB068]/10 text-[#9BB068]" : "bg-[#FE814B]/10 text-[#FE814B]"
+                                    )}>
+                                        {apt.status}
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-4 text-[11px] font-bold text-[#4B3425]/60">
+                                        <div className="flex items-center gap-1.5">
+                                            <Calendar className="w-3.5 h-3.5" />
+                                            {new Date(apt.startTime).toLocaleDateString()}
+                                        </div>
+                                        <div className="flex items-center gap-1.5">
+                                            <Clock className="w-3.5 h-3.5" />
+                                            {new Date(apt.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                        </div>
+                                    </div>
+
+                                    {apt.status === 'CONFIRMED' && apt.meetLink && (
+                                        <a 
+                                            href={apt.meetLink}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="px-4 py-1.5 bg-[#4B3425] text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-md active:scale-95 transition-all"
+                                        >
+                                            Join Now
+                                        </a>
+                                    )}
+                                </div>
                             </motion.div>
                         ))
                     )}

@@ -1,17 +1,37 @@
-'use client';
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { TabBar } from '@/components/dashboard/TabBar';
 import { authFetch } from '@/lib/api';
-import {
-  Bell, BedDouble, Zap, SmilePlus, BookOpen,
-  Wind, Brain, ChevronRight, ArrowRight, CheckCircle2, Circle,
-  Sparkles, TrendingUp, TrendingDown, BarChart2,
-  Moon, HeartPulse, PenLine, Dumbbell,
-  Search, Filter, Activity, Info, Calendar
+import { 
+  Search, 
+  Filter, 
+  Activity, 
+  Info, 
+  Calendar,
+  Bell,
+  BedDouble,
+  Zap,
+  SmilePlus,
+  HeartPulse,
+  PenLine,
+  Wind,
+  ChevronRight,
+  ArrowRight,
+  CheckCircle2,
+  Circle,
+  Sparkles,
+  TrendingUp,
+  BarChart2,
+  Moon,
+  Clock,
+  BookOpen,
+  Brain,
+  TrendingDown
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { NotificationDemo } from '@/components/dashboard/NotificationDemo';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Insight {
@@ -38,6 +58,7 @@ function insightIcon(icon: string) {
   if (icon === 'log-mood')   return <SmilePlus className="w-5 h-5 text-[#9BB068]" />;
   if (icon === 'log-stress') return <Zap className="w-5 h-5 text-[#FE814B]" />;
   if (icon === 'log-sleep')  return <BedDouble className="w-5 h-5 text-[#7C6AFF]" />;
+  if (icon === 'mood')       return <SmilePlus className="w-5 h-5 text-[#FFCE5C]" />;
   return <SmilePlus className="w-5 h-5 text-[#9BB068]" />;
 }
 
@@ -47,6 +68,7 @@ function insightBg(icon: string) {
   if (icon === 'combo')                           return 'bg-[#FFF0F0]';
   if (icon === 'journal')                         return 'bg-[#F5F0EC]';
   if (icon === 'mindful')                         return 'bg-[#F0F7E8]';
+  if (icon === 'mood')                            return 'bg-[#FFF9EB]';
   return 'bg-[#F0F7E8]';
 }
 
@@ -221,12 +243,12 @@ export default function InsightsPage() {
           </div>
           
           {/* Week Selector / Indicator */}
-          <div className="mt-6 flex items-center gap-3">
+          <div className="mt-6 flex flex-wrap items-center gap-3">
              <div className="px-4 py-2 bg-white/10 backdrop-blur-md rounded-xl border border-white/10 flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-white/60" />
                 <span className="text-white font-black text-xs uppercase tracking-widest">{weekRange}</span>
              </div>
-             <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest">Active Week</p>
+             <NotificationDemo />
           </div>
         </div>
       </div>

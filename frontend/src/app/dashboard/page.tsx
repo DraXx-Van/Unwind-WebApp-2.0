@@ -14,6 +14,7 @@ import { MindfulHoursCard } from '@/components/dashboard/MindfulHoursCard';
 import { StressLevelCard } from '@/components/dashboard/StressLevelCard';
 import { MoodTrackerCard } from '@/components/dashboard/MoodTrackerCard';
 import { DailyCheckCard } from '@/components/dashboard/DailyCheckCard';
+import { PanicButton } from '@/components/dashboard/PanicButton';
 import { useAuthStore } from '@/store/authStore';
 import { authFetch } from '@/lib/api';
 import { isToday } from '@/lib/dateUtils';
@@ -298,7 +299,11 @@ export default function DashboardPage() {
                 )}
             </div>
 
+            {/* Floating Navigation Bar */}
             <TabBar />
+            
+            {/* Panic Button */}
+            <PanicButton />
         </div>
     );
 }

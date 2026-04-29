@@ -14,6 +14,8 @@ export interface Activity {
     prompt?: string; // for journal types
     why: string;     // Why this helps
     steps: string[]; // How to do it
+    bestFor: string;  // NEW: Usage context
+    timeRequired: string; // NEW: Display string
 }
 
 export const LIBRARY_ACTIVITIES: Activity[] = [
@@ -34,7 +36,9 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Hold your breath for 4 seconds.',
             'Exhale slowly through your mouth for 4 seconds.',
             'Hold your lungs empty for 4 seconds before the next breath.'
-        ]
+        ],
+        bestFor: 'Panic, High Stress, Performance Anxiety',
+        timeRequired: '2-5 Minutes'
     },
     {
         id: 'worry-dump',
@@ -50,7 +54,9 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Write down every single thing bothering you, no matter how small.',
             'Don’t worry about grammar or spelling—just get it out.'
         ],
-        prompt: 'Write down every single thing that is stressing you out right now, no matter how small.'
+        prompt: 'Write down every single thing that is stressing you out right now, no matter how small.',
+        bestFor: 'Overthinking, Bedtime Worries',
+        timeRequired: '5-10 Minutes'
     },
     {
         id: 'cold-water',
@@ -65,7 +71,9 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Splash cold water on your face and eyes for 15-30 seconds.',
             'Take a few deep breaths while your face is wet.',
             'Gently pat your skin dry and notice the sensation.'
-        ]
+        ],
+        bestFor: 'Acute Anxiety, Sudden Overwhelm',
+        timeRequired: '1 Minute'
     },
 
     // Anxiety
@@ -86,7 +94,9 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Acknowledge 3 things you can hear.',
             'Acknowledge 2 things you can smell.',
             'Acknowledge 1 thing you can taste.'
-        ]
+        ],
+        bestFor: 'Anxiety Attacks, Dissociation',
+        timeRequired: '3 Minutes'
     },
     {
         id: 'anxiety-timeline',
@@ -102,7 +112,9 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Describe the physical sensations you felt (tight chest, etc.).',
             'Note what eventually helped the feeling subside.'
         ],
-        prompt: 'When did this anxiety start? What was the trigger? How does it feel in your body?'
+        prompt: 'When did this anxiety start? What was the trigger? How does it feel in your body?',
+        bestFor: 'Identifying Triggers, Self-Reflection',
+        timeRequired: '10 Minutes'
     },
     {
         id: 'safe-space',
@@ -118,7 +130,9 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Imagine a place where you feel completely safe and calm.',
             'Focus on the colors, the sounds, and the temperature of this place.',
             'Stay in this mental space until you feel your muscles relax.'
-        ]
+        ],
+        bestFor: 'Chronic Anxiety, Restlessness',
+        timeRequired: '10-15 Minutes'
     },
 
     // Focus
@@ -137,7 +151,9 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Set your timer for 25 minutes.',
             'Work with zero interruptions until the timer rings.',
             'Take a 5-minute break away from your screen.'
-        ]
+        ],
+        bestFor: 'Procrastination, ADHD, Work Stress',
+        timeRequired: '25 Minutes'
     },
     {
         id: 'priorities-log',
@@ -153,7 +169,9 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Write them down clearly.',
             'Commit to ignoring everything else until these three are done.'
         ],
-        prompt: 'What are the 3 most important things you need to finish today? Why are they important?'
+        prompt: 'What are the 3 most important things you need to finish today? Why are they important?',
+        bestFor: 'Mental Overwhelm, Morning Planning',
+        timeRequired: '5 Minutes'
     },
 
     // Sleep
@@ -173,7 +191,9 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Close your mouth and inhale quietly through your nose to a count of 4.',
             'Hold your breath for a count of 7.',
             'Exhale completely through your mouth to a count of 8.'
-        ]
+        ],
+        bestFor: 'Insomnia, Nighttime Racing Thoughts',
+        timeRequired: '4 Minutes'
     },
     {
         id: 'sleep-gratitude',
@@ -189,7 +209,9 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Identify three small moments that made you smile or feel grateful.',
             'Write them down to seal the positive memory.'
         ],
-        prompt: 'Write down 3 things that went well today before you sleep.'
+        prompt: 'Write down 3 things that went well today before you sleep.',
+        bestFor: 'Better Sleep Quality, Ending Day Positively',
+        timeRequired: '5 Minutes'
     },
 
     // Mood Boost
@@ -207,7 +229,9 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Write it down in your log.',
             'Allow yourself to feel a brief moment of pride.'
         ],
-        prompt: 'What is one thing you accomplished today that you are proud of?'
+        prompt: 'What is one thing you accomplished today that you are proud of?',
+        bestFor: 'Low Self-Esteem, Depression, Low Energy',
+        timeRequired: '5 Minutes'
     },
     {
         id: 'sunlight-boost',
@@ -223,7 +247,9 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Try to get direct light on your face and eyes (safely).',
             'Stay for at least 5 minutes.',
             'Notice the warmth and brightness around you.'
-        ]
+        ],
+        bestFor: 'SAD, Morning Sluggishness, Mood Boost',
+        timeRequired: '5-10 Minutes'
     },
 
     // Overthinking
@@ -241,7 +267,9 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Now, write a version where everything goes surprisingly well.',
             'Focus on the positive version for 2 minutes.'
         ],
-        prompt: 'List 3 negative "what if" thoughts you are having. Now, flip each one into a positive "what if".'
+        prompt: 'List 3 negative "what if" thoughts you are having. Now, flip each one into a positive "what if".',
+        bestFor: 'Catastrophizing, Future Anxiety',
+        timeRequired: '5-10 Minutes'
     },
     {
         id: 'leaves-stream',
@@ -258,6 +286,8 @@ export const LIBRARY_ACTIVITIES: Activity[] = [
             'Whenever a thought enters your mind, imagine placing it on a leaf.',
             'Watch the leaf drift down the stream and out of sight.',
             'Repeat this for every single thought, good or bad.'
-        ]
+        ],
+        bestFor: 'Intrusive Thoughts, Mental Loops',
+        timeRequired: '8 Minutes'
     }
 ];

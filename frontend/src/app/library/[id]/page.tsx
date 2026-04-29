@@ -5,7 +5,7 @@ import { use, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
     ChevronLeft, Play, PenLine, CheckCircle2, Info, ArrowRight, Video, Image as ImageIcon,
-    Wind, Droplets, Globe, Activity as ActivityIcon, Home, Target, ClipboardList, Moon, Sparkles, Trophy, Sun, Repeat 
+    Wind, Droplets, Globe, Activity as ActivityIcon, Home, Target, ClipboardList, Moon, Sparkles, Trophy, Sun, Repeat, Clock
 } from 'lucide-react';
 import { LIBRARY_ACTIVITIES, ActivityType, ActivityCategory } from '@/data/libraryActivities';
 import { cn } from '@/lib/utils';
@@ -135,9 +135,19 @@ export default function ActivityDetailPage({ params }: { params: Promise<{ id: s
                             </span>
                         )}
                     </div>
-                    <h1 className="text-4xl font-black leading-tight mb-8" style={{ color: textColor }}>
+                    <h1 className="text-4xl font-black leading-tight mb-4" style={{ color: textColor }}>
                         {activity.title}
                     </h1>
+                    <div className="flex flex-wrap gap-4 mb-8 opacity-80" style={{ color: textColor }}>
+                        <div className="flex items-center gap-1.5">
+                            <Clock className="w-3.5 h-3.5" />
+                            <span className="text-[10px] font-black uppercase tracking-widest">{activity.timeRequired}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                            <Sparkles className="w-3.5 h-3.5" />
+                            <span className="text-[10px] font-black uppercase tracking-widest">Best For: {activity.bestFor}</span>
+                        </div>
+                    </div>
                     <div className="w-20 h-20 rounded-3xl bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-xl">
                         <IconComponent className="w-10 h-10 text-[#4B3425]" strokeWidth={1.5} />
                     </div>

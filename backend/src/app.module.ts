@@ -11,6 +11,7 @@ import { MindfulModule } from './mindful/mindful.module';
 import { MentorModule } from './mentor/mentor.module';
 import { ChatModule } from './chat/chat.module';
 import { AiModule } from './ai/ai.module';
+import { AppointmentModule } from './appointment/appointment.module';
 
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
@@ -19,7 +20,7 @@ import { PrismaModule } from './prisma/prisma.module';
   imports: [
     ConfigModule.forRoot(),
     PrismaModule,
-    AuthModule, AssessmentModule, JournalModule, MoodModule, StressModule, SleepModule, MindfulModule, MentorModule, ChatModule, AiModule
+    AuthModule, AssessmentModule, JournalModule, MoodModule, StressModule, SleepModule, MindfulModule, MentorModule, ChatModule, AiModule, AppointmentModule
   ],
   controllers: [AppController],
   providers: [AppService],

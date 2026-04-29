@@ -5,13 +5,15 @@ import { PrismaService } from '../prisma/prisma.service';
 export class ChatService {
     constructor(private prisma: PrismaService) { }
 
-    async saveMessage(data: { content: string, senderType: string, studentId: string, mentorId: string }) {
+    async saveMessage(data: { content: string, senderType: string, studentId: string, mentorId: string, type?: string, appointmentId?: string }) {
         return this.prisma.message.create({
             data: {
                 content: data.content,
                 senderType: data.senderType,
                 studentId: data.studentId,
                 mentorId: data.mentorId,
+                type: data.type || 'text',
+                appointmentId: data.appointmentId,
             }
         });
     }

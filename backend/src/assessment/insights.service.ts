@@ -10,38 +10,46 @@ const MOOD_VALUES: Record<string, number> = {
 // actionLink is optional — real-life tasks have none
 const TASK_POOL = {
   mindful: [
-    { id: 'm1', title: 'Breathing exercise', description: 'Take 2 minutes to breathe deeply and reset', type: 'mindful', actionLink: '/mindful/add' },
-    { id: 'm2', title: '5-minute relaxation', description: 'A short guided session to restore your energy', type: 'mindful', actionLink: '/mindful/add' },
-    { id: 'm3', title: 'Focus timer', description: 'Block distractions with a focused work session', type: 'mindful', actionLink: '/mindful/add' },
-    { id: 'm4', title: 'Body scan session', description: 'Check in with how your body feels right now', type: 'mindful', actionLink: '/mindful/add' },
+    { id: 'm1', title: 'Breathing exercise', description: 'Regulate your heart rate with 2 mins of deep box breathing.', type: 'mindful', actionLink: '/mindful/add', context: 'When you feel your heart racing, box breathing acts as a natural reset for your nervous system.' },
+    { id: 'm2', title: '5-minute relaxation', description: 'A short guided session to restore your mental energy.', type: 'mindful', actionLink: '/mindful/add', context: 'Sustained focus drains your battery; 5 mins of silence restores cognitive clarity.' },
+    { id: 'm3', title: 'Focus timer', description: 'Block distractions with a focused 25-min work session.', type: 'mindful', actionLink: '/mindful/add', context: 'Overwhelm often comes from multitasking. Focusing on ONE thing reduces mental friction.' },
+    { id: 'm4', title: 'Body scan session', description: 'Check in with how your body feels right now.', type: 'mindful', actionLink: '/mindful/add', context: 'Stress often hides in your shoulders or jaw. Finding it is the first step to releasing it.' },
   ],
   journal: [
-    { id: 'j1', title: 'Write it out', description: "Journal about what's on your mind today", type: 'journal', actionLink: '/journal/new' },
-    { id: 'j2', title: 'Gratitude journal', description: 'Write 3 things you are grateful for today', type: 'journal', actionLink: '/journal/new' },
-    { id: 'j3', title: 'Write one win', description: 'Note one thing that went well today', type: 'journal', actionLink: '/journal/new' },
-    { id: 'j4', title: 'Reflect on your day', description: 'A few lines about how your day has been', type: 'journal', actionLink: '/journal/new' },
+    { id: 'j1', title: 'Write it out', description: "Externalize what's on your mind today.", type: 'journal', actionLink: '/journal/new', context: 'Your brain is for having ideas, not for holding them. Clearing your head reduces anxiety.' },
+    { id: 'j2', title: 'Gratitude journal', description: 'Write 3 things you are grateful for today.', type: 'journal', actionLink: '/journal/new', context: 'Gratitude retrains your brain to scan for positives instead of threats.' },
+    { id: 'j3', title: 'Write one win', description: 'Note one small victory from today.', type: 'journal', actionLink: '/journal/new', context: 'Celebrating small wins triggers dopamine, boosting your resilience for bigger challenges.' },
+    { id: 'j4', title: 'Reflect on your day', description: 'A few lines about how your day has been.', type: 'journal', actionLink: '/journal/new', context: 'Reflection turns raw experience into wisdom and perspective.' },
   ],
   real: [
-    { id: 'r1', title: 'Take a 5-minute break', description: 'Step away from your screen and stretch', type: 'real' },
-    { id: 'r2', title: 'Drink a glass of water', description: 'Stay hydrated — it helps more than you think', type: 'real' },
-    { id: 'r3', title: 'Talk to someone you trust', description: 'A quick chat with a friend or family member', type: 'real' },
-    { id: 'r4', title: 'Go for a short walk', description: 'Even 5 minutes outside can shift your mood', type: 'real' },
-    { id: 'r5', title: 'Avoid screens 20 min before bed', description: 'Wind down without your phone tonight', type: 'real' },
-    { id: 'r6', title: 'Sleep 30 minutes earlier tonight', description: 'Small shift, big impact on tomorrow', type: 'real' },
-    { id: 'r7', title: 'Take 5 deep breaths right now', description: 'Pause, breathe in for 4, out for 6', type: 'real' },
+    { id: 'r1', title: 'Take a 5-minute break', description: 'Step away from your screen and stretch.', type: 'real', context: 'Physical movement breaks the cycle of mental stagnation.' },
+    { id: 'r2', title: 'Drink a glass of water', description: 'Hydrate to help regulate your energy.', type: 'real', context: "Dehydration mimics the symptoms of anxiety. Water is often the simplest fix." },
+    { id: 'r3', title: 'Talk to someone you trust', description: 'A quick chat with a friend or family member.', type: 'real', context: 'Human connection is the fastest way to lower cortisol levels.' },
+    { id: 'r4', title: 'Go for a short walk', description: '5 minutes outside can shift your perspective.', type: 'real', context: 'Changing your environment can immediately interrupt a negative thought loop.' },
+    { id: 'r5', title: 'Avoid screens 20 min before bed', description: 'Wind down without your phone tonight.', type: 'real', context: 'Blue light suppresses melatonin, making it harder for your brain to truly rest.' },
+    { id: 'r6', title: 'Sleep 30 minutes earlier', description: 'Small shift, big impact on tomorrow.', type: 'real', context: 'Sleep is your brain’s garbage disposal system. Give it more time to work.' },
+    { id: 'r7', title: 'Take 5 deep breaths', description: 'Pause, breathe in for 4, out for 6.', type: 'real', context: 'Exhaling longer than you inhale signals safety to your brain.' },
   ],
   system: [
-    { id: 's1', title: 'Log your stress level', description: 'How are you managing your load today?', type: 'system', actionLink: '/stress/add' },
-    { id: 's2', title: 'Log your mood', description: 'How are you feeling right now?', type: 'system', actionLink: '/mood/check-in' },
-    { id: 's3', title: 'Set a sleep schedule', description: 'Building a consistent routine starts here', type: 'system', actionLink: '/sleep/schedule' },
+    { id: 's1', title: 'Log your stress level', description: 'Check your load today.', type: 'system', actionLink: '/stress/add', context: 'Awareness is 50% of the solution. Identify the stress before it identifies you.' },
+    { id: 's2', title: 'Log your mood', description: 'How are you feeling right now?', type: 'system', actionLink: '/mood/check-in', context: 'Naming an emotion reduces its intensity in the brain.' },
+    { id: 's3', title: 'Set a sleep schedule', description: 'Build a consistent routine.', type: 'system', actionLink: '/sleep/schedule', context: 'Circadian rhythm thrives on consistency, not just total hours.' },
   ],
 };
 
 // ─── Seeded PRNG (same output all day, resets at midnight) ──────────────────
-function dateSeed(): number {
+function dateSeed(userId?: string): number {
   const d = new Date();
-  // seed = YYYYMMDD as integer
-  return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+  const base = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+  if (!userId) return base;
+
+  // Simple hash for string userId
+  let hash = 0;
+  for (let i = 0; i < userId.length; i++) {
+    hash = (hash << 5) - hash + userId.charCodeAt(i);
+    hash |= 0;
+  }
+  return base + Math.abs(hash);
 }
 
 function seededRandom(seed: number): () => number {
@@ -183,11 +191,12 @@ export class InsightsService {
           todayMood, todayStress, todaySleep: todaySleepRaw,
           sleepHistory, mindfulSessions, journalEntries,
           recentStress, prevStress, recentMood, prevMood,
+          userId
         })
       : [];
 
     const tasks = hasData
-      ? this.generateTasks({ todayMood, todayStress, todaySleep: todaySleepRaw, mindfulSessions, journalEntries })
+      ? this.generateTasks({ todayMood, todayStress, todaySleep: todaySleepRaw, mindfulSessions, journalEntries, userId })
       : [];
 
     const weeklyMoodAvg = moodHistory.length > 0
@@ -252,6 +261,7 @@ export class InsightsService {
     sleepHistory: any[]; mindfulSessions: any[]; journalEntries: any[];
     recentStress: any[]; prevStress: any[];
     recentMood: any[]; prevMood: any[];
+    userId?: string;
   }) {
     type Insight = { icon: string; title: string; subtitle: string; positive: boolean; isLogPrompt?: boolean; actionLink?: string };
     const real: Insight[] = [];
@@ -280,8 +290,8 @@ export class InsightsService {
     const mindfulTodayMins = mindfulToday.reduce((sum, s) => sum + (s.duration ?? 0), 0);
     const mindfulCount7 = data.mindfulSessions.length;
 
-    // Day seed used to rotate copy variations once per day
-    const seed = dateSeed();
+    // Day seed used to rotate copy variations once per day per user
+    const seed = dateSeed(data.userId);
     const pick1 = <T>(arr: T[]): T => arr[seed % arr.length];
 
     const loggedCount = [data.todayMood, data.todayStress, data.todaySleep].filter(Boolean).length;
@@ -291,18 +301,41 @@ export class InsightsService {
       ? ` — ${data.todayStress.stressor}` : '';
 
     // ── LAYER 3: Cross-variable combos (highest priority) ────────────────────
+    // Pattern: Mood dip linked to sleep
+    if (real.length < maxReal && avgRecentMood !== null && avgPrevMood !== null && avgRecentMood < avgPrevMood - 0.3) {
+        const avgRecentSleep = data.sleepHistory.length > 0 ? data.sleepHistory.reduce((s, e) => s + e.duration, 0) / data.sleepHistory.length : null;
+        if (avgRecentSleep !== null && avgRecentSleep < 6.5) {
+            real.push({ 
+                icon: 'combo', 
+                positive: false, 
+                actionLink: '/sleep/stats',
+                title: 'Sleep-Mood Correlation', 
+                subtitle: `Your mood dipped this week while averaging only ${avgRecentSleep.toFixed(1)}h of sleep. Focus on rest tonight.` 
+            });
+        }
+    }
+
     if (real.length < maxReal && sleepDur !== null && sleepDur < 6 && stressVal !== null && stressVal >= 4) {
       real.push({ icon: 'combo', positive: false, actionLink: '/sleep/stats', ...pick1([
         { title: 'Tough combination today', subtitle: 'Low sleep + high stress is draining. Prioritise rest and a short break today.' },
         { title: 'Running on empty today', subtitle: `${this.fmtDuration(sleepDur)} of sleep and stress at ${stressVal}/5 — go gentle with yourself.` },
-        { title: 'Your body needs recovery', subtitle: 'Skimping on sleep while stressed takes a toll. Even a 10-min nap can help.' },
-        { title: 'High pressure, low fuel', subtitle: 'Sleep deprivation and stress compound each other. A short pause resets a lot.' },
       ])});
     }
+    
+    // Pattern: High stress linked to journal omission
+    if (real.length < maxReal && stressVal !== null && stressVal >= 4 && data.journalEntries.length === 0) {
+        real.push({
+            icon: 'journal',
+            positive: false,
+            actionLink: '/journal/new',
+            title: 'Unprocessed Stress',
+            subtitle: "You're stressed but haven't journaled in 7 days. Writing it out can reduce the 'mental volume' of your worries."
+        });
+    }
+
     if (real.length < maxReal && moodVal !== null && moodVal <= 2 && data.journalEntries.length === 0) {
       real.push({ icon: 'mood', positive: false, actionLink: '/journal/new', ...pick1([
         { title: 'Writing could help right now', subtitle: "Your mood is low and you haven't journaled lately. Putting words to feelings helps." },
-        { title: 'A journal entry might lift you', subtitle: "Difficult moods are easier to process when written out. Give it 5 minutes." },
         { title: "Feeling heavy? Write it out", subtitle: "Low mood + no journaling recently — try writing one honest sentence. It helps." },
       ])});
     }
@@ -310,32 +343,26 @@ export class InsightsService {
       real.push({ icon: 'stress', positive: false, actionLink: '/mindful/add', ...pick1([
         { title: 'A breather could go a long way', subtitle: "You're stressed but haven't done any mindful sessions. Even 2 minutes counts." },
         { title: 'Stress without a reset is rough', subtitle: 'No mindful sessions yet this week. A 5-min breathing exercise can shift your state.' },
-        { title: 'Your nervous system needs a break', subtitle: 'High stress, no mindfulness — your cortisol will thank you for even one session.' },
       ])});
     }
 
     // ── LAYER 2: Trend-based (second priority — more interesting than today's snapshot) ──
     if (real.length < maxReal && avgRecentStress !== null && avgRecentStress >= 4) {
       real.push({ icon: 'stress', positive: false, actionLink: '/stress/stats', ...pick1([
-        { title: "You've been stressed for a few days", subtitle: 'Your stress has been consistently high. A longer reset this week would help.' },
-        { title: 'Stress trend is high this week', subtitle: `Averaging ${avgRecentStress.toFixed(1)}/5 over recent days. Your body is taking notice.` },
+        { title: "You've been stressed for a few days", subtitle: `Averaging ${avgRecentStress.toFixed(1)}/5 recently. Consistent stress signals a need for a recovery day.` },
         { title: 'Several high-stress days in a row', subtitle: "Sustained stress is tiring. Look at what's driving it — your trend shows the pattern." },
-        { title: "Stress hasn't let up much lately", subtitle: 'Consistent high stress is a signal. Check your trend and consider a proper recovery.' },
       ])});
     }
     if (real.length < maxReal && avgRecentMood !== null && avgPrevMood !== null) {
       if (avgRecentMood < avgPrevMood - 0.5) {
         real.push({ icon: 'mood', positive: false, actionLink: '/mood/stats', ...pick1([
-          { title: 'Your mood has dipped this week', subtitle: 'Compared to earlier this week, things feel heavier. Keep checking in.' },
+          { title: 'Your mood has dipped this week', subtitle: 'Compared to earlier this week, things feel heavier. Something changed in your pattern.' },
           { title: 'Mood trending downward this week', subtitle: 'You were feeling better a few days ago. See your trend to understand the shift.' },
-          { title: 'A dip in mood recently', subtitle: 'Your recent moods are lower than your previous average. Something to pay attention to.' },
         ])});
       } else if (avgRecentMood > avgPrevMood + 0.5) {
         real.push({ icon: 'mood', positive: true, actionLink: '/mood/stats', ...pick1([
           { title: 'Your mood is improving this week', subtitle: "Things are looking up — whatever you're doing, keep it up!" },
           { title: 'Mood trending upward 📈', subtitle: "Your recent days have been better than the week before. That's real progress." },
-          { title: "You're on an upswing this week", subtitle: "Mood is improving — check your trend to see what's been contributing." },
-          { title: 'Better week emotionally', subtitle: 'Mood scores are up vs the previous few days. Keep the positive habits going.' },
         ])});
       }
     }
@@ -344,9 +371,8 @@ export class InsightsService {
       const variance = Math.max(...durations) - Math.min(...durations);
       if (variance >= 2) {
         real.push({ icon: 'sleep', positive: false, actionLink: '/sleep/stats', ...pick1([
-          { title: 'Sleep schedule looks inconsistent', subtitle: `Your sleep has varied by up to ${Math.round(variance)}h recently. Consistency helps more than duration.` },
+          { title: 'Sleep schedule looks inconsistent', subtitle: `Your sleep has varied by ${Math.round(variance)}h recently. Your mood often follows your sleep stability.` },
           { title: 'Irregular sleep pattern detected', subtitle: `${Math.round(variance)}h swing in your sleep this week. Your body clock thrives on routine.` },
-          { title: 'Your sleep timing is all over the place', subtitle: 'Varying when you sleep disrupts your rhythm. Even fixing wake time helps a lot.' },
         ])});
       }
     }
@@ -355,15 +381,13 @@ export class InsightsService {
     if (real.length < maxReal && journalStreak >= 2) {
       real.push({ icon: 'journal', positive: true, actionLink: '/journal', ...pick1([
         { title: `${journalStreak}-day journaling streak 🔥`, subtitle: "You're building a strong reflection habit. Keep it alive." },
-        { title: `${journalStreak} days of journaling in a row!`, subtitle: "Consistency like this is rare. Your future self will thank you." },
         { title: `${journalStreak}-day streak 📓🔥`, subtitle: "Journaling this consistently builds real self-awareness over time." },
       ])});
     }
     if (real.length < maxReal && mindfulCount7 >= 2) {
       real.push({ icon: 'mindful', positive: true, actionLink: '/mindful', ...pick1([
-        { title: 'Consistent with mindfulness', subtitle: `${mindfulCount7} sessions this week. Your nervous system appreciates it.` },
+        { title: 'Consistent with mindfulness', subtitle: `${mindfulCount7} sessions this week. Your nervous system is thanking you.` },
         { title: `${mindfulCount7} mindful sessions this week 🌿`, subtitle: "You're making mindfulness a real habit. That takes intention." },
-        { title: 'Mindfulness this week: on track', subtitle: `${mindfulCount7} sessions so far. Regularity matters more than duration.` },
       ])});
     }
 
@@ -372,11 +396,9 @@ export class InsightsService {
       real.push({ icon: 'mindful', positive: true, actionLink: '/mindful', ...pick1(
         mindfulTodayMins >= 20 ? [
           { title: `${mindfulTodayMins} min of mindfulness today 🧘`, subtitle: 'Solid session. Your nervous system is thanking you right now.' },
-          { title: `You've done ${mindfulTodayMins} min mindful today`, subtitle: 'Great focus on your wellbeing. Keep this momentum going.' },
           { title: `${mindfulTodayMins}-min mindfulness session 🌿`, subtitle: "That's a real investment in your mental health. Well done." },
         ] : [
           { title: `${mindfulTodayMins} min of mindfulness so far`, subtitle: 'A good start. Even short sessions reduce cortisol levels.' },
-          { title: 'Mindfulness session done today ✓', subtitle: `${mindfulTodayMins} minutes in — every bit counts. Log another to build the habit.` },
           { title: 'You showed up for your mind today', subtitle: `${mindfulTodayMins} minutes of mindfulness logged. Consistency beats intensity.` },
         ]
       )});
@@ -387,14 +409,11 @@ export class InsightsService {
       if (moodVal <= 2) {
         real.push({ icon: 'mood', positive: false, actionLink: '/mood/stats', ...pick1([
           { title: 'Mood seems low today', subtitle: 'These days happen. A journal entry or short walk can shift things.' },
-          { title: "It's okay not to feel okay", subtitle: 'Low days are part of the cycle. Be kind to yourself today.' },
           { title: 'Rough day emotionally', subtitle: "Your mood logged as low — check your trend to see if it's a pattern." },
-          { title: 'Feeling heavy today?', subtitle: 'Small things help — a walk, a chat, writing it down. See your mood history.' },
         ])});
       } else if (moodVal === 3) {
         real.push({ icon: 'mood', positive: true, actionLink: '/mood/stats', ...pick1([
           { title: 'Mood is steady today', subtitle: "You're holding steady. Little acts of self-care can tip it positive." },
-          { title: "Neutral and that's fine", subtitle: "Not every day needs to be amazing. Steady is solid." },
           { title: "You're in a balanced place today", subtitle: 'Consistent mood is a good sign. See your weekly trend.' },
           { title: 'Middle of the road today', subtitle: 'Neutral mood — small wins today can push it positive.' },
         ])});
@@ -496,6 +515,7 @@ export class InsightsService {
   private generateTasks(data: {
     todayMood: any; todayStress: any; todaySleep: any;
     mindfulSessions: any[]; journalEntries: any[];
+    userId?: string;
   }) {
     const stressVal = data.todayStress?.value ?? 0;
     const moodVal = data.todayMood ? (MOOD_VALUES[data.todayMood.mood] ?? 3) : 3;
@@ -505,8 +525,8 @@ export class InsightsService {
     // Always show 3 tasks as long as at least 1 metric is logged
     const taskLimit = 3;
 
-    // Same seed every day → consistent shuffle all day, resets at midnight
-    const rng = seededRandom(dateSeed());
+    // Same seed every day per user → consistent shuffle all day for that user
+    const rng = seededRandom(dateSeed(data.userId));
 
     let pool: any[] = [];
 
@@ -544,16 +564,30 @@ export class InsightsService {
     for (const t of pool) {
       if (t && !seen.has(t.id) && final.length < 3) {
         seen.add(t.id);
-        final.push(t);
+        
+        // Smart Context Description
+        let dynamicDesc = t.description;
+        if (stressVal >= 4 && (t.type === 'mindful' || t.id === 'r2' || t.id === 'r7')) {
+            dynamicDesc = `You've been stressed today — ${t.id === 'r2' ? 'hydration' : 'this'} can help regulate your energy levels.`;
+        } else if (moodVal <= 2 && t.type === 'journal') {
+            dynamicDesc = "Writing one small win helps your brain shift away from negative loops.";
+        } else if (sleepDur < 6 && (t.id === 'r5' || t.id === 'r6')) {
+            dynamicDesc = "You slept less than 6h — protecting tonight's sleep is your top priority.";
+        }
+        
+        final.push({ ...t, description: dynamicDesc });
       }
     }
+    
     const allTasks = [...TASK_POOL.mindful, ...TASK_POOL.journal, ...TASK_POOL.real];
     for (const t of shuffle(allTasks, rng)) {
       if (final.length >= 3) break;
-      if (!seen.has(t.id)) { seen.add(t.id); final.push(t); }
+      if (!seen.has(t.id)) { 
+          seen.add(t.id); 
+          final.push(t); 
+      }
     }
 
-    // Return only as many tasks as the user has logged data for
     return final.slice(0, taskLimit);
   }
 

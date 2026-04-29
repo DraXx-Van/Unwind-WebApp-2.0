@@ -69,6 +69,22 @@ export default function MentorDashboard() {
         <div className="min-h-screen bg-[#FDFDFD] font-sans pb-10">
             {/* Header */}
             <div className="bg-[#4B3425] rounded-b-[48px] pt-12 pb-10 px-6 shadow-lg relative overflow-hidden">
+                {/* Background Decor - with floating animation */}
+                <motion.div 
+                    animate={{ x: [0, 10, 0], y: [0, -10, 0] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3" 
+                />
+                <motion.div 
+                    animate={{ x: [0, -15, 0], y: [0, 10, 0] }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/3" 
+                />
+                
+                <div className="absolute top-1/4 right-1/4 w-4 h-4 border-2 border-white/10 rounded-full" />
+                <div className="absolute top-1/3 left-1/4 w-3 h-3 bg-white/10 rotate-45" />
+                <div className="absolute bottom-1/4 right-1/3 w-6 h-6 border-2 border-white/5 rotate-12" />
+                
                 <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl" />
 
                 <div className="flex items-center justify-between mb-8 relative z-10">

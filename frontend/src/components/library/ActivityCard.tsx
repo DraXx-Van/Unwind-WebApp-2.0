@@ -76,7 +76,18 @@ export function ActivityCard({ activity }: ActivityCardProps) {
                         )}
                     </div>
                     <h3 className="text-[#4B3425] font-black text-lg leading-tight mb-0.5">{activity.title}</h3>
-                    <p className="text-[#4B3425]/40 text-xs font-bold line-clamp-1">{activity.description}</p>
+                    <p className="text-[#4B3425]/40 text-xs font-bold line-clamp-1 mb-2">{activity.description}</p>
+                    
+                    <div className="flex flex-wrap items-center gap-y-1 gap-x-3 opacity-60">
+                         <div className="flex items-center gap-1">
+                            <span className="w-1 h-1 rounded-full bg-[#4B3425]/20" />
+                            <span className="text-[10px] font-black uppercase text-[#4B3425]">{activity.timeRequired}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                            <span className="w-1 h-1 rounded-full bg-[#4B3425]/20" />
+                            <span className="text-[10px] font-black uppercase text-[#4B3425]">{activity.bestFor}</span>
+                        </div>
+                    </div>
                 </div>
 
                 {/* CTA Section */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { User, Frown, Smile } from 'lucide-react';
+import { User, Frown, Smile, Circle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface MessageBubbleProps {
@@ -8,9 +8,12 @@ interface MessageBubbleProps {
     sender: 'user' | 'bot' | 'mentor';
     emotion?: string;
     dataUpdated?: boolean;
+    type?: string;
+    appointmentId?: string;
+    onConfirm?: (id: string) => void;
 }
 
-export function MessageBubble({ text, sender, emotion, dataUpdated }: MessageBubbleProps) {
+export function MessageBubble({ text, sender, emotion, dataUpdated, type, appointmentId, onConfirm }: MessageBubbleProps) {
     const isUser = sender === 'user';
 
     if (emotion) {
@@ -60,19 +63,58 @@ export function MessageBubble({ text, sender, emotion, dataUpdated }: MessageBub
                 {/* Bubble */}
                 <div className={cn(
                     "p-4 rounded-2xl relative shadow-sm",
+                    type?.startsWith('appointment') ? "bg-white border-2 border-[#9BB068]/20" :
                     isUser 
                         ? "bg-[#4B3425] text-white rounded-tr-none" 
                         : "bg-[#E8DDD9] text-[#4B3425]/70 rounded-tl-none"
                 )}>
-                    <p className="text-sm font-bold leading-tight Urbanist">{text}</p>
+                    {type === 'appointment_request' ? (
+                        <div className="flex flex-col gap-3 min-w-[200px]">
+                            <div className="flex items-center gap-2 text-[#9BB068]">
+                                <Circle className="w-4 h-4 fill-[#9BB068]/10" />
+                                <span className="text-[10px] font-black uppercase tracking-widest">Appointment Request</span>
+                            </div>
+                            <p className="text-sm font-bold text-[#4B3425]">{text}</p>
+                            {!isUser && onConfirm && (
+                                <button 
+                                    onClick={() => appointmentId && onConfirm(appointmentId)}
+                                    className="w-full py-2 bg-[#9BB068] text-white text-xs font-black uppercase tracking-widest rounded-xl shadow-md active:scale-95 transition-transform"
+                                >
+                                    Confirm Slot
+                                </button>
+                            )}
+                        </div>
+                    ) : type === 'appointment_confirmed' ? (
+                        <div className="flex flex-col gap-3 min-w-[200px]">
+                            <div className="flex items-center gap-2 text-[#9BB068]">
+                                <Smile className="w-4 h-4 text-[#9BB068]" />
+                                <span className="text-[10px] font-black uppercase tracking-widest">Appointment Confirmed</span>
+                            </div>
+                            <p className="text-sm font-bold text-[#4B3425]">{text}</p>
+                            {text.includes('http') && (
+                                <a 
+                                    href={text.split('Join here: ')[1]} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="w-full py-2 bg-[#4B3425] text-white text-xs font-black uppercase tracking-widest rounded-xl text-center shadow-md active:scale-95 transition-transform"
+                                >
+                                    Join Meeting
+                                </a>
+                            )}
+                        </div>
+                    ) : (
+                        <p className="text-sm font-bold leading-tight Urbanist">{text}</p>
+                    )}
                     
                     {/* Bubble Tail */}
-                    <div className={cn(
-                        "absolute top-0 w-3 h-3",
-                        isUser 
-                            ? "right-[-6px] bg-[#4B3425] [clip-path:polygon(0_0,0%_100%,100%_0)]" 
-                            : "left-[-6px] bg-[#E8DDD9] [clip-path:polygon(0_0,100%_0,100%_100%)]"
-                    )} />
+                    {!type?.startsWith('appointment') && (
+                        <div className={cn(
+                            "absolute top-0 w-3 h-3",
+                            isUser 
+                                ? "right-[-6px] bg-[#4B3425] [clip-path:polygon(0_0,0%_100%,100%_0)]" 
+                                : "left-[-6px] bg-[#E8DDD9] [clip-path:polygon(0_0,100%_0,100%_100%)]"
+                        )} />
+                    )}
                 </div>
             </div>
         </div>
