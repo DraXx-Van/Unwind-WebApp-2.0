@@ -32,7 +32,7 @@ export function NotificationDemo() {
                         icon: '/icon-192x192.png',
                         badge: '/icon-192x192.png',
                         vibrate: [200, 100, 200],
-                    });
+                    } as any);
                 } else {
                     new Notification(random.title, { body: random.body });
                 }
